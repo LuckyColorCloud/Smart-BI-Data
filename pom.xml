@@ -23,7 +23,6 @@
         <module>bi-data</module>
         <module>bi-apiManage</module>
         <module>bi-gateway</module>
-        <module>bi-nacos</module>
     </modules>
 
     <!--    版本管理-->
@@ -34,8 +33,13 @@
         <hutool.version>5.8.5</hutool.version>
         <java.version>1.8</java.version>
         <springboot.version>2.3.5.RELEASE</springboot.version>
+        <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
         <lombok.version>1.18.4</lombok.version>
         <spring-openfeign.version>3.1.2</spring-openfeign.version>
+        <knife4j.version>3.0.2</knife4j.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+        <servlet.api.version>3.0-alpha-1</servlet.api.version>
+        <spring-gateway.version>2.2.5.RELEASE</spring-gateway.version>
     </properties>
 
     <!--    依赖管理-->
@@ -45,6 +49,27 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus</artifactId>
                 <version>${mybatis.plus.version}</version>
+            </dependency>
+<!--            &lt;!&ndash; spring-cloud&ndash;&gt;-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring-cloud-alibaba -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-gateway</artifactId>
+                <version>${spring-gateway.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -70,5 +95,24 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>${springboot.version}</version>
         </dependency>
+        <!-- 添加Nacos相关依赖-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>${spring-cloud-alibaba.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>${spring-cloud-alibaba.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${springboot.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>
