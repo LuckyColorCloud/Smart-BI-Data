@@ -13,11 +13,9 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Swagger配置类
- *
- * @author 陌溪
- * @date 2020年12月4日22:50:09
+ * @author Yun
  */
 @Slf4j
 @Component

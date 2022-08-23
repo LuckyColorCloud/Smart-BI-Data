@@ -16,6 +16,14 @@
         <module>bi-apiManage-dao</module>
         <module>bi-apiManage-service</module>
     </modules>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${springboot.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

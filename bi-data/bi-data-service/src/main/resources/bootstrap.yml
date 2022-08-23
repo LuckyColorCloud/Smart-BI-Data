@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: bi-data
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 127.0.0.1:12345
+        namespace: dda6bce5-c628-461a-903f-e8aa4726d1fc
+      config:
+        server-addr: 127.0.0.1:12345
+        file-extension: yaml
+        prefix: smart-data-data
+        #指定命名空间
+        namespace: dda6bce5-c628-461a-903f-e8aa4726d1fc
