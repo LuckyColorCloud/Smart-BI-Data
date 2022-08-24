@@ -7,7 +7,7 @@
     <groupId>com.yun</groupId>
     <artifactId>smart-bi-data</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <!--    spring boot-->
     <parent>
@@ -23,13 +23,14 @@
         <module>bi-data</module>
         <module>bi-apiManage</module>
         <module>bi-gateway</module>
+        <module>bi-data-connmon</module>
     </modules>
 
     <!--    版本管理-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mybatis.plus.version>3.5.1</mybatis.plus.version>
+        <mybatis.plus.version>3.4.3.1</mybatis.plus.version>
         <hutool.version>5.8.5</hutool.version>
         <java.version>1.8</java.version>
         <springboot.version>2.3.5.RELEASE</springboot.version>
@@ -40,17 +41,38 @@
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <servlet.api.version>3.0-alpha-1</servlet.api.version>
         <spring-gateway.version>2.2.5.RELEASE</spring-gateway.version>
+        <mysql-connector.version>8.0.21</mysql-connector.version>
+        <druid.version>1.1.17</druid.version>
+        <revision>1.0.0.Beta.3</revision>
     </properties>
 
     <!--    依赖管理-->
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!--mybatis-plus-->
+            <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
-<!--            &lt;!&ndash; spring-cloud&ndash;&gt;-->
+            <!--        swagger 文档-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!--            &lt;!&ndash; spring-cloud&ndash;&gt;-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -85,6 +107,11 @@
     </dependencyManagement>
     <!--    公共依赖-->
     <dependencies>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-data-connmon</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
