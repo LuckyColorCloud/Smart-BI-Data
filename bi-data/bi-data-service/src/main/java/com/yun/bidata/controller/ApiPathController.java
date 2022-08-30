@@ -2,6 +2,7 @@ package com.yun.bidata.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yun.bidata.api.BiDataApi;
 import com.yun.bidata.entity.ApiPathEntity;
 import com.yun.bidata.service.ApiPathService;
 import com.yun.bidataconnmon.vo.Result;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/apiPath")
 @Api(tags = "第三方api路径相关接口")
-public class ApiPathController {
+public class ApiPathController{
     @Autowired
     private ApiPathService apiPathService;
 

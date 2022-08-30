@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -13,9 +14,11 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @MapperScan(value = "com.yun.bidata.dao")
 @ComponentScan(basePackages = {"com.yun.bidata", "com.yun.bidataconnmon"})
+@EnableFeignClients(basePackages = {
+        "com.yun.*.api"
+})
 public class BiDataServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(BiDataServiceApplication.class, args);
     }
-
 }

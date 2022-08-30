@@ -16,5 +16,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!--            hutools-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-apiManage-dao</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

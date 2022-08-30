@@ -50,7 +50,7 @@ public class Result<T> implements Serializable {
         this.message = message;
     }
 
-    public Result<T> success(String message) {
+    public Result<T> SUCCESS(String message) {
         this.message = message;
         this.code = ResultEnum.SUCCESS.respCode;
         this.success = true;
@@ -91,7 +91,7 @@ public class Result<T> implements Serializable {
         return r;
     }
 
-    public static <T> Result<T> error(String msg, T data) {
+    public static <T> Result<T> ERROR(String msg, T data) {
         Result<T> r = new Result<T>();
         r.setSuccess(false);
         r.setCode(ResultEnum.ERROR.respCode);
@@ -100,11 +100,29 @@ public class Result<T> implements Serializable {
         return r;
     }
 
-    public static Result<Object> error(String msg) {
-        return error(ResultEnum.ERROR.respCode, msg);
+    public static <T> Result<T> ERROR(ResultEnum resultEnum, T data) {
+        Result<T> r = new Result<T>();
+        r.setSuccess(false);
+        r.setCode(resultEnum.respCode);
+        r.setMessage(resultEnum.respDesc);
+        r.setResult(data);
+        return r;
     }
 
-    public static Result<Object> error(int code, String msg) {
+    public static <T> Result<T> ERROR(ResultEnum resultEnum) {
+        Result<T> r = new Result<T>();
+        r.setSuccess(false);
+        r.setCode(resultEnum.respCode);
+        r.setMessage(resultEnum.respDesc);
+        r.setResult(null);
+        return r;
+    }
+
+    public static Result<Object> ERROR(String msg) {
+        return ERROR(ResultEnum.ERROR.respCode, msg);
+    }
+
+    public static Result<Object> ERROR(int code, String msg) {
         Result<Object> r = new Result<Object>();
         r.setCode(code);
         r.setMessage(msg);
@@ -115,7 +133,8 @@ public class Result<T> implements Serializable {
     public enum ResultEnum {
         //定义返回值内容
         SUCCESS(200, "处理成功"),
-        ERROR(500, "处理失败");
+        ERROR(500, "处理失败"),
+        INTERFACE_DOES_NOT_EXIST(100001, "接口不存在!");
         private Integer respCode;
         private String respDesc;
 
