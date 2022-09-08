@@ -18,7 +18,7 @@ import lombok.Data;
  */
 @Data
 @TableName("api_path")
-public class ApiPathEntity implements Serializable {
+public class  ApiPathEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

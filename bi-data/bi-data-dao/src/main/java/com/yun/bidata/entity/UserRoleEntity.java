@@ -37,9 +37,17 @@ public class UserRoleEntity implements Serializable {
      */
     private String url;
     /**
+     * domain
+     */
+    private String domain;
+    /**
+     * jsonPath
+     */
+    private String jsonPath;
+    /**
      * 是否缓存
      */
-    private String cache;
+    private boolean cache;
     /**
      * 缓存过期时间 单位分钟
      */
@@ -53,9 +61,9 @@ public class UserRoleEntity implements Serializable {
      */
     private String body;
     /**
-     * 请求方式
+     * 请求方式 0.GET 1.POST
      */
-    private String requestType;
+    private Integer requestType;
     /**
      * 名称
      */

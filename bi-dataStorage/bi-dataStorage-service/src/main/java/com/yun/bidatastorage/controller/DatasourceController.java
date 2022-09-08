@@ -2,7 +2,6 @@ package com.yun.bidatastorage.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yun.bidata.api.BiDataApi;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.entity.DatasourceEntity;
 import com.yun.bidatastorage.service.DatasourceService;
@@ -13,8 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 
 /**
@@ -90,15 +87,4 @@ public class DatasourceController {
         return Result.OK();
     }
 
-    @Resource
-    BiDataApi biDataApi;
-
-    /**
-     * 删除
-     */
-    @GetMapping("/test")
-    @ApiOperation("test")
-    public Result<String> test() {
-        return biDataApi.test();
-    }
 }

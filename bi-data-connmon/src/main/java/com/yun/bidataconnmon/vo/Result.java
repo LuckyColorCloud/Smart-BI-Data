@@ -134,6 +134,7 @@ public class Result<T> implements Serializable {
         //定义返回值内容
         SUCCESS(200, "处理成功"),
         ERROR(500, "处理失败"),
+        DIRTY_DATA(200001, "存在脏数据"),
         INTERFACE_DOES_NOT_EXIST(100001, "接口不存在!");
         private Integer respCode;
         private String respDesc;
