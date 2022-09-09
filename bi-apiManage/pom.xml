@@ -29,7 +29,6 @@
                 <version>${revision}</version>
             </dependency>
 
-
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -64,8 +63,13 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-data-connmon</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 </project>
