@@ -59,7 +59,7 @@ public class  ApiPathEntity implements Serializable {
      */
     private String body;
     /**
-     * 请求类型
+     * 请求类型 0.GET 1.POST
      */
     private Integer requestType;
     /**
@@ -67,7 +67,7 @@ public class  ApiPathEntity implements Serializable {
      */
     private Integer storageFieldId;
     /**
-     * 排除 jsonlist过滤key
+     * 保存 需要的key  listJson
      */
     private String exclude;
     /**
