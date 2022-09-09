@@ -136,6 +136,7 @@ public class Result<T> implements Serializable {
         ERROR(500, "处理失败"),
         DIRTY_DATA(200001, "存在脏数据"),
         ROLE_TOKEN_DOES_NOT_EXIST(200002, "角色获取Token失败"),
+        NO_SUCH_DATA_PROCESSING_TYPE(100002, "无此数据处理类型!"),
         INTERFACE_DOES_NOT_EXIST(100001, "接口不存在!");
         private Integer respCode;
         private String respDesc;

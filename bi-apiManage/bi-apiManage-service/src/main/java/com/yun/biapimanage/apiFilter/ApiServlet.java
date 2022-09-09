@@ -7,6 +7,8 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yun.biapimanage.entity.ApiManageEntity;
 import com.yun.biapimanage.service.ApiManageService;
+import com.yun.bidata.api.api.DataApiFeign;
+import com.yun.bidata.api.dto.QueryDataDto;
 import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.vo.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,8 @@ public class ApiServlet extends HttpServlet {
 
     @Autowired
     private ApiManageService apiManageService;
-
+    @Autowired
+    private DataApiFeign dataApiFeign;
 
     /**
      * 拦截 post 请求 作为动态api接口输出 仅拦截 smart.api.context
@@ -74,21 +77,21 @@ public class ApiServlet extends HttpServlet {
         if (apiManageEntity == null) {
             return Result.ERROR(Result.ResultEnum.INTERFACE_DOES_NOT_EXIST);
         }
-        Object o;
+        Result<Object> result;
         if (apiManageEntity.isAuth()) {
             //权限处理逻辑
-            o = null;
+            result = null;
         } else {
             //判断是否需要从请求头获取参数 减少不必要操作
             if (StrUtil.isEmpty(apiManageEntity.getJson()) || JSONUtil.parseObj(apiManageEntity.getJson()).isEmpty()) {
-                o = getData(apiManageEntity, null);
+                result = getData(apiManageEntity, new JSONObject());
             } else {
                 //从请求获取数据库配置需要的 请求参数
                 JSONObject params = getParams(request, JSONUtil.parseArray(apiManageEntity.getJson()));
-                o = getData(apiManageEntity, params);
+                result = getData(apiManageEntity, params);
             }
         }
-        return Result.OK(o);
+        return result;
     }
 
     /**
@@ -97,16 +100,27 @@ public class ApiServlet extends HttpServlet {
      * @param apiManageEntity
      * @return
      */
-    private Object getData(ApiManageEntity apiManageEntity, JSONObject params) {
+    private Result<Object> getData(ApiManageEntity apiManageEntity, JSONObject params) {
+        QueryDataDto queryDataDto = new QueryDataDto();
+        queryDataDto.setParams(params.isEmpty() ? null : JSONUtil.toJsonStr(params));
+        queryDataDto.setApiId(apiManageEntity.getApiId());
+        Result<Object> result;
+        //0.接口转发1.查询数据库 2.静态数据直接返回result
         switch (apiManageEntity.getType()) {
             case 0:
-
+                result = dataApiFeign.getData(queryDataDto);
                 break;
             case 1:
-
+                result = null;
+                break;
+            case 2:
+                result = Result.OK((Object) apiManageEntity.getResult());
+                break;
+            default:
+                result = Result.ERROR(Result.ResultEnum.NO_SUCH_DATA_PROCESSING_TYPE);
                 break;
         }
-        return null;
+        return result;
     }
 
 

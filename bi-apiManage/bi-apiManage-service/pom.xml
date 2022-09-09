@@ -24,7 +24,10 @@
         <dependency>
             <groupId>com.yun</groupId>
             <artifactId>bi-apiManage-dao</artifactId>
-            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-data-api</artifactId>
         </dependency>
     </dependencies>
 </project>

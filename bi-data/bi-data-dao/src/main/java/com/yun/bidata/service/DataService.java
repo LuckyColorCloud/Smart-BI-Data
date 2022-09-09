@@ -1,6 +1,7 @@
 package com.yun.bidata.service;
 
 import com.yun.bidata.api.dto.QueryDataDto;
+import com.yun.bidataconnmon.vo.Result;
 
 /**
  * 数据清洗接口
@@ -13,5 +14,5 @@ public interface DataService {
      * @param dto 获取数据类
      * @return 结果
      */
-    Object getData(QueryDataDto dto);
+    Result<Object> getData(QueryDataDto dto);
 }

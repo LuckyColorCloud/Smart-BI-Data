@@ -38,15 +38,23 @@ public class ApiManageEntity implements Serializable {
      */
     private String path;
     /**
+     * 第三方转发id
+     */
+    private String apiId;
+    /**
      * 请求参数
      */
     private String json;
+    /**
+     * 静态数据
+     */
+    private String result;
     /**
      * 是否鉴权
      */
     private boolean auth;
     /**
-     * 接口类型 0.接口转发1.查询数据库
+     * 接口类型 0.接口转发1.查询数据库 2.静态数据直接返回result
      */
     private Integer type;
 }

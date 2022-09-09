@@ -19,6 +19,18 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.yun</groupId>
+                <artifactId>bi-data-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yun</groupId>
+                <artifactId>bi-apiManage-dao</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
+            <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector.version}</version>
@@ -52,6 +64,7 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

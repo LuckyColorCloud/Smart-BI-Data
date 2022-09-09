@@ -12,6 +12,7 @@ import java.util.Map;
  *
  * @author Yun
  */
+@SuppressWarnings("unchecked")
 public class HttpUtil {
 
     /**
@@ -20,7 +21,6 @@ public class HttpUtil {
      * @param timeOut
      * @return
      */
-    @SuppressWarnings("unchecked")
     public static String get(UserRoleEntity userRoleEntity, Integer timeOut) {
       return  HttpRequest.get(userRoleEntity.getDomain() + userRoleEntity.getUrl())
                 .headerMap(JSONUtil.toBean(userRoleEntity.getHeader(), Map.class), true)
@@ -35,7 +35,6 @@ public class HttpUtil {
      * @param timeOut
      * @return
      */
-    @SuppressWarnings("unchecked")
     public static String post(UserRoleEntity userRoleEntity, Integer timeOut) {
         return  HttpRequest.post(userRoleEntity.getDomain() + userRoleEntity.getUrl())
                 .headerMap(JSONUtil.toBean(userRoleEntity.getHeader(), Map.class), true)
@@ -50,15 +49,13 @@ public class HttpUtil {
      * @param timeOut
      * @return
      */
-    @SuppressWarnings("unchecked")
     public static String get(UserRoleEntity userRoleEntity, Integer timeOut, ApiPathEntity apiPathEntity) {
         return  HttpRequest.get(userRoleEntity.getDomain() + apiPathEntity.getUrl())
                 .headerMap(JSONUtil.toBean(apiPathEntity.getPrivateHeader(), Map.class), true)
                 .timeout(timeOut)
-                .body(userRoleEntity.getBody())
+                .body(apiPathEntity.getBody())
                 .execute().body();
     }
-
 
     /**
      * post方式获取接口信息
@@ -66,12 +63,11 @@ public class HttpUtil {
      * @param timeOut
      * @return
      */
-    @SuppressWarnings("unchecked")
     public static String post(UserRoleEntity userRoleEntity, Integer timeOut,ApiPathEntity apiPathEntity) {
         return  HttpRequest.get(userRoleEntity.getDomain() + userRoleEntity.getUrl())
-                .headerMap(JSONUtil.toBean(userRoleEntity.getHeader(), Map.class), true)
+                .headerMap(JSONUtil.toBean(apiPathEntity.getPrivateHeader(), Map.class), true)
                 .timeout(timeOut)
-                .body(userRoleEntity.getBody())
+                .body(apiPathEntity.getBody())
                 .execute().body();
     }
 }

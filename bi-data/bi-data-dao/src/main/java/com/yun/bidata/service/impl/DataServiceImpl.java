@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jayway.jsonpath.JsonPath;
 import com.yun.bidata.api.dto.QueryDataDto;
 import com.yun.bidata.entity.ApiPathEntity;
@@ -19,10 +18,11 @@ import com.yun.bidataconnmon.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,13 +30,14 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Yun
  */
+@Service("dataServiceImpl")
 public class DataServiceImpl implements DataService {
     @Autowired
     ApiPathService apiPathService;
     @Autowired
     UserRoleService userRoleService;
 
-    @Autowired
+    @Resource
     RedisTemplate<String, Object> redisTemplate;
 
     @Value("smart.data.timeOut:3000")
@@ -49,16 +50,12 @@ public class DataServiceImpl implements DataService {
      * @return 数据结果
      */
     @Override
-    public Object getData(QueryDataDto dto) {
-        List<ApiPathEntity> lists = apiPathService.getBaseMapper().selectList(new QueryWrapper<ApiPathEntity>().lambda().eq(ApiPathEntity::getUrl, dto.getPath()));
+    public Result<Object> getData(QueryDataDto dto) {
+        ApiPathEntity apiPathEntity = apiPathService.getById(dto.getApiId());
         //保证脏数据的情况下 不抛出异常 进行逻辑判断
-        if (lists == null || lists.size() < 1) {
+        if (apiPathEntity == null) {
             return Result.ERROR(Result.ResultEnum.INTERFACE_DOES_NOT_EXIST);
-        } else if (lists.size() != 1) {
-            return Result.ERROR(Result.ResultEnum.DIRTY_DATA);
         }
-        //理论为唯一数据 可以从数据库加唯一索引避免判断
-        ApiPathEntity apiPathEntity = lists.get(0);
         //获取需要的token 角色配置信息
         UserRoleEntity userRoleEntity = userRoleService.getById(apiPathEntity.getUserRoleId());
         //数据库无此角色 抛出异常
@@ -71,32 +68,40 @@ public class DataServiceImpl implements DataService {
             String token = queryToken(userRoleEntity);
             //替换占位符 为 token
             apiPathEntity.setPrivateHeader(apiPathEntity.getPrivateHeader().replace("#{token}", token));
+            //如果有传参body 以传参为准 如没有使用默认参数
+            apiPathEntity.setBody(StrUtil.isEmpty(dto.getParams()) || JSONUtil.parseObj(dto.getParams()).isEmpty() ? apiPathEntity.getBody() : dto.getParams());
+            //请求返回结果
             String body = apiPathEntity.getRequestType().equals(0) ? HttpUtil.get(userRoleEntity, timeOut, apiPathEntity) : HttpUtil.post(userRoleEntity, timeOut, apiPathEntity);
-            String result = JsonPath.read(body, apiPathEntity.getJsonPath()).toString();
-            JSONArray excludes = JSONUtil.parseArray(apiPathEntity.getExclude());
-            //判断返回数据类型
-            if (JSONUtil.isTypeJSONObject(result)) {
-                JSONObject jsonObject = JSONUtil.parseObj(result);
-                HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
-                if (!jsonObject.isEmpty()) {
-                    //拦截需要的key
-                    excludes.stream().map(String::valueOf).forEach(t -> hashMap.put(t, jsonObject.get(t)));
-                }
-                return Result.OK(hashMap);
-            } else if (JSONUtil.isTypeJSONArray(result)) {
-                JSONArray jsonArray = JSONUtil.parseArray(result);
-                ArrayList<HashMap<String, Object>> hashMaps = new ArrayList<>(jsonArray.size());
-                //拦截需要的key
-                jsonArray.stream().map(JSONObject::new).forEach(json -> {
+            //根据jsonPath 得到想要的数据集 初步处理
+            String result = StrUtil.isEmpty(apiPathEntity.getJsonPath()) ? body : JsonPath.read(body, apiPathEntity.getJsonPath()).toString();
+            //判断是否有需要拦截的字段
+            JSONArray excludes = StrUtil.isEmpty(apiPathEntity.getExclude()) ? null : JSONUtil.parseArray(apiPathEntity.getExclude());
+            //判断返回数据类型 拦截字段为空直接返回
+            if (excludes != null && excludes.size() > 0) {
+                if (JSONUtil.isTypeJSONObject(result)) {
+                    JSONObject jsonObject = JSONUtil.parseObj(result);
                     HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
-                    excludes.stream().map(String::valueOf).forEach(t -> hashMap.put(t, json.get(t)));
-                    hashMaps.add(hashMap);
-                });
-                return Result.OK(hashMaps);
+                    if (!jsonObject.isEmpty()) {
+                        //拦截需要的key
+                        excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, jsonObject.get(t)));
+                    }
+                    return Result.OK(hashMap);
+                } else if (JSONUtil.isTypeJSONArray(result)) {
+                    JSONArray jsonArray = JSONUtil.parseArray(result);
+                    ArrayList<HashMap<String, Object>> hashMaps = new ArrayList<>(jsonArray.size());
+                    //拦截需要的key
+                    jsonArray.parallelStream().map(JSONObject::new).forEach(json -> {
+                        HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
+                        excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, json.get(t)));
+                        hashMaps.add(hashMap);
+                    });
+                    return Result.OK(hashMaps);
+                } else {
+                    return Result.OK(result);
+                }
             } else {
-                return Result.OK(result);
+                return Result.OK(JSONUtil.parse(result));
             }
-
         } catch (DataException e) {
             return Result.ERROR(e.getMessage());
         } catch (Exception e) {
