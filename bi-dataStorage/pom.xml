@@ -18,6 +18,23 @@
     </modules>
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.yun</groupId>
+                <artifactId>bi-dataStorage-dao</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yun</groupId>
+                <artifactId>bi-dataStorage-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>

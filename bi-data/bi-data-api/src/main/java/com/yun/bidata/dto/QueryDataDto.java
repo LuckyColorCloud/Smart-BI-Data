@@ -1,4 +1,4 @@
-package com.yun.bidata.api.dto;
+package com.yun.bidata.dto;
 
 import lombok.Data;
 

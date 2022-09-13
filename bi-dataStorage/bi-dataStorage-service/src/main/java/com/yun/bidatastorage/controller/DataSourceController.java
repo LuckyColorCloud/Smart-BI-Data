@@ -3,8 +3,8 @@ package com.yun.bidatastorage.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidataconnmon.vo.Result;
-import com.yun.bidatastorage.entity.DatasourceEntity;
-import com.yun.bidatastorage.service.DatasourceService;
+import com.yun.bidatastorage.entity.DataSourceEntity;
+import com.yun.bidatastorage.service.DataSourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/datasource")
 @Api(tags = "查询数据源相关接口")
-public class DatasourceController {
+public class DataSourceController {
 
     @Autowired
-    private DatasourceService datasourceService;
+    private DataSourceService dataSourceService;
 
     /**
      * 列表
@@ -38,10 +38,10 @@ public class DatasourceController {
             @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
     })
     @ApiOperation("查询列表")
-    public Result<Page<DatasourceEntity>> list(@Param("pageNo") int pageNo,
+    public Result<Page<DataSourceEntity>> list(@Param("pageNo") int pageNo,
                                                @Param("pageSize") int pageSize) {
-        Page<DatasourceEntity> datasourceEntityPage = new Page<>(pageNo, pageSize);
-        Page<DatasourceEntity> page = datasourceService.page(datasourceEntityPage, new QueryWrapper<DatasourceEntity>().lambda().orderByDesc(DatasourceEntity::getCreatedTime));
+        Page<DataSourceEntity> DataSourceEntityPage = new Page<>(pageNo, pageSize);
+        Page<DataSourceEntity> page = dataSourceService.page(DataSourceEntityPage, new QueryWrapper<DataSourceEntity>().lambda().orderByDesc(DataSourceEntity::getCreatedTime));
         return Result.OK(page);
     }
 
@@ -51,8 +51,8 @@ public class DatasourceController {
      */
     @PostMapping("/save")
     @ApiOperation("保存数据源")
-    public Result<String> save(@RequestBody DatasourceEntity datasource) {
-        datasourceService.save(datasource);
+    public Result<String> save(@RequestBody DataSourceEntity datasource) {
+        dataSourceService.save(datasource);
         return Result.OK();
     }
 
@@ -61,8 +61,8 @@ public class DatasourceController {
      */
     @PostMapping("/update")
     @ApiOperation("修改数据源")
-    public Result<String> update(@RequestBody DatasourceEntity datasource) {
-        datasourceService.updateById(datasource);
+    public Result<String> update(@RequestBody DataSourceEntity datasource) {
+        dataSourceService.updateById(datasource);
         return Result.OK();
     }
 
@@ -72,8 +72,8 @@ public class DatasourceController {
     @GetMapping("/info/{id}")
     @ApiOperation("查询数据源信息")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
-    public Result<DatasourceEntity> info(@PathVariable("id") Integer id) {
-        return Result.OK(datasourceService.getById(id));
+    public Result<DataSourceEntity> info(@PathVariable("id") Integer id) {
+        return Result.OK(dataSourceService.getById(id));
     }
 
     /**
@@ -83,7 +83,7 @@ public class DatasourceController {
     @ApiOperation("删除数据源信息")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
     public Result<String> delete(Integer id) {
-        datasourceService.removeById(id);
+        dataSourceService.removeById(id);
         return Result.OK();
     }
 

@@ -12,6 +12,20 @@
     <artifactId>bi-apiManage-service</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-apiManage-dao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-data-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-dataStorage-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -34,14 +48,5 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.yun</groupId>
-            <artifactId>bi-apiManage-dao</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.yun</groupId>
-            <artifactId>bi-data-api</artifactId>
-        </dependency>
-
     </dependencies>
 </project>

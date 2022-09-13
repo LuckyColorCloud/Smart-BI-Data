@@ -1,7 +1,7 @@
 package com.yun.bidata.controller.feign;
 
-import com.yun.bidata.api.api.DataApiFeign;
-import com.yun.bidata.api.dto.QueryDataDto;
+import com.yun.bidata.api.DataApiFeign;
+import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidata.service.DataService;
 import com.yun.bidataconnmon.vo.Result;
 import io.swagger.annotations.Api;

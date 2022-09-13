@@ -38,7 +38,7 @@ public class ApiManageEntity implements Serializable {
      */
     private String path;
     /**
-     * 第三方转发id
+     * 第三方转发id 或 sql id
      */
     private String apiId;
     /**

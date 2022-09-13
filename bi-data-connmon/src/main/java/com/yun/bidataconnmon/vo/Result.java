@@ -132,12 +132,19 @@ public class Result<T> implements Serializable {
 
     public enum ResultEnum {
         //定义返回值内容
+        // 0-100000 公共
+        // 100000  data
+        // 200000  apiManage
+        // 300000  dataStorage
         SUCCESS(200, "处理成功"),
         ERROR(500, "处理失败"),
-        DIRTY_DATA(200001, "存在脏数据"),
-        ROLE_TOKEN_DOES_NOT_EXIST(200002, "角色获取Token失败"),
-        NO_SUCH_DATA_PROCESSING_TYPE(100002, "无此数据处理类型!"),
-        INTERFACE_DOES_NOT_EXIST(100001, "接口不存在!");
+        ROLE_TOKEN_DOES_NOT_EXIST(100002, "角色获取Token失败"),
+        NO_SUCH_DATA_PROCESSING_TYPE(100001, "无此数据处理类型!"),
+        DATA_SOURCE_DOES_NOT_EXIST(300001, "数据源不存在!"),
+        DATA_SOURCE_TYPE_DOES_NOT_EXIST(300002, "数据源类型不存在!"),
+        FAILED_TO_CREATE_DATA_SOURCE_LINK(300002, "创建数据源链接失败!"),
+        PROHIBIT_SENSITIVE_OPERATIONS(300003, "禁止敏感操作!"),
+        INTERFACE_DOES_NOT_EXIST(50001, "接口不存在!");
         private Integer respCode;
         private String respDesc;
 

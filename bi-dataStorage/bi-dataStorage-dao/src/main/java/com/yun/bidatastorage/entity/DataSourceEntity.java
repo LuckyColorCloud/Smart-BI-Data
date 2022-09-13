@@ -18,7 +18,7 @@ import lombok.Data;
  */
 @Data
 @TableName("datasource")
-public class DatasourceEntity implements Serializable {
+public class DataSourceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

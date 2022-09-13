@@ -1,6 +1,6 @@
 package com.yun.bidata.service;
 
-import com.yun.bidata.api.dto.QueryDataDto;
+import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidataconnmon.vo.Result;
 
 /**

@@ -7,14 +7,17 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yun.biapimanage.entity.ApiManageEntity;
 import com.yun.biapimanage.service.ApiManageService;
-import com.yun.bidata.api.api.DataApiFeign;
-import com.yun.bidata.api.dto.QueryDataDto;
+import com.yun.bidata.api.DataApiFeign;
+import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatastorage.api.DataStorageApiFeign;
+import com.yun.bidatastorage.dto.QuerySourceDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +39,8 @@ public class ApiServlet extends HttpServlet {
     private ApiManageService apiManageService;
     @Autowired
     private DataApiFeign dataApiFeign;
+    @Autowired
+    private DataStorageApiFeign dataStorageApiFeign;
 
     /**
      * 拦截 post 请求 作为动态api接口输出 仅拦截 smart.api.context
@@ -72,8 +77,20 @@ public class ApiServlet extends HttpServlet {
         }
     }
 
-    public Result<Object> process(String path, HttpServletRequest request, HttpServletResponse response) {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
+    }
 
+    /**
+     * 处理过程
+     *
+     * @param path     路径
+     * @param request  请求
+     * @param response 返回
+     * @return
+     */
+    public Result<Object> process(String path, HttpServletRequest request, HttpServletResponse response) {
         // 校验接口是否存在
         ApiManageEntity apiManageEntity = apiManageService.getBaseMapper().selectOne(new QueryWrapper<ApiManageEntity>().lambda().eq(ApiManageEntity::getPath, path));
         if (apiManageEntity == null) {
@@ -103,17 +120,21 @@ public class ApiServlet extends HttpServlet {
      * @return
      */
     private Result<Object> getData(ApiManageEntity apiManageEntity, JSONObject params) {
-        QueryDataDto queryDataDto = new QueryDataDto();
-        queryDataDto.setParams(params.isEmpty() ? null : JSONUtil.toJsonStr(params));
-        queryDataDto.setApiId(apiManageEntity.getApiId());
         Result<Object> result;
         //0.接口转发1.查询数据库 2.静态数据直接返回result
         switch (apiManageEntity.getType()) {
             case 0:
+                QueryDataDto queryDataDto = new QueryDataDto();
+                queryDataDto.setParams(params.isEmpty() ? null : JSONUtil.toJsonStr(params));
+                queryDataDto.setApiId(apiManageEntity.getApiId());
                 result = dataApiFeign.getData(queryDataDto);
                 break;
             case 1:
-                result = null;
+                //TODO 缺少表  已完成大部分 业务逻辑
+                QuerySourceDto querySourceDto = new QuerySourceDto();
+//                querySourceDto.setSourceId();
+//                querySourceDto.setSql();
+                result = dataStorageApiFeign.querySql(querySourceDto);
                 break;
             case 2:
                 result = Result.OK((Object) apiManageEntity.getResult());

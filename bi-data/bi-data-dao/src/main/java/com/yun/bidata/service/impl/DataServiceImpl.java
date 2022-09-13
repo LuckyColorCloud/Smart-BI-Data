@@ -5,7 +5,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.jayway.jsonpath.JsonPath;
-import com.yun.bidata.api.dto.QueryDataDto;
+import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidata.entity.ApiPathEntity;
 import com.yun.bidata.entity.UserRoleEntity;
 import com.yun.bidata.exception.DataException;
