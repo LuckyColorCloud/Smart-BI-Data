@@ -55,6 +55,8 @@ public class ApiServlet extends HttpServlet {
         Result result = new Result();
         try {
             out = resp.getWriter();
+            resp.setContentType("application/json;charset=UTF-8");
+            resp.setCharacterEncoding("UTF-8");
             result = process(servletPath, req, resp);
             resp.setStatus(result.getCode());
             out.append(JSONUtil.toJsonStr(result));

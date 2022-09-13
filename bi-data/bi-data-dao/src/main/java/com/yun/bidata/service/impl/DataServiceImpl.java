@@ -40,7 +40,7 @@ public class DataServiceImpl implements DataService {
     @Resource
     RedisTemplate<String, Object> redisTemplate;
 
-    @Value("smart.data.timeOut:3000")
+    @Value("${smart.data.timeOut:3000}")
     private Integer timeOut;
 
     /**

@@ -3,10 +3,8 @@ package com.yun.biapimanage.apiFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
+import java.io.IOException;
 
 /**
  * @author Yun
@@ -21,7 +19,9 @@ public class ApiAuthFilter implements Filter {
      * @param filterChain
      */
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
-
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        servletResponse.setCharacterEncoding("UTF-8");
+        servletResponse.setContentType("application/json;charset=UTF-8");
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 }
