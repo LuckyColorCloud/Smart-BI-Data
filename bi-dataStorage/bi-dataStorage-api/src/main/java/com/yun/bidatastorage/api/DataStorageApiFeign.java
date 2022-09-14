@@ -6,9 +6,7 @@ package com.yun.bidatastorage.api;
  * @author Yun
  */
 
-import com.sun.xml.internal.bind.v2.TODO;
 import com.yun.bidataconnmon.vo.Result;
-import com.yun.bidatastorage.dto.QuerySourceDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +39,6 @@ public interface DataStorageApiFeign {
      * @return 保存结果
      */
     @RequestMapping(value = "/querySql", method = RequestMethod.POST)
-    Result<Object> querySql(@RequestBody QuerySourceDto querySourceDto);
+    Result<Object> querySql(@RequestBody Integer sqlId);
 
 }

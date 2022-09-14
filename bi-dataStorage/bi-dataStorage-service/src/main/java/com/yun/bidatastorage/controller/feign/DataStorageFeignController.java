@@ -6,10 +6,11 @@ import cn.hutool.db.sql.SqlExecutor;
 import com.yun.bidataconnmon.util.Regular;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
-import com.yun.bidatastorage.dto.QuerySourceDto;
 import com.yun.bidatastorage.entity.DataSourceEntity;
+import com.yun.bidatastorage.entity.SqlScriptEntity;
 import com.yun.bidatastorage.enums.DataSourceFactory;
 import com.yun.bidatastorage.service.DataSourceService;
+import com.yun.bidatastorage.service.SqlScriptService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ import java.util.regex.Matcher;
 public class DataStorageFeignController implements DataStorageApiFeign {
     @Autowired
     DataSourceService dataSourceService;
-
+    @Autowired
+    SqlScriptService sqlScriptService;
 
     @Override
     public Result<Object> querySourceList() {
@@ -44,8 +46,13 @@ public class DataStorageFeignController implements DataStorageApiFeign {
     }
 
     @Override
-    public Result<Object> querySql(QuerySourceDto querySourceDto) {
-        DataSourceEntity dataSourceEntity = dataSourceService.getById(querySourceDto.getSourceId());
+    public Result<Object> querySql(Integer sqlId) {
+        SqlScriptEntity sqlScriptEntity = sqlScriptService.getById(sqlId);
+        //SQL 不存在 返回
+        if (sqlScriptEntity == null) {
+            return Result.ERROR(Result.ResultEnum.SCRIPT_DOES_NOT_EXIST);
+        }
+        DataSourceEntity dataSourceEntity = dataSourceService.getById(sqlScriptEntity.getSourceId());
         //数据源不存在 直接返回
         if (dataSourceEntity == null) {
             return Result.ERROR(Result.ResultEnum.DATA_SOURCE_DOES_NOT_EXIST);
@@ -62,17 +69,19 @@ public class DataStorageFeignController implements DataStorageApiFeign {
             //获取链接
             connection = dataSourceFactory.creationConnection(dataSourceEntity);
             //进行匹配 SQL 是否有敏感操作 避免数据问题
-            Matcher matcher = Regular.PATTERN_SENSITIVE_SQL.matcher(querySourceDto.getSql());
+            Matcher matcher = Regular.PATTERN_SENSITIVE_SQL.matcher(sqlScriptEntity.getSql());
             if (matcher.find()) {
                 return Result.ERROR(Result.ResultEnum.PROHIBIT_SENSITIVE_OPERATIONS);
             }
             //执行SQL 查询结果
-            List<Entity> query = SqlExecutor.query(connection, querySourceDto.getSql(), new EntityListHandler());
+            List<Entity> query = SqlExecutor.query(connection, sqlScriptEntity.getSql(), new EntityListHandler());
             return Result.OK(query);
         } catch (IllegalArgumentException illegalArgumentException) {
             return Result.ERROR(Result.ResultEnum.DATA_SOURCE_TYPE_DOES_NOT_EXIST);
         } catch (SQLException sqlException) {
             return Result.ERROR(Result.ResultEnum.FAILED_TO_CREATE_DATA_SOURCE_LINK);
+        } catch (Exception e) {
+            return Result.ERROR(Result.ResultEnum.UNKNOWN_EXCEPTION);
         } finally {
             if (connection != null) {
                 try {

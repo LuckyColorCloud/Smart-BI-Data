@@ -1,4 +1,4 @@
-package com.yun.biapimanage.entity;
+package com.yun.bidatastorage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,15 +9,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * api管理
+ * 查询数据库
  *
  * @author Yun
  * @email 2289128964@qq.com
- * @date 2022-08-30 10:27:44
+ * @date 2022-09-14 09:18:16
  */
 @Data
-@TableName("api_manage")
-public class ApiManageEntity implements Serializable {
+@TableName("sql_script")
+public class SqlScriptEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -34,27 +34,12 @@ public class ApiManageEntity implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
     /**
-     * 请求路径
+     * 数据库语句
      */
-    private String path;
+    private String sql;
     /**
-     * 第三方转发id 或 sql id
+     * 数据源
      */
-    private Integer apiId;
-    /**
-     * 请求参数
-     */
-    private String json;
-    /**
-     * 静态数据
-     */
-    private String result;
-    /**
-     * 是否鉴权
-     */
-    private boolean auth;
-    /**
-     * 接口类型 0.接口转发1.查询数据库 2.静态数据直接返回result
-     */
-    private Integer type;
+    private Integer sourceId;
+
 }

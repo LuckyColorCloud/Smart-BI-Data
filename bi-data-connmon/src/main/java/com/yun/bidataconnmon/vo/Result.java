@@ -142,8 +142,10 @@ public class Result<T> implements Serializable {
         NO_SUCH_DATA_PROCESSING_TYPE(100001, "无此数据处理类型!"),
         DATA_SOURCE_DOES_NOT_EXIST(300001, "数据源不存在!"),
         DATA_SOURCE_TYPE_DOES_NOT_EXIST(300002, "数据源类型不存在!"),
-        FAILED_TO_CREATE_DATA_SOURCE_LINK(300002, "创建数据源链接失败!"),
-        PROHIBIT_SENSITIVE_OPERATIONS(300003, "禁止敏感操作!"),
+        FAILED_TO_CREATE_DATA_SOURCE_LINK(300003, "创建数据源链接失败!"),
+        PROHIBIT_SENSITIVE_OPERATIONS(300004, "禁止敏感操作!"),
+        SCRIPT_DOES_NOT_EXIST(300005, "SQL 脚本不存在!"),
+        UNKNOWN_EXCEPTION(50000, "未知异常!"),
         INTERFACE_DOES_NOT_EXIST(50001, "接口不存在!");
         private Integer respCode;
         private String respDesc;

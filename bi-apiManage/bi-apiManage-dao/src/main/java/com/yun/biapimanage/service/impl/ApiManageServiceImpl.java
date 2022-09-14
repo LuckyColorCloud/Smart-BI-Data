@@ -7,6 +7,9 @@ import com.yun.biapimanage.service.ApiManageService;
 import org.springframework.stereotype.Service;
 
 
+/**
+ * @author Yun
+ */
 @Service("apiManageService")
 public class ApiManageServiceImpl extends ServiceImpl<ApiManageDao, ApiManageEntity> implements ApiManageService {
 

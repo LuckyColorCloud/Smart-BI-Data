@@ -12,7 +12,6 @@ import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
-import com.yun.bidatastorage.dto.QuerySourceDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -72,8 +71,9 @@ public class ApiServlet extends HttpServlet {
             log.error(e.toString(), e);
             throw e;
         } finally {
-            if (out != null)
+            if (out != null) {
                 out.close();
+            }
         }
     }
 
@@ -130,11 +130,7 @@ public class ApiServlet extends HttpServlet {
                 result = dataApiFeign.getData(queryDataDto);
                 break;
             case 1:
-                //TODO 缺少表  已完成大部分 业务逻辑
-                QuerySourceDto querySourceDto = new QuerySourceDto();
-//                querySourceDto.setSourceId();
-//                querySourceDto.setSql();
-                result = dataStorageApiFeign.querySql(querySourceDto);
+                result = dataStorageApiFeign.querySql(apiManageEntity.getApiId());
                 break;
             case 2:
                 result = Result.OK((Object) apiManageEntity.getResult());
