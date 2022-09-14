@@ -63,10 +63,6 @@ public class  ApiPathEntity implements Serializable {
      */
     private Integer requestType;
     /**
-     * 是否落库 空不储存
-     */
-    private Integer storageFieldId;
-    /**
      * 保存 需要的key  listJson
      */
     private String exclude;

@@ -7,6 +7,7 @@ package com.yun.bidatastorage.api;
  */
 
 import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatastorage.dto.SaveDataDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public interface DataStorageApiFeign {
      * @return 保存结果
      */
     @RequestMapping(value = "/saveData", method = RequestMethod.POST)
-    Result<Object> saveData();
+    Result<Object> saveData(@RequestBody SaveDataDto saveDataDto);
      /**
      * 查询数据库
      * @return 保存结果

@@ -145,6 +145,7 @@ public class Result<T> implements Serializable {
         FAILED_TO_CREATE_DATA_SOURCE_LINK(300003, "创建数据源链接失败!"),
         PROHIBIT_SENSITIVE_OPERATIONS(300004, "禁止敏感操作!"),
         SCRIPT_DOES_NOT_EXIST(300005, "SQL 脚本不存在!"),
+        STORAGE_TABLE_DOES_NOT_EXIST(300006, "SQL 存储表不存在!"),
         UNKNOWN_EXCEPTION(50000, "未知异常!"),
         INTERFACE_DOES_NOT_EXIST(50001, "接口不存在!");
         private Integer respCode;
