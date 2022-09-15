@@ -1,6 +1,5 @@
 package com.yun.bidatastorage.controller.feign;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.db.Entity;
 import cn.hutool.db.handler.EntityListHandler;
@@ -22,15 +21,12 @@ import com.yun.bidatastorage.service.StorageTableService;
 import com.yun.bidatastorage.util.SqlUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
