@@ -8,4 +8,5 @@ public interface CommonConstant {
     String APP_JSON = "application/json";
     String CACHE_TOKEN_HEAD = "CACHE_TOKEN_HEAD";
     String TEXT = "Text";
+    String UTF_8 = "UTF-8";
 }

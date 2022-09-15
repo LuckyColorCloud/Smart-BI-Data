@@ -29,14 +29,18 @@ public interface DataStorageApiFeign {
      */
     @RequestMapping(value = "/querySourceList", method = RequestMethod.POST)
     Result<Object> querySourceList();
+
     /**
      * 保存数据到本地
+     *
      * @return 保存结果
      */
     @RequestMapping(value = "/saveData", method = RequestMethod.POST)
     Result<Object> saveData(@RequestBody SaveDataDto saveDataDto);
-     /**
+
+    /**
      * 查询数据库
+     *
      * @return 保存结果
      */
     @RequestMapping(value = "/querySql", method = RequestMethod.POST)

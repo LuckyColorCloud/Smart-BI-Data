@@ -7,6 +7,7 @@ import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.util.Regular;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
@@ -66,7 +67,7 @@ public class DataStorageFeignController implements DataStorageApiFeign {
         try (Connection connection = getConnection(dataSourceEntity)) {
             boolean b = SqlUtil.doesTheTableExist(storageTable.getSaveName(), connection);
             //解压缩 还原成string
-            String body = ZipUtil.unGzip(saveDataDto.getContext(), "UTF-8");
+            String body = ZipUtil.unGzip(saveDataDto.getContext(), CommonConstant.UTF_8);
             //转换成list
             JSONArray jsonArray = JSONUtil.parseArray(body);
             //判断需要保存的 list

@@ -13,13 +13,17 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-data-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.yun</groupId>
-            <artifactId>bi-data-api</artifactId>
-            <version>${revision}</version>
+            <artifactId>bi-dataStorage-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>

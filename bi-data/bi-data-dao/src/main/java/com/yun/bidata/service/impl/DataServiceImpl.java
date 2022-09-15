@@ -16,6 +16,8 @@ import com.yun.bidata.service.UserRoleService;
 import com.yun.bidata.util.HttpUtil;
 import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatastorage.api.DataStorageApiFeign;
+import com.yun.bidatastorage.dto.SaveDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -38,6 +39,8 @@ public class DataServiceImpl implements DataService {
     ApiPathService apiPathService;
     @Autowired
     UserRoleService userRoleService;
+    @Autowired
+    DataStorageApiFeign dataStorageApiFeign;
 
     @Resource
     RedisTemplate<String, Object> redisTemplate;
@@ -64,7 +67,6 @@ public class DataServiceImpl implements DataService {
         if (userRoleEntity == null) {
             return Result.ERROR(Result.ResultEnum.ROLE_TOKEN_DOES_NOT_EXIST);
         }
-        //TODO 存储还未做 需要远程调用形式 调用 dataStorage
         try {
             //根据角色获取Token
             String token = queryToken(userRoleEntity);
@@ -87,6 +89,7 @@ public class DataServiceImpl implements DataService {
                         //拦截需要的key
                         excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, jsonObject.get(t)));
                     }
+                    saveData(JSONUtil.toJsonStr(hashMap), apiPathEntity.getStorageTableId());
                     return Result.OK(hashMap);
                 } else if (JSONUtil.isTypeJSONArray(result)) {
                     JSONArray jsonArray = JSONUtil.parseArray(result);
@@ -97,8 +100,10 @@ public class DataServiceImpl implements DataService {
                         excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, json.get(t)));
                         hashMaps.add(hashMap);
                     });
+                    saveData(JSONUtil.toJsonStr(hashMaps), apiPathEntity.getStorageTableId());
                     return Result.OK(hashMaps);
                 } else {
+                    //非JSON 情况无法落库!!! 或者人工选择存到redis等
                     return Result.OK(result);
                 }
             } else {
@@ -151,4 +156,12 @@ public class DataServiceImpl implements DataService {
         return result;
     }
 
+    private Result<Object> saveData(String content, Integer storageId) {
+        SaveDataDto saveDataDto = new SaveDataDto();
+        saveDataDto.setCharset(CommonConstant.UTF_8);
+        saveDataDto.setContext(ZipUtil.gzip(content, CommonConstant.UTF_8));
+        saveDataDto.setStorageId(storageId);
+        Result<Object> result = dataStorageApiFeign.saveData(saveDataDto);
+        return result;
+    }
 }
