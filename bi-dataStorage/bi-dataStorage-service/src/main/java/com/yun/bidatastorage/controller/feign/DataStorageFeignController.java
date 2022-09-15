@@ -1,5 +1,6 @@
 package com.yun.bidatastorage.controller.feign;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.db.Entity;
 import cn.hutool.db.handler.EntityListHandler;
@@ -31,7 +32,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 /**
  * @author Yun
@@ -53,7 +56,6 @@ public class DataStorageFeignController implements DataStorageApiFeign {
         return null;
     }
 
-    private static final String SQL = "INSERT IGNORE INTO ${table}  ${key} VALUES ${value}";
 
     @Override
     public Result<Object> saveData(SaveDataDto saveDataDto) {
@@ -67,36 +69,61 @@ public class DataStorageFeignController implements DataStorageApiFeign {
         }
         try (Connection connection = getConnection(dataSourceEntity)) {
             boolean b = SqlUtil.doesTheTableExist(storageTable.getSaveName(), connection);
+            //解压缩 还原成string
             String body = ZipUtil.unGzip(saveDataDto.getContext(), "UTF-8");
+            //转换成list
             JSONArray jsonArray = JSONUtil.parseArray(body);
-            // 1.追加2.全量3.主键
+            //判断需要保存的 list
+            JSONArray storageTableArray = JSONUtil.parseArray(storageTable.getStorageField().isEmpty() ? "[]" : storageTable.getStorageField());
+            //进行过滤保存的list
+            jsonArray = filter(jsonArray, storageTableArray);
+            // 1.追加 2.全量 3.主键
             switch (storageTable.getSaveType()) {
                 case 1:
                     if (b) {
                         if (jsonArray.size() > 0) {
-                            String field = StringUtils.join(jsonArray.getJSONObject(0).keySet().toArray(), ",");
-                            String sql = SQL.replace("${table}", storageTable.getSaveName()).replace("${key}", "(" + field + ")");
-                            StringBuffer value = new StringBuffer();
-                            for (int i = 0; i < jsonArray.size(); i++) {
-                                ArrayList<Object> strings = new ArrayList<Object>(jsonArray.getJSONObject(i).values());
-                                value.append("(");
-                                for (int j = 0; j < strings.size(); j++) {
-                                    value.append("'").append(strings.get(j)).append("'").append(j + 1 == strings.size() ? "" : ",");
-                                }
-                                value.append(")").append(i + 1 != jsonArray.size() ? "," : "");
-                            }
-                            String replace = sql.replace("${value}", value.toString());
+                            SqlUtil.insetTable(storageTable.getSaveName(), connection, jsonArray);
+                        } else {
+                            return Result.ERROR(Result.ResultEnum.DATA_NOT_OBTAINED);
+                        }
+                    } else {
+                        if (SqlUtil.createTable(storageTable.getSaveName(), connection, jsonArray.getJSONObject(0))) {
+                            SqlUtil.insetTable(storageTable.getSaveName(), connection, jsonArray);
+                        } else {
+                            return Result.ERROR(Result.ResultEnum.FAILED_TO_CREATE_TABLE);
                         }
                     }
                     break;
                 case 2:
-
+                    if (b) {
+                        if (jsonArray.size() > 0 && SqlUtil.truncateTable(storageTable.getSaveName(), connection)) {
+                            SqlUtil.insetTable(storageTable.getSaveName(), connection, jsonArray);
+                        } else {
+                            return Result.ERROR(Result.ResultEnum.FAILED_TO_CLEAR_TABLE_DATA);
+                        }
+                    } else {
+                        if (SqlUtil.createTable(storageTable.getSaveName(), connection, jsonArray.getJSONObject(0)) && SqlUtil.truncateTable(storageTable.getSaveName(), connection)) {
+                            SqlUtil.insetTable(storageTable.getSaveName(), connection, jsonArray);
+                        } else {
+                            return Result.ERROR(Result.ResultEnum.FAILED_TO_CREATE_TABLE);
+                        }
+                    }
                     break;
                 case 3:
+                    if (b) {
+                        if (jsonArray.size() > 0) {
+                            SqlUtil.insetTableIgnore(storageTable.getSaveName(), connection, jsonArray);
+                        } else {
+                            return Result.ERROR(Result.ResultEnum.FAILED_TO_CLEAR_TABLE_DATA);
+                        }
+                    } else {
+                        if (SqlUtil.createTable(storageTable.getSaveName(), connection, jsonArray.getJSONObject(0), storageTable.getPrimaryKey())) {
+                            SqlUtil.insetTableIgnore(storageTable.getSaveName(), connection, jsonArray);
+                        }
+                    }
                     break;
                 default:
-                    break;
-
+                    return Result.ERROR(Result.ResultEnum.NO_SUCH_DATA_PROCESSING_TYPE);
             }
         } catch (SQLException e) {
             return Result.ERROR(Result.ResultEnum.FAILED_TO_CREATE_DATA_SOURCE_LINK);
@@ -157,5 +184,28 @@ public class DataStorageFeignController implements DataStorageApiFeign {
         }
         //获取链接
         return dataSourceFactory.creationConnection(dataSourceEntity);
+    }
+
+    /**
+     * 拦截需要保存的字段
+     *
+     * @param jsonArray 初始数据
+     * @param filter    需要的字段
+     * @return 过滤结构
+     */
+    private JSONArray filter(JSONArray jsonArray, JSONArray filter) {
+        if (jsonArray.isEmpty() || filter.isEmpty()) {
+            return jsonArray;
+        }
+        JSONArray result = new JSONArray();
+        Set<String> sets = filter.stream().map(String::valueOf).collect(Collectors.toSet());
+        jsonArray.parallelStream().map(JSONObject::new).forEach(t -> {
+            JSONObject jsonObject = new JSONObject();
+            sets.parallelStream().forEach(t1 -> {
+                jsonObject.set(t1, t.get(t1));
+            });
+            result.put(jsonObject);
+        });
+        return result;
     }
 }

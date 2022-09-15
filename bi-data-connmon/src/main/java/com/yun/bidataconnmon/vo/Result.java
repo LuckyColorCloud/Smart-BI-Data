@@ -146,6 +146,9 @@ public class Result<T> implements Serializable {
         PROHIBIT_SENSITIVE_OPERATIONS(300004, "禁止敏感操作!"),
         SCRIPT_DOES_NOT_EXIST(300005, "SQL 脚本不存在!"),
         STORAGE_TABLE_DOES_NOT_EXIST(300006, "SQL 存储表不存在!"),
+        DATA_NOT_OBTAINED(300007, "未获取到数据!"),
+        FAILED_TO_CLEAR_TABLE_DATA(300007, "清除表数据失败!"),
+        FAILED_TO_CREATE_TABLE(300007, "创建表失败!"),
         UNKNOWN_EXCEPTION(50000, "未知异常!"),
         INTERFACE_DOES_NOT_EXIST(50001, "接口不存在!");
         private Integer respCode;
