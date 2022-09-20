@@ -18,6 +18,7 @@ import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
 import com.yun.bidatastorage.dto.SaveDataDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,6 +34,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Yun
  */
+@Slf4j
 @Service("dataServiceImpl")
 public class DataServiceImpl implements DataService {
     @Autowired
@@ -89,7 +91,11 @@ public class DataServiceImpl implements DataService {
                         //拦截需要的key
                         excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, jsonObject.get(t)));
                     }
-                    saveData(JSONUtil.toJsonStr(hashMap), apiPathEntity.getStorageTableId());
+                    //远程调用存储数据
+                    Result<Object> saveDataResult = saveData(JSONUtil.toJsonStr(hashMap), apiPathEntity.getStorageTableId());
+                    if (!saveDataResult.isSuccess()) {
+                        log.error("bi-dataStorage存储数据失败:{}", saveDataResult);
+                    }
                     return Result.OK(hashMap);
                 } else if (JSONUtil.isTypeJSONArray(result)) {
                     JSONArray jsonArray = JSONUtil.parseArray(result);
@@ -100,10 +106,14 @@ public class DataServiceImpl implements DataService {
                         excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, json.get(t)));
                         hashMaps.add(hashMap);
                     });
-                    saveData(JSONUtil.toJsonStr(hashMaps), apiPathEntity.getStorageTableId());
+                    //远程调用存储数据
+                    Result<Object> saveDataResult = saveData(JSONUtil.toJsonStr(hashMaps), apiPathEntity.getStorageTableId());
+                    if (!saveDataResult.isSuccess()) {
+                        log.error("bi-dataStorage存储数据失败:{}", saveDataResult);
+                    }
                     return Result.OK(hashMaps);
                 } else {
-                    //非JSON 情况无法落库!!! 或者人工选择存到redis等
+                    //非JSON 情况无法落库!!! 可以由人工扩展选择存到redis等
                     return Result.OK(result);
                 }
             } else {
@@ -114,6 +124,17 @@ public class DataServiceImpl implements DataService {
         } catch (Exception e) {
             return Result.ERROR(Result.ResultEnum.ROLE_TOKEN_DOES_NOT_EXIST);
         }
+    }
+
+    /**
+     * 格式转换
+     * @param data 数据
+     * @param type 转换类型
+     * @return 结果数据
+     */
+    @Override
+    public Result<Object> formatConversion(Object data, Integer type) {
+        return null;
     }
 
     /**
@@ -156,6 +177,14 @@ public class DataServiceImpl implements DataService {
         return result;
     }
 
+    /**
+     * 远程调用存储数据
+     *
+     * @param content   压缩后的存储数据
+     * @param storageId 存储id
+     * @return 存储结果
+     */
+    //TODO 大数据量情况下 会有问题
     private Result<Object> saveData(String content, Integer storageId) {
         SaveDataDto saveDataDto = new SaveDataDto();
         saveDataDto.setCharset(CommonConstant.UTF_8);
