@@ -1,0 +1,69 @@
+server:
+  port: 8607
+spring:
+ cloud:
+  gateway:
+      globalcors:
+        # gateway 跨域设置
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - OPTIONS
+      # 设置与服务注册发现组件结合，这样可以采用服务名的路由策略
+      discovery:
+        locator:
+          enabled: true
+      # # 配置路由规则
+      routes:
+        - id: bi-data
+          # 采用 LoadBalanceClient 方式请求，以 lb:// 开头，后面的是注册在 Nacos 上的服务名
+          uri: lb://bi-data
+          # Predicate 翻译过来是“谓词”的意思，必须，主要作用是匹配用户的请求，有很多种用法
+          predicates:
+            # 路径匹配，以 api 开头，直接配置是不生效的，看 filters 配置
+            - Path=/bi-data/**
+          filters:
+            # 前缀过滤，默认配置下，我们的请求路径是 http://localhost:8888/business-oauth2/** 这时会路由到指定的服务
+            # 此处配置去掉 1 个路径前缀，再配置上面的 Path=/api/**，就能按照 http://localhost:8888/api/** 的方式访问了
+            - StripPrefix=1
+        # 采用自定义路由 ID（有固定用法，不同的 id 有不同的功能，详见：https://cloud.spring.io/spring-cloud-gateway/2.0.x/single/spring-cloud-gateway.html#gateway-route-filters）
+        - id: bi-apiManage
+          # 采用 LoadBalanceClient 方式请求，以 lb:// 开头，后面的是注册在 Nacos 上的服务名
+          uri: lb://bi-apiManage
+          # Predicate 翻译过来是“谓词”的意思，必须，主要作用是匹配用户的请求，有很多种用法
+          predicates:
+            # 路径匹配，以 api 开头，直接配置是不生效的，看 filters 配置
+            - Path=/bi-apiManage/**
+          filters:
+            # 前缀过滤，默认配置下，我们的请求路径是 http://localhost:8888/business-oauth2/** 这时会路由到指定的服务
+            # 此处配置去掉 1 个路径前缀，再配置上面的 Path=/api/**，就能按照 http://localhost:8888/api/** 的方式访问了
+            - StripPrefix=1
+        - id: bi-dataStorage
+          # 采用 LoadBalanceClient 方式请求，以 lb:// 开头，后面的是注册在 Nacos 上的服务名
+          uri: lb://bi-dataStorage
+          # Predicate 翻译过来是“谓词”的意思，必须，主要作用是匹配用户的请求，有很多种用法
+          predicates:
+            # 路径匹配，以 api 开头，直接配置是不生效的，看 filters 配置
+            - Path=/bi-dataStorage/**
+          filters:
+            # 前缀过滤，默认配置下，我们的请求路径是 http://localhost:8888/business-oauth2/** 这时会路由到指定的服务
+            # 此处配置去掉 1 个路径前缀，再配置上面的 Path=/api/**，就能按照 http://localhost:8888/api/** 的方式访问了
+            - StripPrefix=1
+        - id: bi-fileManage
+          # 采用 LoadBalanceClient 方式请求，以 lb:// 开头，后面的是注册在 Nacos 上的服务名
+          uri: lb://bi-fileManage
+          # Predicate 翻译过来是“谓词”的意思，必须，主要作用是匹配用户的请求，有很多种用法
+          predicates:
+            # 路径匹配，以 api 开头，直接配置是不生效的，看 filters 配置
+            - Path=/bi-fileManage/**
+          filters:
+            # 前缀过滤，默认配置下，我们的请求路径是 http://localhost:8888/business-oauth2/** 这时会路由到指定的服务
+            # 此处配置去掉 1 个路径前缀，再配置上面的 Path=/api/**，就能按照 http://localhost:8888/api/** 的方式访问了
+            - StripPrefix=1
+      
