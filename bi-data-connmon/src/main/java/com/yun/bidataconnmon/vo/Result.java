@@ -140,6 +140,7 @@ public class Result<T> implements Serializable {
         ERROR(500, "处理失败"),
         ROLE_TOKEN_DOES_NOT_EXIST(100002, "角色获取Token失败"),
         NO_SUCH_DATA_PROCESSING_TYPE(100001, "无此数据处理类型!"),
+        DATA_FORMAT_ERROR(100003, "数据格式错误!"),
         DATA_SOURCE_DOES_NOT_EXIST(300001, "数据源不存在!"),
         DATA_SOURCE_TYPE_DOES_NOT_EXIST(300002, "数据源类型不存在!"),
         FAILED_TO_CREATE_DATA_SOURCE_LINK(300003, "创建数据源链接失败!"),

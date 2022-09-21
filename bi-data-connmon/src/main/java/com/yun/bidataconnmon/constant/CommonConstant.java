@@ -15,4 +15,17 @@ public interface CommonConstant {
      * 数据转换系统字段
      */
     String JOIN = "join";
+    /**
+     * 父参数加入
+     */
+    String PARENT_PARAMETER = "ppr";
+    /**
+     * 名称
+     */
+    String NAME = "name";
+    /**
+     * jsonPath工具解析
+     */
+    String JSON_PATH = "jsonPath";
+    String KEY = "key";
 }
