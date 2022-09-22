@@ -51,7 +51,7 @@ params===>{"ppr":[{"key":"total","jsonPath":"$..total"}],"name":"name","data":"d
 接下来就是修改各个服务的
 namespace===>nacos的
 ```
-![namespace](/doc/png/nacosp.png)
+![namespace](/doc/png/namespace.png)
 ```
 右侧这一段长的像UUID的东西
 server-addr====>服务器地址 默认端口8848
