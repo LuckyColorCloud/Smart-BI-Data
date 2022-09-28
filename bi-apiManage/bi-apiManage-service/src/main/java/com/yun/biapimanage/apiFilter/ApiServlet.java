@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yun.biapimanage.entity.ApiManageEntity;
 import com.yun.biapimanage.service.ApiManageService;
 import com.yun.bidata.api.DataApiFeign;
+import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.vo.Result;
@@ -138,6 +139,18 @@ public class ApiServlet extends HttpServlet {
             default:
                 result = Result.ERROR(Result.ResultEnum.NO_SUCH_DATA_PROCESSING_TYPE);
                 break;
+        }
+        //判断是否有需要在次转换为特定格式
+        if (StrUtil.isNotEmpty(apiManageEntity.getParams()) && StrUtil.isNotEmpty(apiManageEntity.getChartType())) {
+            FormatDto formatDto = new FormatDto();
+            formatDto.setChartType(apiManageEntity.getChartType());
+            formatDto.setData(JSONUtil.toJsonStr(result.getResult()));
+            formatDto.setParams(apiManageEntity.getParams());
+            Result<Object> format = dataApiFeign.format(formatDto);
+            //判断转换是否成功
+            if (format.isSuccess()) {
+                return format;
+            }
         }
         return result;
     }

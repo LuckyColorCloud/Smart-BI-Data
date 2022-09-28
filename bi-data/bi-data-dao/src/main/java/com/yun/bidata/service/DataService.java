@@ -1,5 +1,6 @@
 package com.yun.bidata.service;
 
+import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidataconnmon.vo.Result;
 
@@ -20,9 +21,10 @@ public interface DataService {
 
     /**
      * 数据格式转换
-     * @param data 数据
-     * @param type 转换类型
+     * @param dto 数据
      * @return 转换结果
      */
-    Result<Object> formatConversion(Object data,Integer type);
+    Result<Object> formatConversion(FormatDto dto);
+
+
 }

@@ -57,4 +57,12 @@ public class ApiManageEntity implements Serializable {
      * 接口类型 0.接口转发1.查询数据库 2.静态数据直接返回result
      */
     private Integer type;
+    /**
+     * 图表类型
+     */
+    private String chartType;
+    /**
+     * 图表参数
+     */
+    private String params;
 }

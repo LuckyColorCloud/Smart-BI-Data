@@ -6,15 +6,18 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.jayway.jsonpath.JsonPath;
+import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidata.entity.ApiPathEntity;
 import com.yun.bidata.entity.UserRoleEntity;
+import com.yun.bidata.enums.FormatConversion;
 import com.yun.bidata.exception.DataException;
 import com.yun.bidata.service.ApiPathService;
 import com.yun.bidata.service.DataService;
 import com.yun.bidata.service.UserRoleService;
 import com.yun.bidata.util.HttpUtil;
 import com.yun.bidataconnmon.constant.CommonConstant;
+import com.yun.bidataconnmon.util.JavaFormat;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
 import com.yun.bidatastorage.dto.SaveDataDto;
@@ -128,13 +131,23 @@ public class DataServiceImpl implements DataService {
 
     /**
      * 格式转换
-     * @param data 数据
-     * @param type 转换类型
+     *
+     * @param dto 数据
      * @return 结果数据
      */
     @Override
-    public Result<Object> formatConversion(Object data, Integer type) {
-        return null;
+    public Result<Object> formatConversion(FormatDto dto) {
+        FormatConversion formatConversion;
+        try{
+            try {
+                formatConversion = FormatConversion.valueOf(dto.getChartType().toUpperCase());
+            } catch (IllegalArgumentException e) {
+                formatConversion = FormatConversion.valueOf(JavaFormat.javaToMysql(dto.getChartType()).toUpperCase());
+            }
+            return formatConversion.conversion(dto.getData(), dto.getParams());
+        }catch (Exception e) {
+            return Result.ERROR("");
+        }
     }
 
     /**

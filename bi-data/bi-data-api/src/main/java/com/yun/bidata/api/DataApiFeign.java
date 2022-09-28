@@ -1,5 +1,6 @@
 package com.yun.bidata.api;
 
+import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidataconnmon.vo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -23,4 +24,13 @@ public interface DataApiFeign {
      */
     @RequestMapping(value = "/getData", method = RequestMethod.POST)
     Result<Object> getData(QueryDataDto dto);
+
+    /**
+     * feign调用获取数据接口
+     *
+     * @param dto
+     * @return 数据
+     */
+    @RequestMapping(value = "/format", method = RequestMethod.POST)
+    Result<Object> format(FormatDto dto);
 }

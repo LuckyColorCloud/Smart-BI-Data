@@ -10,6 +10,8 @@ create table api_manage
     api_id       int           null comment '第三方api id 即接口转发id',
     result       mediumtext    null comment '静态数据',
     type         int default 0 null comment ' 0.接口转发1.查询数据库 2.静态数据直接返回result'
+    chart_type   varchar(1024) null comment ' 参考FormatConversion.Class 该值可以未CHART或chart'
+    params       varchar(1024) null comment ' 图表类型参数'
 )
     comment 'api管理' charset = utf8mb4;
 create table api_path

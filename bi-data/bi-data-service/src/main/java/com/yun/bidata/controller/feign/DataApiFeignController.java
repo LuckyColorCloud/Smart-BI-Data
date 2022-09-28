@@ -1,6 +1,7 @@
 package com.yun.bidata.controller.feign;
 
 import com.yun.bidata.api.DataApiFeign;
+import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidata.service.DataService;
 import com.yun.bidataconnmon.vo.Result;
@@ -27,5 +28,11 @@ public class DataApiFeignController implements DataApiFeign {
     @PostMapping("/getData")
     public Result<Object> getData(QueryDataDto dto) {
         return dataService.getData(dto);
+    }
+
+    @Override
+    @PostMapping("/format")
+    public Result<Object> format(FormatDto dto) {
+        return dataService.formatConversion(dto);
     }
 }
