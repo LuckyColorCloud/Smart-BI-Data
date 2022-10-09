@@ -145,7 +145,7 @@ public class SqlUtil {
      */
     private static String infoSql(JSONArray jsonArray, String tableName, String initSql) {
         String field = StringUtils.join(jsonArray.getJSONObject(0).keySet().toArray(), ",");
-        String temp = INSERT_TABLE_IGNORE.replace("${table}", tableName).replace("${key}", "(" + field + ")");
+        String temp = initSql.replace("${table}", tableName).replace("${key}", "(" + field + ")");
         StringBuilder value = new StringBuilder();
         for (int i = 0; i < jsonArray.size(); i++) {
             ArrayList<Object> strings = new ArrayList<Object>(jsonArray.getJSONObject(i).values());
@@ -158,6 +158,11 @@ public class SqlUtil {
         return temp.replace("${value}", value.toString());
     }
 
+    /**
+     * 转换 Java类型为数据库类型
+     * @param type
+     * @return
+     */
     private static String javaToMysql(String type) {
         switch (type) {
             case "Integer":

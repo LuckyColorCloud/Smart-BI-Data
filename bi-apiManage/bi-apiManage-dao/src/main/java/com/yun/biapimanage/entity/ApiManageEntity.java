@@ -54,7 +54,7 @@ public class ApiManageEntity implements Serializable {
      */
     private boolean auth;
     /**
-     * 接口类型 0.接口转发1.查询数据库 2.静态数据直接返回result
+     * 接口类型 0.接口转发1.查询数据库 2.静态数据直接返回result 3.数据融合(根据id)4.数据融合(数组合并)
      */
     private Integer type;
     /**
@@ -65,4 +65,17 @@ public class ApiManageEntity implements Serializable {
      * 图表参数
      */
     private String params;
+    /**
+     * 数据融合参数 只能是一种类型
+     */
+    private String apis;
+    /**
+     * 融合类型  0.接口转发1.查询数据库
+     */
+    private Integer fusion;
+
+    /**
+     * 融合参数=====>
+     */
+    private String  fusionParams;
 }

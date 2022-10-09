@@ -13,6 +13,7 @@ import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
+import io.swagger.util.Json;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Yun
@@ -122,7 +124,7 @@ public class ApiServlet extends HttpServlet {
      */
     private Result<Object> getData(ApiManageEntity apiManageEntity, JSONObject params) {
         Result<Object> result;
-        //0.接口转发1.查询数据库 2.静态数据直接返回result
+        //0.接口转发1.查询数据库 2.静态数据直接返回result 3.数据融合(根据id) 4.数据融合(数组合并)
         switch (apiManageEntity.getType()) {
             case 0:
                 QueryDataDto queryDataDto = new QueryDataDto();
@@ -136,6 +138,9 @@ public class ApiServlet extends HttpServlet {
             case 2:
                 result = Result.OK((Object) apiManageEntity.getResult());
                 break;
+            case 3:
+            case 4:
+                return null;
             default:
                 result = Result.ERROR(Result.ResultEnum.NO_SUCH_DATA_PROCESSING_TYPE);
                 break;
@@ -155,6 +160,81 @@ public class ApiServlet extends HttpServlet {
         return result;
     }
 
+    /**
+     * 数据融合
+     *
+     * @param apiManageEntity api配置类
+     * @return 融合结果
+     */
+    private Object dataFusion(ApiManageEntity apiManageEntity) {
+        try {
+            //必须是jsonList类型 单个融合锤子🔨
+            JSONArray jsonArray = JSONUtil.parseArray(apiManageEntity.getApis());
+            List<Object> data;
+            switch (apiManageEntity.getFusion()) {
+                case 0:
+                    //接口类型
+                    data = jsonArray.parallelStream().map(String::valueOf).map(Integer::valueOf).map(t -> new QueryDataDto() {
+                        {
+                            setApiId(t);
+                        }
+                    }).map(dataApiFeign::getData).map(Result::getResult).collect(Collectors.toList());
+                    break;
+                case 1:
+                    //查询数据库类型 多种不同类型时可从这里做数据关联内存搞⛏
+                    data = jsonArray.parallelStream().map(String::valueOf).map(Integer::valueOf).map(dataStorageApiFeign::querySql).map(Result::getResult).collect(Collectors.toList());
+                    break;
+                default:
+                    return Result.ERROR(Result.ResultEnum.DATA_FUSION_ERROR);
+            }
+            //判断融合类型  3.数据融合(根据id)  4.数据融合(数组合并)
+            switch (apiManageEntity.getType()) {
+                case 4:
+                    //判断是否有融合参数 没有融合🔨
+                    if (StrUtil.isEmpty(apiManageEntity.getFusionParams()) || JSONUtil.parseObj(apiManageEntity.getFusionParams()).isEmpty()) {
+                        return Result.ERROR(Result.ResultEnum.DATA_FUSION_ERROR);
+                    }
+                    //匹配键
+                    JSONObject jsonObject = JSONUtil.parseObj(apiManageEntity.getFusionParams());
+                    //将所有对象转换成list集合
+                    List<? extends List<Object>> listTemp = data.stream().map(t -> {
+                        if (t instanceof Map) {
+                            ArrayList<Object> temp = new ArrayList<>();
+                            temp.add(t);
+                            return temp;
+                        } else if (t instanceof Collection) {
+                            return JSONUtil.parseArray(t);
+                        }
+                        return null;
+                    }).filter(Objects::nonNull).collect(Collectors.toList());
+                    //数据匹配 多变一
+                    //TODO 在想处理方案
+                    for (int i = 0; i < listTemp.size(); i++) {
+
+                    }
+
+                case 5:
+                    //数据库查询出来都是集合类型====> 具体看代码
+                    List<JSONArray> collect = data.parallelStream().map(JSONArray::new).collect(Collectors.toList());
+                    //查询出来最少的集合数 多余会舍弃
+                    int min = collect.stream().map(List::size).min(Integer::compareTo).get();
+                    //结果
+                    ArrayList<HashMap<String, Object>> hashMaps = new ArrayList<>();
+                    for (int i = 0; i < min; i++) {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        for (JSONArray objects : collect) {
+                            hashMap.putAll(objects.getJSONObject(i));
+                        }
+                        hashMaps.add(hashMap);
+                    }
+                    return hashMaps;
+                default:
+                    return Result.ERROR(Result.ResultEnum.DATA_FUSION_ERROR);
+            }
+        } catch (Exception e) {
+            return Result.ERROR(Result.ResultEnum.DATA_FUSION_ERROR);
+        }
+    }
 
     /**
      * 匹配请求参数
@@ -204,4 +284,5 @@ public class ApiServlet extends HttpServlet {
         }
         return null;
     }
+
 }

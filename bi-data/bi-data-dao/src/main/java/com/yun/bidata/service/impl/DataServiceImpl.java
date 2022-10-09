@@ -76,7 +76,7 @@ public class DataServiceImpl implements DataService {
             //根据角色获取Token
             String token = queryToken(userRoleEntity);
             //替换占位符 为 token
-            apiPathEntity.setPrivateHeader(apiPathEntity.getPrivateHeader().replace("#{token}", token));
+            apiPathEntity.setPrivateHeader(apiPathEntity.getPrivateHeader().replace(CommonConstant.TOKEN, token));
             //如果有传参body 以传参为准 如没有使用默认参数
             apiPathEntity.setBody(StrUtil.isEmpty(dto.getParams()) || JSONUtil.parseObj(dto.getParams()).isEmpty() ? apiPathEntity.getBody() : dto.getParams());
             //请求返回结果
@@ -138,15 +138,15 @@ public class DataServiceImpl implements DataService {
     @Override
     public Result<Object> formatConversion(FormatDto dto) {
         FormatConversion formatConversion;
-        try{
+        try {
             try {
                 formatConversion = FormatConversion.valueOf(dto.getChartType().toUpperCase());
             } catch (IllegalArgumentException e) {
                 formatConversion = FormatConversion.valueOf(JavaFormat.javaToMysql(dto.getChartType()).toUpperCase());
             }
             return formatConversion.conversion(dto.getData(), dto.getParams());
-        }catch (Exception e) {
-            return Result.ERROR("");
+        } catch (Exception e) {
+            return Result.ERROR(Result.ResultEnum.FORMAT_CONVERSION_ERROR);
         }
     }
 

@@ -50,6 +50,11 @@ public enum DataSourceFactory {
         }
     };
 
+    /**
+     * 判断是否为druid支持的数据库类型
+     * @param type
+     * @return
+     */
     public static boolean isDruid(String type) {
         return DRUID_LIST.contains(type.toLowerCase());
     }

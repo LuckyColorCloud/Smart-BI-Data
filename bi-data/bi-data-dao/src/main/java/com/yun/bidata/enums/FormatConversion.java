@@ -75,9 +75,9 @@ public enum FormatConversion {
                         hashMap.put(t.getStr(key), jsonObject.get(key));
                     });
 //                    //判断是否有额外补充参数
-//                    if (t.get(CommonConstant.JOIN) != null) {
-//                        hashMap.putAll(JSONUtil.toBean(t.getStr(CommonConstant.JOIN), HashMap.class));
-//                    }
+                    if (t.get(CommonConstant.JOIN) != null) {
+                        hashMap.putAll(JSONUtil.toBean(t.getStr(CommonConstant.JOIN), HashMap.class));
+                    }
                     return hashMap;
                 }).collect(Collectors.toList());
                 return Result.OK(collect);

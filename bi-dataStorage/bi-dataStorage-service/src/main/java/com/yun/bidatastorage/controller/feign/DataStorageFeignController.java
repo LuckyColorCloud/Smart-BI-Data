@@ -57,13 +57,16 @@ public class DataStorageFeignController implements DataStorageApiFeign {
     @Override
     public Result<Object> saveData(SaveDataDto saveDataDto) {
         StorageTableEntity storageTable = storageTableService.getById(saveDataDto.getStorageId());
+        //判断是否存在 存库实体
         if (storageTable == null) {
             return Result.ERROR(Result.ResultEnum.STORAGE_TABLE_DOES_NOT_EXIST);
         }
+        //判断数据源是否存在
         DataSourceEntity dataSourceEntity = dataSourceService.getById(storageTable.getSourceId());
         if (dataSourceEntity == null) {
             return Result.ERROR(Result.ResultEnum.DATA_SOURCE_DOES_NOT_EXIST);
         }
+        //获取数据源
         try (Connection connection = getConnection(dataSourceEntity)) {
             boolean b = SqlUtil.doesTheTableExist(storageTable.getSaveName(), connection);
             //解压缩 还原成string
@@ -76,6 +79,7 @@ public class DataStorageFeignController implements DataStorageApiFeign {
             jsonArray = filter(jsonArray, storageTableArray);
             // 1.追加 2.全量 3.主键
             switch (storageTable.getSaveType()) {
+                //1.追加方式
                 case 1:
                     if (b) {
                         if (jsonArray.size() > 0) {
@@ -91,6 +95,7 @@ public class DataStorageFeignController implements DataStorageApiFeign {
                         }
                     }
                     break;
+                // 全量方式
                 case 2:
                     if (b) {
                         if (jsonArray.size() > 0 && SqlUtil.truncateTable(storageTable.getSaveName(), connection)) {
@@ -106,6 +111,7 @@ public class DataStorageFeignController implements DataStorageApiFeign {
                         }
                     }
                     break;
+                //3.主键方式
                 case 3:
                     if (b) {
                         if (jsonArray.size() > 0) {
@@ -131,6 +137,12 @@ public class DataStorageFeignController implements DataStorageApiFeign {
         return null;
     }
 
+    /**
+     * 查询SQL结果
+     *
+     * @param sqlId sqlid
+     * @return 查询结果
+     */
     @Override
     public Result<Object> querySql(Integer sqlId) {
         SqlScriptEntity sqlScriptEntity = sqlScriptService.getById(sqlId);
