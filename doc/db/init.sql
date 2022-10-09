@@ -9,9 +9,12 @@ create table api_manage
     auth         varchar(1)    null comment '是否鉴权',
     api_id       int           null comment '第三方api id 即接口转发id',
     result       mediumtext    null comment '静态数据',
-    type         int default 0 null comment ' 0.接口转发1.查询数据库 2.静态数据直接返回result'
-    chart_type   varchar(1024) null comment ' 参考FormatConversion.Class 该值可以未CHART或chart'
-    params       varchar(1024) null comment ' 图表类型参数'
+    type         int default 0 null comment ' 0.接口转发1.查询数据库 2.静态数据直接返回result',
+    chart_type   varchar(1024) null comment ' 参考FormatConversion.Class 该值可以未CHART或chart',
+    params       varchar(1024) null comment ' 图表类型参数',
+    apis         varchar(1024) null comment ' 数据融合参数 只能是一种类型',
+    fusion       int default 0 null comment ' 融合类型  0.接口转发1.查询数据库',
+    fusionParams         varchar(1024) null comment ' 融合参数',
 )
     comment 'api管理' charset = utf8mb4;
 create table api_path
