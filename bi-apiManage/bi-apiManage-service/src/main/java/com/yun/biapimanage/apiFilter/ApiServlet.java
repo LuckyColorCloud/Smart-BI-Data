@@ -13,7 +13,6 @@ import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
-import io.swagger.util.Json;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,6 +27,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -140,7 +144,8 @@ public class ApiServlet extends HttpServlet {
                 break;
             case 3:
             case 4:
-                return null;
+                result = dataFusion(apiManageEntity);
+                break;
             default:
                 result = Result.ERROR(Result.ResultEnum.NO_SUCH_DATA_PROCESSING_TYPE);
                 break;
@@ -166,7 +171,7 @@ public class ApiServlet extends HttpServlet {
      * @param apiManageEntity api配置类
      * @return 融合结果
      */
-    private Object dataFusion(ApiManageEntity apiManageEntity) {
+    private Result<Object>  dataFusion(ApiManageEntity apiManageEntity) {
         try {
             //必须是jsonList类型 单个融合锤子🔨
             JSONArray jsonArray = JSONUtil.parseArray(apiManageEntity.getApis());
@@ -195,7 +200,7 @@ public class ApiServlet extends HttpServlet {
                         return Result.ERROR(Result.ResultEnum.DATA_FUSION_ERROR);
                     }
                     //匹配键
-                    JSONObject jsonObject = JSONUtil.parseObj(apiManageEntity.getFusionParams());
+                    String key = apiManageEntity.getFusionParams();
                     //将所有对象转换成list集合
                     List<? extends List<Object>> listTemp = data.stream().map(t -> {
                         if (t instanceof Map) {
@@ -207,12 +212,18 @@ public class ApiServlet extends HttpServlet {
                         }
                         return null;
                     }).filter(Objects::nonNull).collect(Collectors.toList());
-                    //数据匹配 多变一
-                    //TODO 在想处理方案
-                    for (int i = 0; i < listTemp.size(); i++) {
-
-                    }
-
+                    //数据匹配 多变一  经过上层数据处理这里不存在 多种key 情况 如果有请转换成一致的key
+                    ArrayList<JSONObject> jsonObjects = new ArrayList<>();
+                    //拍平整个集合
+                    listTemp.forEach(t -> t.stream().map(JSONObject::new).forEach(jsonObjects::add));
+                    //合并集合
+                    return Result.OK(jsonObjects.stream().collect(Collectors.groupingBy(t -> t.getStr(key)))
+                            .values().parallelStream().map(list ->
+                            {
+                                HashMap<String, Object> hashMap1 = new HashMap<>();
+                                list.forEach(hashMap1::putAll);
+                                return hashMap1;
+                            }).collect(Collectors.toList()));
                 case 5:
                     //数据库查询出来都是集合类型====> 具体看代码
                     List<JSONArray> collect = data.parallelStream().map(JSONArray::new).collect(Collectors.toList());
@@ -227,7 +238,7 @@ public class ApiServlet extends HttpServlet {
                         }
                         hashMaps.add(hashMap);
                     }
-                    return hashMaps;
+                    return Result.OK(hashMaps);
                 default:
                     return Result.ERROR(Result.ResultEnum.DATA_FUSION_ERROR);
             }

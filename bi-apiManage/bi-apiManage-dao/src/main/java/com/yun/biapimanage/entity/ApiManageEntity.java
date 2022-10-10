@@ -75,7 +75,7 @@ public class ApiManageEntity implements Serializable {
     private Integer fusion;
 
     /**
-     * 融合参数=====>
+     * 融合参数=====>{"id":1}====>该值直接写id
      */
     private String  fusionParams;
 }
