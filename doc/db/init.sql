@@ -14,7 +14,7 @@ create table api_manage
     params       varchar(1024) null comment ' 图表类型参数',
     apis         varchar(1024) null comment ' 数据融合参数 只能是一种类型',
     fusion       int default 0 null comment ' 融合类型  0.接口转发1.查询数据库',
-    fusionParams         varchar(1024) null comment ' 融合参数',
+    fusionParams         varchar(1024) null comment ' 融合参数'
 )
     comment 'api管理' charset = utf8mb4;
 create table api_path
@@ -80,3 +80,17 @@ create table storage_table
     storage_field varchar(3072) null comment '储存字段 list可以多个字段'
 )
     comment '存储表 ' charset = utf8mb4;
+CREATE TABLE file(
+    created_time DATETIME    COMMENT '创建时间' ,
+    updated_time DATETIME    COMMENT '更新时间' ,
+    id INT NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
+    file_name VARCHAR(32)    COMMENT '文件名' ,
+    file_path VARCHAR(32)    COMMENT '文件路径' ,
+    size INT    COMMENT '文件大小' ,
+    file_md5 VARCHAR(32)    COMMENT '文件md5' ,
+    file_type INT    COMMENT '文件类型' ,
+    storage tinyint(1)    COMMENT '是否存储' ,
+    source_id INT    COMMENT '存储数据源' ,
+    status tinyint(1)    COMMENT '是否删除' ,
+    PRIMARY KEY (id)
+) COMMENT = '文件管理 ' charset = utf8mb4;
