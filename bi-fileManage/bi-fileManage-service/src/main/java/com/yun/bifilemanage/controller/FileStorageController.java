@@ -49,7 +49,7 @@ public class FileStorageController {
      * 保存
      */
     @PostMapping("/save")
-    @ApiOperation("保存数据源")
+    @ApiOperation("保存文件数据")
     public Result<String> save(@RequestBody FileEntity fileEntity) {
         fileService.save(fileEntity);
         return Result.OK();
@@ -59,7 +59,7 @@ public class FileStorageController {
      * 修改
      */
     @PostMapping("/update")
-    @ApiOperation("修改数据源")
+    @ApiOperation("修改文件数据")
     public Result<String> update(@RequestBody FileEntity fileEntity) {
         fileEntity.setUpdatedTime(new Date());
         fileService.updateById(fileEntity);
@@ -70,7 +70,7 @@ public class FileStorageController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @ApiOperation("查询数据源信息")
+    @ApiOperation("查询文件信息")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
     public Result<FileEntity> info(@PathVariable("id") Integer id) {
         return Result.OK(fileService.getById(id));
@@ -80,7 +80,7 @@ public class FileStorageController {
      * 删除
      */
     @GetMapping("/delete")
-    @ApiOperation("删除数据源信息")
+    @ApiOperation("删除文件信息")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
     public Result<String> delete(Integer id) {
         FileEntity fileEntity = fileService.getById(id);
