@@ -1,7 +1,7 @@
 package com.yun.biapimanage.config;
 
-import com.yun.biapimanage.apiFilter.ApiAuthFilter;
-import com.yun.biapimanage.apiFilter.ApiServlet;
+import com.yun.biapimanage.apifilter.ApiAuthFilter;
+import com.yun.biapimanage.apifilter.ApiServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

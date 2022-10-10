@@ -108,7 +108,10 @@ public class Swagger2Config implements WebMvcConfigurer {
                 .build();
     }
 
-    //暂时屏蔽，因为shiro设置权限不校验，api文档依然加上token拦截
+    /**
+     * 暂时屏蔽，因为shiro设置权限不校验，api文档依然加上token拦截
+     * @return
+     */
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];

@@ -1,4 +1,4 @@
-package com.yun.biapimanage.apiFilter;
+package com.yun.biapimanage.apifilter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

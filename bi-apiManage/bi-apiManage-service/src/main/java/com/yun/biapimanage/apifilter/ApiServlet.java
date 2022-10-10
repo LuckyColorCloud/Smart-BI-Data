@@ -1,4 +1,4 @@
-package com.yun.biapimanage.apiFilter;
+package com.yun.biapimanage.apifilter;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
@@ -27,11 +27,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -171,7 +166,7 @@ public class ApiServlet extends HttpServlet {
      * @param apiManageEntity api配置类
      * @return 融合结果
      */
-    private Result<Object>  dataFusion(ApiManageEntity apiManageEntity) {
+    private Result<Object> dataFusion(ApiManageEntity apiManageEntity) {
         try {
             //必须是jsonList类型 单个融合锤子🔨
             JSONArray jsonArray = JSONUtil.parseArray(apiManageEntity.getApis());
@@ -220,7 +215,7 @@ public class ApiServlet extends HttpServlet {
                     return Result.OK(jsonObjects.stream().collect(Collectors.groupingBy(t -> t.getStr(key)))
                             .values().parallelStream().map(list ->
                             {
-                                HashMap<String, Object> hashMap1 = new HashMap<>();
+                                HashMap<String, Object> hashMap1 = new HashMap<>(16);
                                 list.forEach(hashMap1::putAll);
                                 return hashMap1;
                             }).collect(Collectors.toList()));
@@ -232,7 +227,7 @@ public class ApiServlet extends HttpServlet {
                     //结果
                     ArrayList<HashMap<String, Object>> hashMaps = new ArrayList<>();
                     for (int i = 0; i < min; i++) {
-                        HashMap<String, Object> hashMap = new HashMap<>();
+                        HashMap<String, Object> hashMap = new HashMap<>(16);
                         for (JSONArray objects : collect) {
                             hashMap.putAll(objects.getJSONObject(i));
                         }

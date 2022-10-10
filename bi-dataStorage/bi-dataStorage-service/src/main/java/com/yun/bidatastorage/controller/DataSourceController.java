@@ -40,8 +40,8 @@ public class DataSourceController {
     @ApiOperation("查询列表")
     public Result<Page<DataSourceEntity>> list(@Param("pageNo") int pageNo,
                                                @Param("pageSize") int pageSize) {
-        Page<DataSourceEntity> DataSourceEntityPage = new Page<>(pageNo, pageSize);
-        Page<DataSourceEntity> page = dataSourceService.page(DataSourceEntityPage, new QueryWrapper<DataSourceEntity>().lambda().orderByDesc(DataSourceEntity::getCreatedTime));
+        Page<DataSourceEntity> dataSourceEntityPage = new Page<>(pageNo, pageSize);
+        Page<DataSourceEntity> page = dataSourceService.page(dataSourceEntityPage, new QueryWrapper<DataSourceEntity>().lambda().orderByDesc(DataSourceEntity::getCreatedTime));
         return Result.OK(page);
     }
 

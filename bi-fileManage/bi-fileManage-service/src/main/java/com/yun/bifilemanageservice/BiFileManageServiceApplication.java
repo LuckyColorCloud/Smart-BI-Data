@@ -9,9 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @Slf4j
 @SpringBootApplication
-//@EnableFeignClients(basePackages = {
-//        "com.yun.bifilemanageapi.api"
-//})
 public class BiFileManageServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(BiFileManageServiceApplication.class, args);

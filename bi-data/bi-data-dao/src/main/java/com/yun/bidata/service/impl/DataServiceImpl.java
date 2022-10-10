@@ -197,8 +197,8 @@ public class DataServiceImpl implements DataService {
      * @param storageId 存储id
      * @return 存储结果
      */
-    //TODO 大数据量情况下 会有问题
     private Result<Object> saveData(String content, Integer storageId) {
+        //TODO 大数据量情况下 会有问题
         SaveDataDto saveDataDto = new SaveDataDto();
         saveDataDto.setCharset(CommonConstant.UTF_8);
         saveDataDto.setContext(ZipUtil.gzip(content, CommonConstant.UTF_8));

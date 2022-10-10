@@ -32,7 +32,7 @@ public interface DataStorageApiFeign {
 
     /**
      * 保存数据到本地
-     *
+     * @param saveDataDto 保存对象
      * @return 保存结果
      */
     @RequestMapping(value = "/saveData", method = RequestMethod.POST)
@@ -40,8 +40,8 @@ public interface DataStorageApiFeign {
 
     /**
      * 查询数据库
-     *
-     * @return 保存结果
+     * @param sqlId
+     * @return 查询结果
      */
     @RequestMapping(value = "/querySql", method = RequestMethod.POST)
     Result<Object> querySql(@RequestBody Integer sqlId);
