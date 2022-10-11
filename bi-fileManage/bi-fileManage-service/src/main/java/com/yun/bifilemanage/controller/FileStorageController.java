@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bifilemanage.entity.FileEntity;
+import com.yun.bifilemanage.service.FileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -12,7 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.yun.bifilemanage.service.FileService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -49,10 +50,15 @@ public class FileStorageController {
      * 保存
      */
     @PostMapping("/save")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "file", dataType = "__file", required = true, value = "文件"),
+            @ApiImplicitParam(paramType = "form", name = "md5", dataType = "String", required = true, value = "文件md5"),
+            @ApiImplicitParam(paramType = "form", name = "sourceId", dataType = "int", required = true, value = "存储数据源ID"),
+            @ApiImplicitParam(paramType = "form", name = "saveName", dataType = "String", required = true, value = "保存表名称")
+    })
     @ApiOperation("保存文件数据")
-    public Result<String> save(@RequestBody FileEntity fileEntity) {
-        fileService.save(fileEntity);
-        return Result.OK();
+    public Result<Object> save(MultipartFile file, String md5, String saveName, Integer sourceId) {
+        return fileService.saveAndStorage(file, md5, saveName, sourceId);
     }
 
     /**
@@ -61,8 +67,10 @@ public class FileStorageController {
     @PostMapping("/update")
     @ApiOperation("修改文件数据")
     public Result<String> update(@RequestBody FileEntity fileEntity) {
-        fileEntity.setUpdatedTime(new Date());
-        fileService.updateById(fileEntity);
+        FileEntity save = fileService.getById(fileEntity.getId());
+        save.setUpdatedTime(new Date());
+        save.setStatus(fileEntity.getStatus());
+        fileService.updateById(save);
         return Result.OK();
     }
 
@@ -71,7 +79,7 @@ public class FileStorageController {
      */
     @GetMapping("/info/{id}")
     @ApiOperation("查询文件信息")
-    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
+    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "文件ID")
     public Result<FileEntity> info(@PathVariable("id") Integer id) {
         return Result.OK(fileService.getById(id));
     }
@@ -81,12 +89,23 @@ public class FileStorageController {
      */
     @GetMapping("/delete")
     @ApiOperation("删除文件信息")
-    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
-    public Result<String> delete(Integer id) {
+    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "文件ID")
+    public Result<Object> delete(Integer id) {
+        return fileService.dropTable(id);
+    }
+
+    /**
+     * 删除
+     */
+    @GetMapping("/restart")
+    @ApiOperation("重新入库")
+    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "文件ID")
+    public Result<String> restart(Integer id) {
         FileEntity fileEntity = fileService.getById(id);
         if (fileEntity != null) {
             fileEntity.setStatus(true);
             fileService.updateById(fileEntity);
+
         }
         return Result.OK();
     }

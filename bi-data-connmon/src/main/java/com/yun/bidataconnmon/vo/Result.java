@@ -136,6 +136,7 @@ public class Result<T> implements Serializable {
         // 100000  data
         // 200000  apiManage
         // 300000  dataStorage
+        // 400000  fileManage
         SUCCESS(200, "处理成功"),
         ERROR(500, "处理失败"),
         ROLE_TOKEN_DOES_NOT_EXIST(100002, "角色获取Token失败"),
@@ -150,8 +151,14 @@ public class Result<T> implements Serializable {
         SCRIPT_DOES_NOT_EXIST(300005, "SQL 脚本不存在!"),
         STORAGE_TABLE_DOES_NOT_EXIST(300006, "SQL 存储表不存在!"),
         DATA_NOT_OBTAINED(300007, "未获取到数据!"),
-        FAILED_TO_CLEAR_TABLE_DATA(300007, "清除表数据失败!"),
-        FAILED_TO_CREATE_TABLE(300007, "创建表失败!"),
+        FAILED_TO_CLEAR_TABLE_DATA(300008, "清除表数据失败!"),
+        FAILED_TO_CREATE_TABLE(300009, "创建表失败!"),
+        THE_FILE_ENTRY_TABLE_ALREADY_EXISTS(300010, "文件入库表已存在!"),
+        DROP_TABLE_ERROR(300011, "删除表失败!"),
+        FAILED_TO_SAVE_THE_FILE(400000, "保存文件失败!"),
+        ERROR_GETTING_FILE_TYPE(400001, "获取文件类型出错!"),
+        JSON_TYPE_ERROR(400002, "JSON类型有误 解析失败!"),
+        FILE_DOES_NOT_EXIST(400002, "文件不存在!"),
         UNKNOWN_EXCEPTION(50000, "未知异常!"),
         INTERFACE_DOES_NOT_EXIST(50001, "接口不存在!");
         private Integer respCode;

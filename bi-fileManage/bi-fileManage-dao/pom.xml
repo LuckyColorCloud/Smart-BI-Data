@@ -12,6 +12,15 @@
     <artifactId>bi-fileManage-dao</artifactId>
     <dependencies>
         <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-dataStorage-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>

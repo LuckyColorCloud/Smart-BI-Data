@@ -84,13 +84,13 @@ CREATE TABLE file(
     created_time DATETIME    COMMENT '创建时间' ,
     updated_time DATETIME    COMMENT '更新时间' ,
     id INT NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
-    file_name VARCHAR(32)    COMMENT '文件名' ,
-    file_path VARCHAR(32)    COMMENT '文件路径' ,
+    file_name VARCHAR(1024)    COMMENT '文件名' ,
+    file_path VARCHAR(1024)    COMMENT '文件路径' ,
     size INT    COMMENT '文件大小' ,
-    file_md5 VARCHAR(32)    COMMENT '文件md5' ,
+    file_md5 VARCHAR(1024)    COMMENT '文件md5' ,
     file_type INT    COMMENT '文件类型' ,
-    storage tinyint(1)    COMMENT '是否存储' ,
     source_id INT    COMMENT '存储数据源' ,
     status tinyint(1)    COMMENT '是否删除' ,
+    save_name VARCHAR(1024)    COMMENT '保存名称'
     PRIMARY KEY (id)
 ) COMMENT = '文件管理 ' charset = utf8mb4;

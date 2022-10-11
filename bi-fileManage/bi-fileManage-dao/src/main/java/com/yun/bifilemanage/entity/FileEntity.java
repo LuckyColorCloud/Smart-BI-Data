@@ -44,23 +44,23 @@ public class FileEntity implements Serializable {
     /**
      * 文件大小
      */
-    private Integer size;
+    private Long size;
     /**
      * 文件md5
      */
     private String fileMd5;
     /**
-     * 文件类型
+     * 文件类型 0.csv 1.xlsx 2.json
      */
     private Integer fileType;
-    /**
-     * 是否存储
-     */
-    private Integer storage;
     /**
      * 存储数据源
      */
     private Integer sourceId;
+    /**
+     * 保存名称
+     */
+    private String saveName;
     /**
      * 是否删除
      */

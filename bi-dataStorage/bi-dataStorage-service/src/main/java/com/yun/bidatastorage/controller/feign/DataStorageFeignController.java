@@ -11,7 +11,9 @@ import com.yun.bidataconnmon.constant.CommonConstant;
 import com.yun.bidataconnmon.util.Regular;
 import com.yun.bidataconnmon.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
+import com.yun.bidatastorage.dto.DropTableDto;
 import com.yun.bidatastorage.dto.SaveDataDto;
+import com.yun.bidatastorage.dto.SaveFileDto;
 import com.yun.bidatastorage.entity.DataSourceEntity;
 import com.yun.bidatastorage.entity.SqlScriptEntity;
 import com.yun.bidatastorage.entity.StorageTableEntity;
@@ -70,7 +72,7 @@ public class DataStorageFeignController implements DataStorageApiFeign {
         try (Connection connection = getConnection(dataSourceEntity)) {
             boolean b = SqlUtil.doesTheTableExist(storageTable.getSaveName(), connection);
             //解压缩 还原成string
-            String body = ZipUtil.unGzip(saveDataDto.getContext(), CommonConstant.UTF_8);
+            String body = ZipUtil.unGzip(saveDataDto.getContext(), saveDataDto.getCharset());
             //转换成list
             JSONArray jsonArray = JSONUtil.parseArray(body);
             //判断需要保存的 list
@@ -134,7 +136,7 @@ public class DataStorageFeignController implements DataStorageApiFeign {
             return Result.ERROR(Result.ResultEnum.DATA_SOURCE_TYPE_DOES_NOT_EXIST);
         }
 
-        return null;
+        return Result.ERROR(Result.ResultEnum.UNKNOWN_EXCEPTION);
     }
 
     /**
@@ -173,6 +175,63 @@ public class DataStorageFeignController implements DataStorageApiFeign {
             return Result.ERROR(Result.ResultEnum.UNKNOWN_EXCEPTION);
         }
     }
+
+    @Override
+    public Result<Object> saveFile(SaveFileDto saveFileDto) {
+        //判断数据源是否存在
+        DataSourceEntity dataSourceEntity = dataSourceService.getById(saveFileDto.getSourceId());
+        if (dataSourceEntity == null) {
+            return Result.ERROR(Result.ResultEnum.DATA_SOURCE_DOES_NOT_EXIST);
+        }
+        //获取数据源
+        try (Connection connection = getConnection(dataSourceEntity)) {
+            //判断表是否存在
+            boolean b = SqlUtil.doesTheTableExist(saveFileDto.getSaveName(), connection);
+            //解压缩 还原成string
+            String body = ZipUtil.unGzip(saveFileDto.getContext(), saveFileDto.getCharset());
+            //转换成list
+            JSONArray jsonArray = JSONUtil.parseArray(body);
+            if (b) {
+                //表存在 直接返回异常
+                return Result.ERROR(Result.ResultEnum.THE_FILE_ENTRY_TABLE_ALREADY_EXISTS);
+            } else {
+                //创建表 并插入数据
+                if (SqlUtil.createTable(saveFileDto.getSaveName(), connection, jsonArray.getJSONObject(0)) && SqlUtil.truncateTable(saveFileDto.getSaveName(), connection)) {
+                    SqlUtil.insetTable(saveFileDto.getSaveName(), connection, jsonArray);
+                } else {
+                    return Result.ERROR(Result.ResultEnum.FAILED_TO_CREATE_TABLE);
+                }
+            }
+        } catch (SQLException e) {
+            return Result.ERROR(Result.ResultEnum.FAILED_TO_CREATE_DATA_SOURCE_LINK);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            return Result.ERROR(Result.ResultEnum.DATA_SOURCE_TYPE_DOES_NOT_EXIST);
+        }
+        return Result.ERROR(Result.ResultEnum.UNKNOWN_EXCEPTION);
+    }
+
+    @Override
+    public Result<Object> dropTable(DropTableDto dropTable) {
+        //判断数据源是否存在
+        DataSourceEntity dataSourceEntity = dataSourceService.getById(dropTable.getSourceId());
+        if (dataSourceEntity == null) {
+            return Result.ERROR(Result.ResultEnum.DATA_SOURCE_DOES_NOT_EXIST);
+        }
+        //获取数据源
+        try (Connection connection = getConnection(dataSourceEntity)) {
+            boolean b = SqlUtil.dropTable(dropTable.getTableName(), connection);
+            if (b) {
+                return Result.OK();
+            } else {
+                return Result.ERROR(Result.ResultEnum.DROP_TABLE_ERROR);
+            }
+        } catch (SQLException e) {
+            return Result.ERROR(Result.ResultEnum.FAILED_TO_CREATE_DATA_SOURCE_LINK);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            return Result.ERROR(Result.ResultEnum.DATA_SOURCE_TYPE_DOES_NOT_EXIST);
+        }
+    }
+
 
     /**
      * 获取连接池方法

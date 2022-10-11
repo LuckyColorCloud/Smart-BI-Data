@@ -7,7 +7,9 @@ package com.yun.bidatastorage.api;
  */
 
 import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatastorage.dto.DropTableDto;
 import com.yun.bidatastorage.dto.SaveDataDto;
+import com.yun.bidatastorage.dto.SaveFileDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,7 @@ public interface DataStorageApiFeign {
 
     /**
      * 保存数据到本地
+     *
      * @param saveDataDto 保存对象
      * @return 保存结果
      */
@@ -40,10 +43,28 @@ public interface DataStorageApiFeign {
 
     /**
      * 查询数据库
+     *
      * @param sqlId
      * @return 查询结果
      */
     @RequestMapping(value = "/querySql", method = RequestMethod.POST)
     Result<Object> querySql(@RequestBody Integer sqlId);
 
+    /**
+     * 保存文件到数据库
+     *
+     * @param saveFileDto 保存文件对象
+     * @return 结果
+     */
+    @RequestMapping(value = "/saveFile", method = RequestMethod.POST)
+    Result<Object> saveFile(@RequestBody SaveFileDto saveFileDto);
+
+    /**
+     * 删除数据源的某个表
+     *
+     * @param dropTable 保存文件对象
+     * @return 结果
+     */
+    @RequestMapping(value = "/dropTable", method = RequestMethod.POST)
+    Result<Object> dropTable(@RequestBody DropTableDto dropTable);
 }

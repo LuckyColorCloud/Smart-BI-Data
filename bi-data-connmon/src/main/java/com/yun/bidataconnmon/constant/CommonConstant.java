@@ -9,6 +9,7 @@ public interface CommonConstant {
     String CACHE_TOKEN_HEAD = "CACHE_TOKEN_HEAD";
     String TEXT = "Text";
     String UTF_8 = "UTF-8";
+    String  POINT = ".";
 
 
     /**
