@@ -32,6 +32,8 @@
 params===>{"ppr":[{"key":"total","jsonPath":"$..total"}],"name":"name","data":"data"} 理论上只能有一个key{"key":"total","jsonPath":"$..total"} 这里面除了jsonPath只会有一个
 可同时做字段转换名称
 ```
+### 项目流程 定位 优劣势
+![项目流程](/doc/png/Smart-Bi-Data.png)
 
 ### 怎么让项目跑起来???
 首先先下载Nacos 2.1.1 
