@@ -1,40 +1,80 @@
 package com.yun.bidata.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-
 import java.io.Serializable;
-import java.util.Date;
-
-import lombok.Data;
+import java.time.LocalDateTime;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
+ * <p>
+ * 
+ * </p>
+ *
  * @author Yun
- * @email 2289128964@qq.com
- * @date 2022-08-24 11:11:31
+ * @since 2022-10-21
  */
-@Data
 @TableName("project")
+@ApiModel(value = "ProjectEntity对象", description = "")
 public class ProjectEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
-    /**
-     * 更新时间
-     */
-    private Date updatedTime;
-    /**
-     * 主键
-     */
-    @TableId(type = IdType.AUTO)
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createdTime;
+
+    @ApiModelProperty("更新时间")
+    private LocalDateTime updatedTime;
+
+    @ApiModelProperty("主键")
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-    /**
-     * 项目名称
-     */
+
+    @ApiModelProperty("项目名称")
     private String projectName;
 
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public LocalDateTime getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(LocalDateTime updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectEntity{" +
+        "createdTime=" + createdTime +
+        ", updatedTime=" + updatedTime +
+        ", id=" + id +
+        ", projectName=" + projectName +
+        "}";
+    }
 }
