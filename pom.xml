@@ -25,6 +25,7 @@
         <module>bi-gateway</module>
         <module>bi-data-connmon</module>
         <module>bi-loopauth</module>
+        <module>bi-generation</module>
     </modules>
 
     <!--    版本管理-->
@@ -45,18 +46,11 @@
         <mysql-connector.version>8.0.21</mysql-connector.version>
         <druid.version>1.1.17</druid.version>
         <revision>1.0.0.Beta.3</revision>
-        <loopauth.version>2.0.1</loopauth.version>
     </properties>
 
     <!--    依赖管理-->
     <dependencyManagement>
         <dependencies>
-            <!-- LoopAuth 鉴权 -->
-            <dependency>
-                <groupId>com.sobercoding</groupId>
-                <artifactId>LoopAuth-spring-boot-starter</artifactId>
-                <version>${loopauth.version}</version>
-            </dependency>
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>

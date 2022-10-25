@@ -68,7 +68,7 @@ public enum FormatConversion {
                 //参数转换成集合  这里肯定是集合
                 JSONArray jsonArray = JSONUtil.parseArray(params);
                 //结果
-                List<HashMap<String, Object>> collect = jsonArray.parallelStream().map(JSONObject::new).map(t ->
+               Object collect = jsonArray.parallelStream().map(JSONObject::new).map(t ->
                 {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     keys.forEach(key -> {

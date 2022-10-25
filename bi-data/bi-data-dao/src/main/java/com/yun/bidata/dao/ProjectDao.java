@@ -1,17 +1,16 @@
 package com.yun.bidata.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yun.bidata.entity.ProjectEntity;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- *  
- * 
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
  * @author Yun
- * @email 2289128964@qq.com
- * @date 2022-08-24 11:11:31
+ * @since 2022-10-21
  */
-@Mapper
 public interface ProjectDao extends BaseMapper<ProjectEntity> {
-	
+
 }
