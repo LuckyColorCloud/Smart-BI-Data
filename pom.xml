@@ -24,6 +24,7 @@
         <module>bi-apiManage</module>
         <module>bi-gateway</module>
         <module>bi-data-connmon</module>
+        <module>bi-loopauth</module>
     </modules>
 
     <!--    版本管理-->
