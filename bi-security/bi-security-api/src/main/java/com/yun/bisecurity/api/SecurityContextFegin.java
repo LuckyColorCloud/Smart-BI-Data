@@ -29,7 +29,7 @@ public interface SecurityContextFegin {
      * @return com.yun.bidataconnmon.vo.Result<java.util.Set<com.sobercoding.loopauth.abac.model.Policy>>
      */
     @RequestMapping(value = "/getPolicySet", method = RequestMethod.POST)
-    Result<Set<Policy>> getPolicySet(@RequestParam(value = "route") String route,
+    Result<Set<Policy>> getPolicySet(@RequestParam("route") String route,
                                      @RequestParam("mode") String mode);
 
     /**
@@ -39,7 +39,7 @@ public interface SecurityContextFegin {
      * @return com.yun.bidataconnmon.vo.Result<java.lang.Boolean>
      */
     @RequestMapping(value = "/isLogin", method = RequestMethod.POST)
-    Result<Boolean> isLogin(@Param(value = "sPID") long sPID);
+    Result<Boolean> isLogin(@RequestParam("sPID") long sPID);
 
     /**
      * 获取当前会话LoginId
@@ -47,6 +47,6 @@ public interface SecurityContextFegin {
      * @param sPID 会话生命周期id
      * @return com.yun.bidataconnmon.vo.Result<java.lang.String>
      */
-    @RequestMapping(value = "/isLogin", method = RequestMethod.POST)
-    Result<String> getLoginId(@Param(value = "sPID") long sPID);
+    @RequestMapping(value = "/getLoginId", method = RequestMethod.POST)
+    Result<String> getLoginId(@RequestParam("sPID") long sPID);
 }

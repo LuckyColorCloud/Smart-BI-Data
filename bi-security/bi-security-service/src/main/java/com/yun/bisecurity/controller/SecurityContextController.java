@@ -38,7 +38,7 @@ public class SecurityContextController {
             @ApiImplicitParam(paramType = "query", name = "route", dataType = "String", required = true, value = "路由"),
             @ApiImplicitParam(paramType = "query", name = "mode", dataType = "String", required = true, value = "请求方法")
     })
-    @ApiOperation("获取当前会话LoginId")
+    @ApiOperation("获取abac鉴权的规则")
     public Result<Set<Policy>> getPolicySet(@Param("route") String route, @Param("mode") String mode) {
         LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(mode);
         // 这里只做演示，自行编写的时候，请根据自己存储abac规则的方式查询获取
