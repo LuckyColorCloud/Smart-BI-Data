@@ -5,7 +5,9 @@ import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.entity.AbacPolicyEntity;
+import com.yun.bisecurity.param.AbacPolicyQueryParam;
 import com.yun.bisecurity.service.AbacPolicyService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * @author Sober
@@ -34,9 +37,16 @@ public class AbAcInterFaceImpl implements AbacInterface {
      */
     @Override
     public Set<Policy> getPolicySet(String route, LoopAuthHttpMode loopAuthHttpMode) {
+        // 组建查询参数
+        AbacPolicyQueryParam queryParam = new AbacPolicyQueryParam();
+        queryParam.setRoute(route);
+        queryParam.setMode(loopAuthHttpMode.name());
+        // 获取相关规则
         List<AbacPolicyEntity> abacPolicyEntityList = abacPolicyService
-                .getPolicySet(route, loopAuthHttpMode.name());
-
-        return new HashSet<>();
+                .queryList(queryParam);
+        // 组装数据
+        return abacPolicyEntityList.stream()
+                .map(AbacPolicyEntity.abacPolicyToPolicy)
+                .collect(Collectors.toSet());
     }
 }

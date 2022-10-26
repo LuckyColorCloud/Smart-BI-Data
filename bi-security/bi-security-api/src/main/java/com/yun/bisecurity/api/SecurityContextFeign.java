@@ -20,32 +20,13 @@ import java.util.Set;
 )
 public interface SecurityContextFeign {
 
-    /**
-     * 获取abac鉴权的规则
-     * @author Sober
-     * @param route 路由
-     * @param mode 请求方式
-     * @return com.yun.bidatacommon.vo.Result<java.util.Set<com.sobercoding.loopauth.abac.model.Policy>>
-     */
-    @RequestMapping(value = "/getPolicySet", method = RequestMethod.POST)
-    Result<Set<Policy>> getPolicySet(@RequestParam("route") String route,
-                                     @RequestParam("mode") String mode);
 
     /**
-     * 用户鉴权接口
+     * abac鉴权接口
      * @author Sober
-     * @param sPid 会话生命周期id
      * @return com.yun.bidatacommon.vo.Result<java.lang.Boolean>
      */
-    @RequestMapping(value = "/isLogin", method = RequestMethod.POST)
-    Result<Object> isLogin(@RequestParam("sPid") long sPid);
+    @RequestMapping(value = "/checkAbAc", method = RequestMethod.GET)
+    Result<Boolean> checkAbAc(@RequestParam String route,@RequestParam String method);
 
-    /**
-     * 获取当前会话LoginId
-     * @author Sober
-     * @param sPid 会话生命周期id
-     * @return com.yun.bidatacommon.vo.Result<java.lang.String>
-     */
-    @RequestMapping(value = "/getLoginId", method = RequestMethod.POST)
-    Result<String> getLoginId(@RequestParam("sPid") long sPid);
 }

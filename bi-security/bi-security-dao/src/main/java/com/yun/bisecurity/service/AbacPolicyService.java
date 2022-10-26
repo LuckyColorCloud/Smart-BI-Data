@@ -2,6 +2,7 @@ package com.yun.bisecurity.service;
 
 import com.yun.bisecurity.entity.AbacPolicyEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yun.bisecurity.param.AbacPolicyQueryParam;
 
 import java.util.List;
 
@@ -17,11 +18,10 @@ import java.util.List;
 public interface AbacPolicyService extends IService<AbacPolicyEntity> {
 
     /**
-     * 根据路由即请求方法获取abac规则
+     * 条件查询
      * @author Sober
-     * @param route 路由
-     * @param mode 请求方法
+     * @param abacPolicyQueryParam 查询体
      * @return java.util.List<com.yun.bisecurity.entity.AbacPolicyEntity>
      */
-    List<AbacPolicyEntity> getPolicySet(String route, String mode);
+    List<AbacPolicyEntity> queryList(AbacPolicyQueryParam abacPolicyQueryParam);
 }

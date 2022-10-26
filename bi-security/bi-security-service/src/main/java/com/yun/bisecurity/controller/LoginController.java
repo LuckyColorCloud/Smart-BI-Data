@@ -4,15 +4,14 @@ import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.entity.AccountEntity;
 import com.yun.bisecurity.service.AccountService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
@@ -21,8 +20,9 @@ import java.util.Optional;
 /**
  * @author Sober
  */
-@RestController
 @Slf4j
+@Api(tags = "会话相关")
+@RestController
 public class LoginController {
 
     @Resource
@@ -35,10 +35,10 @@ public class LoginController {
      * @param password
      * @return com.yun.bidatacommon.vo.Result<java.lang.Object>
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "sPID", dataType = "long", required = true, value = "邮箱"),
-            @ApiImplicitParam(paramType = "query", name = "sPID", dataType = "long", required = true, value = "密码")
+            @ApiImplicitParam(paramType = "query", name = "email", dataType = "String", required = true, value = "邮箱"),
+            @ApiImplicitParam(paramType = "query", name = "password", dataType = "String", required = true, value = "密码")
     })
     @ApiOperation("登录接口")
     public Result<Object> register(@RequestParam(value = "email") String email,

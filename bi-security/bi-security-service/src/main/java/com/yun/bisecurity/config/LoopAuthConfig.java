@@ -29,7 +29,11 @@ public class LoopAuthConfig {
                                 // 创建校验方式  value为当前值即setSupplierMap提供的值
                                 // rule为规则的值即 Policy setProperty 的值
                                 .setMaFunction((value, rule) -> {
-                                    LoopAuthSession.isLogin();
+                                    Boolean isLogin = (Boolean) rule;
+                                    // 需要登录才验证是否登录
+                                    if (isLogin) {
+                                        LoopAuthSession.isLogin();
+                                    }
                                 })
                                 // 获得value方式
                                 .setSupplierMap(() -> true)

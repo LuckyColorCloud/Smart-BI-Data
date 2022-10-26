@@ -2,6 +2,7 @@ package com.yun.bisecurity.dao;
 
 import com.yun.bisecurity.entity.AccountInfoEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Sober
  * @since 2022-10-26
  */
+@Mapper
 public interface AccountInfoDao extends BaseMapper<AccountInfoEntity> {
 
 }

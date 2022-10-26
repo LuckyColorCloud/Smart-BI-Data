@@ -1,11 +1,11 @@
 package com.yun.bisecurity.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
+
+import lombok.*;
 
 /**
  * <p>
@@ -15,19 +15,21 @@ import lombok.Data;
  * @author Sober
  * @since 2022-10-26
  */
-@Data
+@Getter
+@Setter
+@Builder
 @TableName("account_info")
 public class AccountInfoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
     /**
      * 账户id
      */
-    private Long accountId;
+    private String accountId;
 
     /**
      * 头像
@@ -42,17 +44,20 @@ public class AccountInfoEntity implements Serializable {
     /**
      * 性别0女1男
      */
-    private Boolean gender;
+    private Short gender;
 
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdTime;
 
     /**
      * 更新时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedTime;
+
 
 
 }

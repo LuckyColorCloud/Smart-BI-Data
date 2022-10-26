@@ -17,6 +17,14 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-security-api</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

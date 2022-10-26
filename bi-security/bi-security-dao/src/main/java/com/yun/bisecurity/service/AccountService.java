@@ -3,6 +3,7 @@ package com.yun.bisecurity.service;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.entity.AccountEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yun.bisecurity.model.vo.AccountVo;
 
 /**
  * <p>
@@ -32,4 +33,11 @@ public interface AccountService extends IService<AccountEntity> {
      */
     AccountEntity getOneByEmail(String email);
 
+    /**
+     * 新增账户
+     * @author Sober
+     * @param accountEntity 账户实体
+     * @return com.yun.bidatacommon.vo.Result<com.yun.bisecurity.model.vo.AccountVo>
+     */
+    Result<AccountVo> saveAccount(AccountEntity accountEntity);
 }

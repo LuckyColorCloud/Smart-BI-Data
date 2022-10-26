@@ -139,6 +139,7 @@ public class Result<T> implements Serializable {
         // 400000  fileManage
         SUCCESS(200, "处理成功"),
         ERROR(500, "处理失败"),
+        ILLEGAL_REQUEST(401, "非法请求"),
         ROLE_TOKEN_DOES_NOT_EXIST(100002, "角色获取Token失败"),
         NO_SUCH_DATA_PROCESSING_TYPE(100001, "无此数据处理类型!"),
         DATA_FORMAT_ERROR(100003, "数据格式错误!"),
