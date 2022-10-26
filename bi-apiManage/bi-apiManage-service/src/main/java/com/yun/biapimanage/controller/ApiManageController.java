@@ -1,12 +1,10 @@
-package com.yun.bidata.controller;
+package com.yun.biapimanage.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yun.bidata.entity.IndexConfigEntity;
-import com.yun.bidata.entity.UserRoleEntity;
-import com.yun.bidata.service.IndexConfigService;
-import com.yun.bidata.service.UserRoleService;
+import com.yun.biapimanage.entity.ApiManageEntity;
+import com.yun.biapimanage.service.ApiManageService;
 import com.yun.bidatacommon.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -14,25 +12,24 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- * 第三方用户角色表  前端控制器
+ * api管理  前端控制器
  * </p>
  *
  * @author Yun
  * @since 2022-10-26
  */
 @Controller
-@RequestMapping("/userRoleEntity")
-@Api(tags = "查询第三方角色表")
-public class UserRoleController {
+@RequestMapping("/apiManageEntity")
+@Api(tags = "API管理接口")
+public class ApiManageController {
 
     @Autowired
-    private UserRoleService userRoleService;
+    private ApiManageService apiManageService;
 
     /**
      * 列表
@@ -43,10 +40,10 @@ public class UserRoleController {
             @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
     })
     @ApiOperation("查询列表")
-    public Result<Page<UserRoleEntity>> list(@Param("pageNo") int pageNo,
-                                             @Param("pageSize") int pageSize) {
-        Page<UserRoleEntity> userRoleEntityPage = new Page<>(pageNo, pageSize);
-        Page<UserRoleEntity> page = userRoleService.page(userRoleEntityPage, new QueryWrapper<UserRoleEntity>().lambda().orderByDesc(UserRoleEntity::getCreatedTime));
+    public Result<Page<ApiManageEntity>> list(@Param("pageNo") int pageNo,
+                                              @Param("pageSize") int pageSize) {
+        Page<ApiManageEntity> apiManagePage = new Page<>(pageNo, pageSize);
+        Page<ApiManageEntity> page = apiManageService.page(apiManagePage, new QueryWrapper<ApiManageEntity>().lambda().orderByDesc(ApiManageEntity::getCreatedTime));
         return Result.OK(page);
     }
 
@@ -56,8 +53,8 @@ public class UserRoleController {
      */
     @PostMapping("/save")
     @ApiOperation("保存")
-    public Result<String> save(@RequestBody UserRoleEntity datasource) {
-        userRoleService.save(datasource);
+    public Result<String> save(@RequestBody ApiManageEntity datasource) {
+        apiManageService.save(datasource);
         return Result.OK();
     }
 
@@ -66,8 +63,8 @@ public class UserRoleController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public Result<String> update(@RequestBody UserRoleEntity datasource) {
-        userRoleService.updateById(datasource);
+    public Result<String> update(@RequestBody ApiManageEntity datasource) {
+        apiManageService.updateById(datasource);
         return Result.OK();
     }
 
@@ -77,8 +74,8 @@ public class UserRoleController {
     @GetMapping("/info/{id}")
     @ApiOperation("查询信息")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
-    public Result<UserRoleEntity> info(@PathVariable("id") Integer id) {
-        return Result.OK(userRoleService.getById(id));
+    public Result<ApiManageEntity> info(@PathVariable("id") Integer id) {
+        return Result.OK(apiManageService.getById(id));
     }
 
     /**
@@ -88,7 +85,7 @@ public class UserRoleController {
     @ApiOperation("删除信息")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
     public Result<String> delete(Integer id) {
-        userRoleService.removeById(id);
+        apiManageService.removeById(id);
         return Result.OK();
     }
 }

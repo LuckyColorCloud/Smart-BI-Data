@@ -8,12 +8,12 @@ spring:
   cloud:
     nacos:
       username: nacos
-      password: nacos
+      password: SmartBi13321
       discovery:
-        server-addr: 127.0.0.1:12345
+        server-addr: 175.178.71.118:9005
         namespace: dda6bce5-c628-461a-903f-e8aa4726d1fc
       config:
-        server-addr: 127.0.0.1:12345
+        server-addr: 175.178.71.118:9005
         file-extension: yaml
         prefix: smart-data-data
         #指定命名空间

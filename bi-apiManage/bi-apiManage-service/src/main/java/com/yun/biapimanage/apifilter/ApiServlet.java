@@ -94,23 +94,18 @@ public class ApiServlet extends HttpServlet {
      */
     public Result<Object> process(String path, HttpServletRequest request, HttpServletResponse response) {
         // 校验接口是否存在
-        ApiManageEntity apiManageEntity = apiManageService.getBaseMapper().selectOne(new QueryWrapper<ApiManageEntity>().lambda().eq(ApiManageEntity::getPath, path));
+        ApiManageEntity apiManageEntity = apiManageService.getBaseMapper().selectOne(new QueryWrapper<ApiManageEntity>().lambda().eq(ApiManageEntity::getApiPath, path));
         if (apiManageEntity == null) {
             return Result.ERROR(Result.ResultEnum.INTERFACE_DOES_NOT_EXIST);
         }
         Result<Object> result;
-        if (apiManageEntity.isAuth()) {
+        if (apiManageEntity.getAuto()) {
             //权限处理逻辑
             result = null;
         } else {
-            //判断是否需要从请求头获取参数 减少不必要操作
-            if (StrUtil.isEmpty(apiManageEntity.getJson()) || JSONUtil.parseObj(apiManageEntity.getJson()).isEmpty()) {
-                result = getData(apiManageEntity, new JSONObject());
-            } else {
-                //从请求获取数据库配置需要的 请求参数
-                JSONObject params = getParams(request, JSONUtil.parseArray(apiManageEntity.getJson()));
-                result = getData(apiManageEntity, params);
-            }
+            //从请求获取 请求参数
+            JSONObject params = getParams(request);
+            result = getData(apiManageEntity, params);
         }
         return result;
     }
@@ -128,14 +123,14 @@ public class ApiServlet extends HttpServlet {
             case 0:
                 QueryDataDto queryDataDto = new QueryDataDto();
                 queryDataDto.setParams(params.isEmpty() ? null : JSONUtil.toJsonStr(params));
-                queryDataDto.setApiId(apiManageEntity.getApiId());
+                queryDataDto.setIndexId(JSONUtil.parseArray(apiManageEntity.getIndexId()).getInt(0));
                 result = dataApiFeign.getData(queryDataDto);
                 break;
             case 1:
-                result = dataStorageApiFeign.querySql(apiManageEntity.getApiId());
+                result = dataStorageApiFeign.querySql(JSONUtil.parseArray(apiManageEntity.getIndexId()).getInt(0));
                 break;
             case 2:
-                result = Result.OK((Object) apiManageEntity.getResult());
+                result = Result.OK(JSONUtil.isTypeJSON(apiManageEntity.getStaticData()) ? JSONUtil.parse(apiManageEntity.getStaticData()) : apiManageEntity.getStaticData());
                 break;
             case 3:
             case 4:
@@ -169,14 +164,14 @@ public class ApiServlet extends HttpServlet {
     private Result<Object> dataFusion(ApiManageEntity apiManageEntity) {
         try {
             //必须是jsonList类型 单个融合锤子🔨
-            JSONArray jsonArray = JSONUtil.parseArray(apiManageEntity.getApis());
+            JSONArray jsonArray = JSONUtil.parseArray(apiManageEntity.getIndexId());
             List<Object> data;
             switch (apiManageEntity.getFusion()) {
                 case 0:
                     //接口类型
                     data = jsonArray.parallelStream().map(String::valueOf).map(Integer::valueOf).map(t -> new QueryDataDto() {
                         {
-                            setApiId(t);
+                            setIndexId(t);
                         }
                     }).map(dataApiFeign::getData).map(Result::getResult).collect(Collectors.toList());
                     break;
@@ -246,11 +241,10 @@ public class ApiServlet extends HttpServlet {
      * 匹配请求参数
      *
      * @param request
-     * @param jsonArray
      * @return
      */
     @SuppressWarnings("SuspiciousMethodCalls")
-    private JSONObject getParams(HttpServletRequest request, JSONArray jsonArray) {
+    private JSONObject getParams(HttpServletRequest request) {
         String contentType = request.getContentType();
         //必须是application/json请求
         if (contentType.equalsIgnoreCase(CommonConstant.APP_JSON)) {
@@ -258,9 +252,6 @@ public class ApiServlet extends HttpServlet {
             JSONObject httpJsonBody = getHttpJsonBody(request);
             if (Objects.isNull(httpJsonBody)) {
                 return new JSONObject();
-            }
-            for (int i = 0; i < jsonArray.size(); i++) {
-                jsonObject.set(jsonArray.getStr(i), httpJsonBody.get(jsonArray.get(i)));
             }
             return jsonObject;
         } else {
@@ -284,7 +275,7 @@ public class ApiServlet extends HttpServlet {
                 sb.append(line);
             }
             br.close();
-            return JSONUtil.parseObj(sb.toString());
+            return JSONUtil.isTypeJSON(br.toString()) ? JSONUtil.parseObj(sb.toString()) : null;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

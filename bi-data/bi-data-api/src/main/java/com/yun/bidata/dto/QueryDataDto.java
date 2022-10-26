@@ -8,6 +8,6 @@ import lombok.Data;
  */
 @Data
 public class QueryDataDto {
-    private Integer apiId;
+    private Integer indexId;
     private String params;
 }

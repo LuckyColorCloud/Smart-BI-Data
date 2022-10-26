@@ -6,21 +6,23 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.jayway.jsonpath.JsonPath;
+import com.yun.apimanage.api.ApiManageFeign;
+import com.yun.apimanage.dto.ProjectDto;
 import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
-import com.yun.bidata.entity.ApiPathEntity;
+import com.yun.bidata.dto.RequestDto;
+import com.yun.bidata.entity.IndexConfigEntity;
 import com.yun.bidata.entity.UserRoleEntity;
 import com.yun.bidata.enums.FormatConversion;
+import com.yun.bidata.enums.RequestEnum;
 import com.yun.bidata.exception.DataException;
-import com.yun.bidata.service.ApiPathService;
 import com.yun.bidata.service.DataService;
+import com.yun.bidata.service.IndexConfigService;
 import com.yun.bidata.service.UserRoleService;
-import com.yun.bidata.util.HttpUtil;
+import com.yun.bidata.util.RequestUtil;
 import com.yun.bidatacommon.constant.CommonConstant;
 import com.yun.bidatacommon.util.JavaFormat;
 import com.yun.bidatacommon.vo.Result;
-import com.yun.bidatastorage.api.DataStorageApiFeign;
-import com.yun.bidatastorage.dto.SaveDataDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,17 +43,17 @@ import java.util.concurrent.TimeUnit;
 @Service("dataServiceImpl")
 public class DataServiceImpl implements DataService {
     @Autowired
-    ApiPathService apiPathService;
+    IndexConfigService indexConfigService;
     @Autowired
     UserRoleService userRoleService;
     @Autowired
-    DataStorageApiFeign dataStorageApiFeign;
+    ApiManageFeign apiManageFeign;
 
     @Resource
     RedisTemplate<String, Object> redisTemplate;
 
     @Value("${smart.data.timeOut:3000}")
-    private Integer timeOut;
+    private Long timeOut;
 
     /**
      * 远程调用获取实时数据
@@ -59,48 +61,53 @@ public class DataServiceImpl implements DataService {
      * @param dto 获取数据类
      * @return 数据结果
      */
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Result<Object> getData(QueryDataDto dto) {
-        ApiPathEntity apiPathEntity = apiPathService.getById(dto.getApiId());
-        //保证脏数据的情况下 不抛出异常 进行逻辑判断
-        if (apiPathEntity == null) {
+        IndexConfigEntity indexConfigEntity = indexConfigService.getById(dto.getIndexId());
+        //指标是否存在
+        if (indexConfigEntity == null) {
             return Result.ERROR(Result.ResultEnum.INTERFACE_DOES_NOT_EXIST);
         }
         //获取需要的token 角色配置信息
-        UserRoleEntity userRoleEntity = userRoleService.getById(apiPathEntity.getUserRoleId());
+        UserRoleEntity userRoleEntity = userRoleService.getById(indexConfigEntity.getTokenId());
         //数据库无此角色 抛出异常
         if (userRoleEntity == null) {
             return Result.ERROR(Result.ResultEnum.ROLE_TOKEN_DOES_NOT_EXIST);
         }
+        //获取上级项目 公共信息
+        Result<ProjectDto> result = apiManageFeign.queryProjectById(userRoleEntity.getProjectId());
+        if (result == null || !result.isSuccess()) {
+            return Result.ERROR(result.getCode(), result.getMessage());
+        }
+        ProjectDto project = result.getResult();
         try {
             //根据角色获取Token
             String token = queryToken(userRoleEntity);
-            //替换占位符 为 token
-            apiPathEntity.setPrivateHeader(apiPathEntity.getPrivateHeader().replace(CommonConstant.TOKEN, token));
-            //如果有传参body 以传参为准 如没有使用默认参数
-            apiPathEntity.setBody(StrUtil.isEmpty(dto.getParams()) || JSONUtil.parseObj(dto.getParams()).isEmpty() ? apiPathEntity.getBody() : dto.getParams());
+            //获取请求信息
+            RequestDto requestDto = new RequestDto();
+            requestDto.setUrl(project.getDomain() + indexConfigEntity.getUrl());
+            requestDto.setHeaders(RequestUtil.apply(project.getHeaders(), indexConfigEntity.getPrivateHeader(), new HashMap<String, Object>(1) {{
+                put(project.getTokenKey(), token);
+            }}));
+            //TODO 缺少动态参数
             //请求返回结果
-            String body = apiPathEntity.getRequestType().equals(0) ? HttpUtil.get(userRoleEntity, timeOut, apiPathEntity) : HttpUtil.post(userRoleEntity, timeOut, apiPathEntity);
+            String resultBody = RequestEnum.valueOf(indexConfigEntity.getRequestType().toUpperCase()).conversion(requestDto);
             //根据jsonPath 得到想要的数据集 初步处理
-            String result = StrUtil.isEmpty(apiPathEntity.getJsonPath()) ? body : JsonPath.read(body, apiPathEntity.getJsonPath()).toString();
+            String processResult = StrUtil.isEmpty(indexConfigEntity.getJsonPath()) ? resultBody : JsonPath.read(resultBody, indexConfigEntity.getJsonPath()).toString();
             //判断是否有需要拦截的字段
-            JSONArray excludes = StrUtil.isEmpty(apiPathEntity.getExclude()) ? null : JSONUtil.parseArray(apiPathEntity.getExclude());
+            JSONArray excludes = StrUtil.isEmpty(indexConfigEntity.getExclude()) ? null : JSONUtil.parseArray(indexConfigEntity.getExclude());
             //判断返回数据类型 拦截字段为空直接返回
             if (excludes != null && excludes.size() > 0) {
-                if (JSONUtil.isTypeJSONObject(result)) {
+                if (JSONUtil.isTypeJSONObject(processResult)) {
                     JSONObject jsonObject = JSONUtil.parseObj(result);
                     HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
                     if (!jsonObject.isEmpty()) {
                         //拦截需要的key
                         excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, jsonObject.get(t)));
                     }
-                    //远程调用存储数据
-                    Result<Object> saveDataResult = saveData(JSONUtil.toJsonStr(hashMap), apiPathEntity.getStorageTableId());
-                    if (!saveDataResult.isSuccess()) {
-                        log.error("bi-dataStorage存储数据失败:{}", saveDataResult);
-                    }
                     return Result.OK(hashMap);
-                } else if (JSONUtil.isTypeJSONArray(result)) {
+                } else if (JSONUtil.isTypeJSONArray(processResult)) {
                     JSONArray jsonArray = JSONUtil.parseArray(result);
                     ArrayList<HashMap<String, Object>> hashMaps = new ArrayList<>(jsonArray.size());
                     //拦截需要的key
@@ -109,11 +116,6 @@ public class DataServiceImpl implements DataService {
                         excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, json.get(t)));
                         hashMaps.add(hashMap);
                     });
-                    //远程调用存储数据
-                    Result<Object> saveDataResult = saveData(JSONUtil.toJsonStr(hashMaps), apiPathEntity.getStorageTableId());
-                    if (!saveDataResult.isSuccess()) {
-                        log.error("bi-dataStorage存储数据失败:{}", saveDataResult);
-                    }
                     return Result.OK(hashMaps);
                 } else {
                     //非JSON 情况无法落库!!! 可以由人工扩展选择存到redis等
@@ -161,17 +163,18 @@ public class DataServiceImpl implements DataService {
         if (redisTemplate.opsForValue().get(CommonConstant.CACHE_TOKEN_HEAD + userRoleEntity.getId()) == null) {
             synchronized (userRoleEntity.getId().toString().intern()) {
                 if (redisTemplate.opsForValue().get(CommonConstant.CACHE_TOKEN_HEAD + userRoleEntity.getId()) == null) {
-                    // 0.GET 1.POST def:抛异常  可自己扩展其他方式
+                    //请求对象
+                    RequestDto requestDto = new RequestDto();
+                    requestDto.setTimeOut(timeOut);
+                    requestDto.setHeaders(userRoleEntity.getHeader());
+                    requestDto.setBody(userRoleEntity.getBody());
+                    requestDto.setUrl(userRoleEntity.getUrl());
                     String temp;
-                    switch (userRoleEntity.getRequestType()) {
-                        case 0:
-                            temp = HttpUtil.get(userRoleEntity, timeOut);
-                            break;
-                        case 1:
-                            temp = HttpUtil.post(userRoleEntity, timeOut);
-                            break;
-                        default:
-                            throw new DataException();
+                    try {
+                        temp = RequestEnum.valueOf(userRoleEntity.getRequestType().toUpperCase()).conversion(requestDto);
+                    } catch (IllegalArgumentException e) {
+                        log.info("该类型请求类型不存在:{}", userRoleEntity.getRequestType());
+                        return null;
                     }
                     //通过 jsonPath 获取需要的token 不在进行转换json获取
                     result = JsonPath.read(temp, userRoleEntity.getJsonPath()).toString();
@@ -190,20 +193,4 @@ public class DataServiceImpl implements DataService {
         return result;
     }
 
-    /**
-     * 远程调用存储数据
-     *
-     * @param content   压缩后的存储数据
-     * @param storageId 存储id
-     * @return 存储结果
-     */
-    private Result<Object> saveData(String content, Integer storageId) {
-        //TODO 大数据量情况下 会有问题
-        SaveDataDto saveDataDto = new SaveDataDto();
-        saveDataDto.setCharset(CommonConstant.UTF_8);
-        saveDataDto.setContext(ZipUtil.gzip(content, CommonConstant.UTF_8));
-        saveDataDto.setStorageId(storageId);
-        Result<Object> result = dataStorageApiFeign.saveData(saveDataDto);
-        return result;
-    }
 }

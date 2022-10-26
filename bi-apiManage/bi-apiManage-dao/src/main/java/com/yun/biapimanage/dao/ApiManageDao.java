@@ -1,17 +1,16 @@
 package com.yun.biapimanage.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yun.biapimanage.entity.ApiManageEntity;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * api管理
- * 
+ * <p>
+ * api管理  Mapper 接口
+ * </p>
+ *
  * @author Yun
- * @email 2289128964@qq.com
- * @date 2022-08-30 10:27:44
+ * @since 2022-10-26
  */
-@Mapper
 public interface ApiManageDao extends BaseMapper<ApiManageEntity> {
-	
+
 }

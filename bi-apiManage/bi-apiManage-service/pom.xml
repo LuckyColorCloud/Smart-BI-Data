@@ -25,6 +25,12 @@
             <groupId>com.yun</groupId>
             <artifactId>bi-dataStorage-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-apiManage-api</artifactId>
+        </dependency>
+
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

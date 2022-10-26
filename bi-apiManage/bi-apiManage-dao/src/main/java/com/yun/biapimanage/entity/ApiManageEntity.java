@@ -3,79 +3,60 @@ package com.yun.biapimanage.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
+ * <p>
  * api管理
+ * </p>
  *
  * @author Yun
- * @email 2289128964@qq.com
- * @date 2022-08-30 10:27:44
+ * @since 2022-10-26
  */
-@Data
 @TableName("api_manage")
+@ApiModel(value = "ApiManageEntity对象", description = "api管理 ")
+@Data
 public class ApiManageEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
-    /**
-     * 更新时间
-     */
-    private Date updatedTime;
-    /**
-     * 主键
-     */
-    @TableId(type = IdType.AUTO)
-    private Integer id;
-    /**
-     * 请求路径
-     */
-    private String path;
-    /**
-     * 第三方转发id 或 sql id
-     */
-    private Integer apiId;
-    /**
-     * 请求参数
-     */
-    private String json;
-    /**
-     * 静态数据
-     */
-    private String result;
-    /**
-     * 是否鉴权
-     */
-    private boolean auth;
-    /**
-     * 接口类型 0.接口转发1.查询数据库 2.静态数据直接返回result 3.数据融合(根据id)4.数据融合(数组合并)
-     */
-    private Integer type;
-    /**
-     * 图表类型
-     */
-    private String chartType;
-    /**
-     * 图表参数
-     */
-    private String params;
-    /**
-     * 数据融合参数 只能是一种类型
-     */
-    private String apis;
-    /**
-     * 融合类型  0.接口转发1.查询数据库
-     */
-    private Integer fusion;
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createdTime;
 
-    /**
-     * 融合参数=====>{"id":1}====>该值直接写id
-     */
-    private String  fusionParams;
+    @ApiModelProperty("更新时间")
+    private LocalDateTime updatedTime;
+    @ApiModelProperty("主键")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+    @ApiModelProperty("请求路径 请求路径")
+    private String apiPath;
+    @ApiModelProperty("指标 多个数据集")
+    private String indexId;
+    @ApiModelProperty("类型 0.普通接口1.混合数据库接口，2.混合SQL接口")
+    private Integer type;
+    @ApiModelProperty("文档描述 文档描述")
+    private String document;
+    @ApiModelProperty("是否鉴权 是否鉴权")
+    private Boolean auto;
+    @ApiModelProperty("所属项目 所属项目")
+    private Integer projectId;
+    @ApiModelProperty("静态数据 静态数据")
+    private String staticData;
+    @ApiModelProperty("接口可写 接口可写")
+    private Boolean writable;
+    @ApiModelProperty("图表参数")
+    private String params;
+    @ApiModelProperty("融合类型 0.http 1.数据库")
+    private Integer fusion;
+    @ApiModelProperty("融合类型参数")
+    private String fusionParams;
+    @ApiModelProperty("字符类型")
+    private String chartType;
+    @ApiModelProperty("是否鉴权")
+    private Boolean auth;
 }
