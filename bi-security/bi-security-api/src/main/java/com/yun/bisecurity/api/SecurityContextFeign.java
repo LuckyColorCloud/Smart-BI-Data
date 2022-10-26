@@ -19,7 +19,7 @@ import java.util.Set;
         name = "bi-security",
         path = "/open/security/api/context"
 )
-public interface SecurityContextFegin {
+public interface SecurityContextFeign {
 
     /**
      * 获取abac鉴权的规则
@@ -35,18 +35,18 @@ public interface SecurityContextFegin {
     /**
      * 用户鉴权接口
      * @author Sober
-     * @param sPID 会话生命周期id
+     * @param sPid 会话生命周期id
      * @return com.yun.bidataconnmon.vo.Result<java.lang.Boolean>
      */
     @RequestMapping(value = "/isLogin", method = RequestMethod.POST)
-    Result<Boolean> isLogin(@RequestParam("sPID") long sPID);
+    Result<Boolean> isLogin(@RequestParam("sPid") long sPid);
 
     /**
      * 获取当前会话LoginId
      * @author Sober
-     * @param sPID 会话生命周期id
+     * @param sPid 会话生命周期id
      * @return com.yun.bidataconnmon.vo.Result<java.lang.String>
      */
     @RequestMapping(value = "/getLoginId", method = RequestMethod.POST)
-    Result<String> getLoginId(@RequestParam("sPID") long sPID);
+    Result<String> getLoginId(@RequestParam("sPid") long sPid);
 }

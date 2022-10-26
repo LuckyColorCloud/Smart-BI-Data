@@ -17,14 +17,15 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
  * @author Sober
  */
 @Configuration
-public class FeginConfig {
+public class FeignConfig {
 
     /**
      * 默认connect timeout 10s，read timeout 60s
+     *
      * @return
      */
     @Bean
-    public Request.Options feignOptions(){
+    public Request.Options feignOptions() {
         return new Request.Options();
     }
 
