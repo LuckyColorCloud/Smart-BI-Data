@@ -2,7 +2,7 @@ package com.yun.bidatastorage.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.vo.Result;
 import com.yun.bidatastorage.entity.StorageTableEntity;
 import com.yun.bidatastorage.service.StorageTableService;
 import io.swagger.annotations.Api;

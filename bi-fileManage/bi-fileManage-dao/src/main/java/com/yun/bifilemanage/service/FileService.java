@@ -1,7 +1,7 @@
 package com.yun.bifilemanage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.vo.Result;
 import com.yun.bifilemanage.entity.FileEntity;
 import org.springframework.web.multipart.MultipartFile;
 

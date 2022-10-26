@@ -4,7 +4,7 @@ import com.yun.bidata.api.DataApiFeign;
 import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidata.service.DataService;
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.vo.Result;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

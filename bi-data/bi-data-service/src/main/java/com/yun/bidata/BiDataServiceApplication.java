@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @SpringBootApplication
 @MapperScan(value = "com.yun.bidata.dao")
-@ComponentScan(basePackages = {"com.yun.bidata", "com.yun.bidataconnmon"})
+@ComponentScan(basePackages = {"com.yun.bidata", "com.yun.bidatacommon"})
 @EnableFeignClients(basePackages = {
         "com.yun.*.api"
 })
