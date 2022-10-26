@@ -5,7 +5,7 @@ import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.yun.bidataconnmon.constant.CommonConstant;
+import com.yun.bidatacommon.constant.CommonConstant;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;

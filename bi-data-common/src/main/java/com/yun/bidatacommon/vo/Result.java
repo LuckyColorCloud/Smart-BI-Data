@@ -1,4 +1,4 @@
-package com.yun.bidataconnmon.vo;
+package com.yun.bidatacommon.vo;
 
 import lombok.Data;
 

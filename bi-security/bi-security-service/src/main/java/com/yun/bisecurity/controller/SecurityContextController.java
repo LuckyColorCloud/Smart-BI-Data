@@ -2,7 +2,7 @@ package com.yun.bisecurity.controller;
 
 import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -30,7 +30,7 @@ public class SecurityContextController {
      *
      * @param route 路由
      * @param mode  请求方式
-     * @return com.yun.bidataconnmon.vo.Result<java.util.Set < com.sobercoding.loopauth.abac.model.Policy>>
+     * @return com.yun.bidatacommon.vo.Result<java.util.Set < com.sobercoding.loopauth.abac.model.Policy>>
      * @author Sober
      */
     @PostMapping("/getPolicySet")
@@ -59,7 +59,7 @@ public class SecurityContextController {
      * 用户鉴权接口
      *
      * @param sPid 会话生命周期id
-     * @return com.yun.bidataconnmon.vo.Result<java.lang.Boolean>
+     * @return com.yun.bidatacommon.vo.Result<java.lang.Boolean>
      * @author Sober
      */
     @PostMapping("/isLogin")
@@ -75,7 +75,7 @@ public class SecurityContextController {
      * 获取当前会话LoginId
      *
      * @param sPid 会话生命周期id
-     * @return com.yun.bidataconnmon.vo.Result<java.lang.String>
+     * @return com.yun.bidatacommon.vo.Result<java.lang.String>
      * @author Sober
      */
     @PostMapping("/getLoginId")

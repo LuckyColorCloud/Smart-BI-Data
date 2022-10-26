@@ -3,7 +3,7 @@ package com.yun.bigateway.loopauth;
 import com.sobercoding.loopauth.abac.face.AbacInterface;
 import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.api.SecurityContextFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

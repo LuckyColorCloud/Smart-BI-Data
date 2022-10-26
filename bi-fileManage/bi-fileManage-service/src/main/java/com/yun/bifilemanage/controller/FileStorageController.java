@@ -3,7 +3,7 @@ package com.yun.bifilemanage.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.vo.Result;
 import com.yun.bifilemanage.entity.FileEntity;
 import com.yun.bifilemanage.service.FileService;
 import io.swagger.annotations.Api;

@@ -6,7 +6,7 @@ package com.yun.bidatastorage.api;
  * @author Yun
  */
 
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.vo.Result;
 import com.yun.bidatastorage.dto.DropTableDto;
 import com.yun.bidatastorage.dto.SaveDataDto;
 import com.yun.bidatastorage.dto.SaveFileDto;

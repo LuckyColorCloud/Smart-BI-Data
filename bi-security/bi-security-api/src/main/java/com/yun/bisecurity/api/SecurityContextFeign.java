@@ -1,8 +1,7 @@
 package com.yun.bisecurity.api;
 
 import com.sobercoding.loopauth.abac.model.Policy;
-import com.yun.bidataconnmon.vo.Result;
-import feign.Param;
+import com.yun.bidatacommon.vo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +25,7 @@ public interface SecurityContextFeign {
      * @author Sober
      * @param route 路由
      * @param mode 请求方式
-     * @return com.yun.bidataconnmon.vo.Result<java.util.Set<com.sobercoding.loopauth.abac.model.Policy>>
+     * @return com.yun.bidatacommon.vo.Result<java.util.Set<com.sobercoding.loopauth.abac.model.Policy>>
      */
     @RequestMapping(value = "/getPolicySet", method = RequestMethod.POST)
     Result<Set<Policy>> getPolicySet(@RequestParam("route") String route,
@@ -36,7 +35,7 @@ public interface SecurityContextFeign {
      * 用户鉴权接口
      * @author Sober
      * @param sPid 会话生命周期id
-     * @return com.yun.bidataconnmon.vo.Result<java.lang.Boolean>
+     * @return com.yun.bidatacommon.vo.Result<java.lang.Boolean>
      */
     @RequestMapping(value = "/isLogin", method = RequestMethod.POST)
     Result<Boolean> isLogin(@RequestParam("sPid") long sPid);
@@ -45,7 +44,7 @@ public interface SecurityContextFeign {
      * 获取当前会话LoginId
      * @author Sober
      * @param sPid 会话生命周期id
-     * @return com.yun.bidataconnmon.vo.Result<java.lang.String>
+     * @return com.yun.bidatacommon.vo.Result<java.lang.String>
      */
     @RequestMapping(value = "/getLoginId", method = RequestMethod.POST)
     Result<String> getLoginId(@RequestParam("sPid") long sPid);

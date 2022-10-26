@@ -23,7 +23,7 @@
         <module>bi-data</module>
         <module>bi-apiManage</module>
         <module>bi-gateway</module>
-        <module>bi-data-connmon</module>
+        <module>bi-data-common</module>
         <module>bi-security</module>
         <module>bi-generation</module>
     </modules>
@@ -126,7 +126,7 @@
             </dependency>
             <dependency>
                 <groupId>com.yun</groupId>
-                <artifactId>bi-data-connmon</artifactId>
+                <artifactId>bi-data-common</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

@@ -1,4 +1,4 @@
-package com.yun.bidataconnmon.util;
+package com.yun.bidatacommon.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

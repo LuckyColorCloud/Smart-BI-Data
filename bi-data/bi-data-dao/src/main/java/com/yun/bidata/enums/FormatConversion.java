@@ -4,8 +4,8 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.jayway.jsonpath.JsonPath;
-import com.yun.bidataconnmon.constant.CommonConstant;
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.constant.CommonConstant;
+import com.yun.bidatacommon.vo.Result;
 
 import java.util.ArrayList;
 import java.util.HashMap;

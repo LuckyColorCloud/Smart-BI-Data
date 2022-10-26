@@ -1,4 +1,4 @@
-package com.yun.bidataconnmon.constant;
+package com.yun.bidatacommon.constant;
 
 /**
  * @author Yun

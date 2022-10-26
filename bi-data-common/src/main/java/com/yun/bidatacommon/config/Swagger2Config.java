@@ -1,8 +1,8 @@
-package com.yun.bidataconnmon.config;
+package com.yun.bidatacommon.config;
 
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
-import com.yun.bidataconnmon.constant.CommonConstant;
+import com.yun.bidatacommon.constant.CommonConstant;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

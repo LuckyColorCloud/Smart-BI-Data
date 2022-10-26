@@ -6,7 +6,7 @@ import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
 import com.sobercoding.loopauth.abac.model.builder.AbacPolicyFunBuilder;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.springbootwebfluxstarter.filter.LoopAuthWebFluxFilter;
-import com.yun.bidataconnmon.vo.Result;
+import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.api.SecurityContextFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
