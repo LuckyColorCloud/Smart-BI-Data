@@ -24,7 +24,6 @@
         <module>bi-apiManage</module>
         <module>bi-gateway</module>
         <module>bi-data-common</module>
-        <module>bi-security</module>
         <module>bi-generation</module>
     </modules>
 
@@ -34,7 +33,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mybatis.plus.version>3.4.3.1</mybatis.plus.version>
         <hutool.version>5.8.5</hutool.version>
-        <LoopAuth.version>2.1.0</LoopAuth.version>
         <java.version>1.8</java.version>
         <springboot.version>2.3.5.RELEASE</springboot.version>
         <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
@@ -46,25 +44,14 @@
         <spring-gateway.version>2.2.5.RELEASE</spring-gateway.version>
         <mysql-connector.version>8.0.21</mysql-connector.version>
         <druid.version>1.1.17</druid.version>
+        <swagger2.version>3.0.0</swagger2.version>
         <revision>1.0.0.Beta.3</revision>
     </properties>
 
     <!--    依赖管理-->
     <dependencyManagement>
         <dependencies>
-            <!-- LoopAuth 权限 -->
-            <dependency>
-                <groupId>com.sobercoding</groupId>
-                <artifactId>LoopAuth-spring-boot-starter</artifactId>
-                <version>${LoopAuth.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sobercoding</groupId>
-                <artifactId>LoopAuth-spring-boot-webflux-starter</artifactId>
-                <version>${LoopAuth.version}</version>
-            </dependency>
-            <!-- LoopAuth End -->
-
+            <!--             mysql-connector-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -87,6 +74,11 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
             </dependency>
             <!--            &lt;!&ndash; spring-cloud&ndash;&gt;-->
             <dependency>
@@ -166,5 +158,6 @@
             <version>${springboot.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 </project>

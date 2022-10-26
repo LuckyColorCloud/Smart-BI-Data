@@ -1,18 +1,16 @@
 package com.yun.biapimanage.service;
 
-
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.yun.biapimanage.entity.ApiManageEntity;
-
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * api管理
+ * <p>
+ * api管理  服务类
+ * </p>
  *
  * @author Yun
- * @email 2289128964@qq.com
- * @date 2022-08-30 10:27:44
+ * @since 2022-10-26
  */
 public interface ApiManageService extends IService<ApiManageEntity> {
 
 }
-

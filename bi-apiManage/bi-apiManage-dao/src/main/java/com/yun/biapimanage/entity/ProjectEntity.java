@@ -1,4 +1,4 @@
-package com.yun.bidata.entity;
+package com.yun.biapimanage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,14 +10,14 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 
+ * 项目表 
  * </p>
  *
  * @author Yun
- * @since 2022-10-21
+ * @since 2022-10-26
  */
 @TableName("project")
-@ApiModel(value = "ProjectEntity对象", description = "")
+@ApiModel(value = "ProjectEntity对象", description = "项目表 ")
 public class ProjectEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,10 +30,19 @@ public class ProjectEntity implements Serializable {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("项目名称")
     private String projectName;
+
+    @ApiModelProperty("域名 域名前缀")
+    private String domian;
+
+    @ApiModelProperty("头信息 公共头信息")
+    private String header;
+
+    @ApiModelProperty("tokenkey token请求的key")
+    private String tokenKey;
 
 
     public LocalDateTime getCreatedTime() {
@@ -52,11 +61,11 @@ public class ProjectEntity implements Serializable {
         this.updatedTime = updatedTime;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,6 +77,30 @@ public class ProjectEntity implements Serializable {
         this.projectName = projectName;
     }
 
+    public String getDomian() {
+        return domian;
+    }
+
+    public void setDomian(String domian) {
+        this.domian = domian;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public String getTokenKey() {
+        return tokenKey;
+    }
+
+    public void setTokenKey(String tokenKey) {
+        this.tokenKey = tokenKey;
+    }
+
     @Override
     public String toString() {
         return "ProjectEntity{" +
@@ -75,6 +108,9 @@ public class ProjectEntity implements Serializable {
         ", updatedTime=" + updatedTime +
         ", id=" + id +
         ", projectName=" + projectName +
+        ", domian=" + domian +
+        ", header=" + header +
+        ", tokenKey=" + tokenKey +
         "}";
     }
 }

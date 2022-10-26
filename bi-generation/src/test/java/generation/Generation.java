@@ -23,7 +23,7 @@ public class Generation {
     public void generation() {
         DataSourceConfig.Builder dataSource = getDataSource("jdbc:mysql://127.0.0.1:3306/smart_bi_data?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8", "root", "123456", "smart_bi_data");
         // outputDir 可以直接写项目地址 直接生成到项目里 比如D:\project\Smart-BI-Data
-        generate(dataSource, "bi-data", "D:\\project\\Smart-BI-Data", "Yun", "api_path", "project");
+        generate(dataSource, "bi-apiManage", "E:\\mybatis", "Yun", "project", "api_manage");
     }
 
     /**
@@ -35,7 +35,7 @@ public class Generation {
      * @param author      作者
      */
     private static void generate(DataSourceConfig.Builder dataSource, String serviceName, String outputDir, String author, String... tableName) {
-        String rootPath = "com.yun." + serviceName.replace("-", "");
+        String rootPath = "com.yun." + serviceName.replace("-", "").toLowerCase() ;
         FastAutoGenerator autoGenerator = FastAutoGenerator.create(dataSource).
                 globalConfig(builder -> {
                     builder.author(author) // 设置作者
@@ -45,11 +45,11 @@ public class Generation {
                             .outputDir(outputDir); // 指定输出目录
                 }).packageConfig(builder -> {
             builder.parent("") // 设置父包名
-                    .controller(serviceName + "/" + serviceName + "-service/src/main/java/com/yun/bidata/controller")
-                    .mapper(serviceName + "/" + serviceName + "-dao/src/main/java/com/yun/bidata/dao")
-                    .entity(serviceName + "/" + serviceName + "-dao/src/main/java/com/yun/bidata/entity")
-                    .service(serviceName + "/" + serviceName + "-dao/src/main/java/com/yun/bidata/service")
-                    .serviceImpl(serviceName + "/" + serviceName + "-dao/src/main/java/com/yun/bidata/service/impl")
+                    .controller(serviceName + "/" + serviceName + "-service/src/main/java/com/yun/" + serviceName.replace("-", "").toLowerCase() + "/controller")
+                    .mapper(serviceName + "/" + serviceName + "-dao/src/main/java/com/yun/" + serviceName.replace("-", "").toLowerCase()  + "/dao")
+                    .entity(serviceName + "/" + serviceName + "-dao/src/main/java/com/yun/" + serviceName.replace("-", "").toLowerCase()  + "/entity")
+                    .service(serviceName + "/" + serviceName + "-dao/src/main/java/com/yun/" + serviceName.replace("-", "").toLowerCase()  + "/service")
+                    .serviceImpl(serviceName + "/" + serviceName + "-dao/src/main/java/com/yun/" + serviceName.replace("-", "").toLowerCase()  + "/service/impl")
                     .packageEntity(rootPath + ".entity")
                     .packageController(rootPath + ".controller")
                     .packageMapper(rootPath + ".dao")
@@ -72,7 +72,7 @@ public class Generation {
                     .build();
         });
         autoGenerator.execute();
-        FileUtil.del(outputDir+"/mapper");
+        FileUtil.del(outputDir + "/mapper");
     }
 
     /**

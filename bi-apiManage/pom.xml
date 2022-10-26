@@ -33,6 +33,11 @@
                 <artifactId>bi-apiManage-dao</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.yun</groupId>
+                <artifactId>bi-apiManage-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <dependency>
                 <groupId>mysql</groupId>

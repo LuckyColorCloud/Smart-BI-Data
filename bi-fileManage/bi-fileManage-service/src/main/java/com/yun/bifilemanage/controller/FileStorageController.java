@@ -12,8 +12,10 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.Date;
 
@@ -49,12 +51,12 @@ public class FileStorageController {
     /**
      * 保存
      */
-    @PostMapping("/save")
+    @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "file", dataType = "__file", required = true, value = "文件"),
-            @ApiImplicitParam(paramType = "form", name = "md5", dataType = "String", required = true, value = "文件md5"),
-            @ApiImplicitParam(paramType = "form", name = "sourceId", dataType = "int", required = true, value = "存储数据源ID"),
-            @ApiImplicitParam(paramType = "form", name = "saveName", dataType = "String", required = true, value = "保存表名称")
+            @ApiImplicitParam(paramType = "query", name = "file", dataType = "__file", required = true, value = "文件"),
+            @ApiImplicitParam(paramType = "query", name = "md5", dataType = "String", required = true, value = "文件md5"),
+            @ApiImplicitParam(paramType = "query", name = "sourceId", dataType = "java.lang.Integer", required = true, value = "存储数据源ID"),
+            @ApiImplicitParam(paramType = "query", name = "saveName", dataType = "String", required = true, value = "保存表名称")
     })
     @ApiOperation("保存文件数据")
     public Result<Object> save(MultipartFile file, String md5, String saveName, Integer sourceId) {
