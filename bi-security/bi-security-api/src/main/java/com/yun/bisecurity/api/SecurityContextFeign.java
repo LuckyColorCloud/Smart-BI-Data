@@ -38,7 +38,7 @@ public interface SecurityContextFeign {
      * @return com.yun.bidatacommon.vo.Result<java.lang.Boolean>
      */
     @RequestMapping(value = "/isLogin", method = RequestMethod.POST)
-    Result<Boolean> isLogin(@RequestParam("sPid") long sPid);
+    Result<Object> isLogin(@RequestParam("sPid") long sPid);
 
     /**
      * 获取当前会话LoginId

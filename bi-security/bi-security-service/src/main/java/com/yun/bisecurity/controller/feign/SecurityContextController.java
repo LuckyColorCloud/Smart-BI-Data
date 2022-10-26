@@ -1,8 +1,10 @@
-package com.yun.bisecurity.controller;
+package com.yun.bisecurity.controller.feign;
 
 import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
+import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.yun.bidatacommon.vo.Result;
+import com.yun.bisecurity.api.SecurityContextFeign;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -23,7 +25,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/open/security/api/context")
 @Api(tags = "用户全局会话上下文管理相关接口")
-public class SecurityContextController {
+public class SecurityContextController implements SecurityContextFeign {
 
     /**
      * 获取abac鉴权的规则
@@ -33,13 +35,13 @@ public class SecurityContextController {
      * @return com.yun.bidatacommon.vo.Result<java.util.Set < com.sobercoding.loopauth.abac.model.Policy>>
      * @author Sober
      */
-    @PostMapping("/getPolicySet")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "route", dataType = "String", required = true, value = "路由"),
             @ApiImplicitParam(paramType = "query", name = "mode", dataType = "String", required = true, value = "请求方法")
     })
     @ApiOperation("获取abac鉴权的规则")
-    public Result<Set<Policy>> getPolicySet(@Param("route") String route, @Param("mode") String mode) {
+    @Override
+    public Result<Set<Policy>> getPolicySet(String route, String mode) {
         LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(mode);
         // 这里只做演示，自行编写的时候，请根据自己存储abac规则的方式查询获取
         Set<Policy> set = new HashSet<>();
@@ -62,13 +64,14 @@ public class SecurityContextController {
      * @return com.yun.bidatacommon.vo.Result<java.lang.Boolean>
      * @author Sober
      */
-    @PostMapping("/isLogin")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "sPID", dataType = "long", required = true, value = "会话生命周期id")
     })
     @ApiOperation("用户鉴权接口")
-    public Result<Boolean> isLogin(@Param("sPID") long sPid) {
-        return Result.OK(true);
+    @Override
+    public Result<Object> isLogin(long sPid) {
+        LoopAuthSession.isLogin();
+        return Result.OK(LoopAuthSession.getTokenModel());
     }
 
     /**
@@ -78,12 +81,12 @@ public class SecurityContextController {
      * @return com.yun.bidatacommon.vo.Result<java.lang.String>
      * @author Sober
      */
-    @PostMapping("/getLoginId")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "sPid", dataType = "long", required = true, value = "会话生命周期id")
     })
     @ApiOperation("获取当前会话LoginId")
-    public Result<String> getLoginId(@Param("sPID") long sPid) {
+    @Override
+    public Result<String> getLoginId(long sPid) {
         return Result.OK("1");
     }
 

@@ -1,11 +1,11 @@
-package com.yun.bigateway.config;
+package com.yun.bisecurity.config;
 
 import com.sobercoding.loopauth.abac.AbacStrategy;
 import com.sobercoding.loopauth.abac.carryout.LoopAuthAbac;
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
 import com.sobercoding.loopauth.abac.model.builder.AbacPolicyFunBuilder;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
-import com.sobercoding.loopauth.springbootwebfluxstarter.filter.LoopAuthWebFluxFilter;
+import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.api.SecurityContextFeign;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoopAuthConfig {
 
-    @Autowired
-    private SecurityContextFeign securityContextFeign;
 
     @Bean
     public void setAbacConfig() {
@@ -31,36 +29,16 @@ public class LoopAuthConfig {
                                 // 创建校验方式  value为当前值即setSupplierMap提供的值
                                 // rule为规则的值即 Policy setProperty 的值
                                 .setMaFunction((value, rule) -> {
-                                    securityContextFeign.isLogin(1L);
+                                    LoopAuthSession.isLogin();
                                 })
                                 // 获得value方式
                                 .setSupplierMap(() -> true)
                 )
                 // loginId 校验规则
                 .loginId()
-                .setLoginId(() -> {
-                    String loginId = securityContextFeign.getLoginId(1L).getResult();
-                    return loginId;
-                })
+                .setLoginId(() -> LoopAuthSession.getTokenModel().getLoginId())
                 .build();
     }
 
-    /**
-     * 注册 [LoopAuth 全局过滤器]
-     */
-    @Bean
-    public LoopAuthWebFluxFilter getLoopAuthServletFilter() {
-        return new LoopAuthWebFluxFilter()
-                .addInclude("/**")
-                .addExclude("/test/login", LoopAuthHttpMode.GET)
-                // 认证函数: 每次请求执行
-                .setLoopAuthFilter((isIntercept, route, exchange) -> {
-                    if (isIntercept) {
-                        // ABAC 鉴权校验
-                        LoopAuthAbac.check(route, exchange.getRequest().getMethodValue());
-                    }
-                })
-                .setLoopAuthErrorFilter(e -> Result.ERROR(e.getMessage()));
-    }
 
 }
