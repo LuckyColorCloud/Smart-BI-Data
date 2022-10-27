@@ -26,7 +26,7 @@ import org.springframework.stereotype.Controller;
  * @author Yun
  * @since 2022-10-26
  */
-@Controller
+@RestController
 @RequestMapping("/userRoleEntity")
 @Api(tags = "查询第三方角色表")
 public class UserRoleController {

@@ -4,7 +4,6 @@ package com.baomidou.mybatisplus.generator.config;
 
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.sun.istack.internal.NotNull;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,18 +40,18 @@ public class PackageConfig {
         this.packageInfo = new HashMap();
     }
 
-    @NotNull
+
     public String getParent() {
         return StringUtils.isNotBlank(this.moduleName) ? this.parent + "." + this.moduleName : this.parent;
     }
 
-    @NotNull
+
     public String joinPackage(String subPackage) {
         String parent = this.getParent();
         return StringUtils.isBlank(parent) ? subPackage : parent + "." + subPackage;
     }
 
-    @NotNull
+
     public Map<String, String> getPackageInfo() {
         if (this.packageInfo.isEmpty()) {
             this.packageInfo.put("ModuleName", this.getModuleName());
@@ -136,83 +135,83 @@ public class PackageConfig {
             this.packageConfig = new PackageConfig();
         }
 
-        public Builder(@org.jetbrains.annotations.NotNull String parent, @NotNull String moduleName) {
+        public Builder(@org.jetbrains.annotations.NotNull String parent,  String moduleName) {
             this();
             this.packageConfig.parent = parent;
             this.packageConfig.moduleName = moduleName;
         }
 
-        public PackageConfig.Builder parent(@NotNull String parent) {
+        public PackageConfig.Builder parent( String parent) {
             this.packageConfig.parent = parent;
             return this;
         }
 
-        public PackageConfig.Builder moduleName(@NotNull String moduleName) {
+        public PackageConfig.Builder moduleName( String moduleName) {
             this.packageConfig.moduleName = moduleName;
             return this;
         }
 
-        public PackageConfig.Builder entity(@NotNull String entity) {
+        public PackageConfig.Builder entity( String entity) {
             this.packageConfig.entity = entity;
             return this;
         }
-        public PackageConfig.Builder packageEntity(@NotNull String packageEntity) {
+        public PackageConfig.Builder packageEntity( String packageEntity) {
             this.packageConfig.packageEntity = packageEntity;
             return this;
         }
-        public PackageConfig.Builder packageController(@NotNull String packageController) {
+        public PackageConfig.Builder packageController( String packageController) {
             this.packageConfig.packageController = packageController;
             return this;
         }
-        public PackageConfig.Builder packageMapper(@NotNull String packageMapper) {
+        public PackageConfig.Builder packageMapper( String packageMapper) {
             this.packageConfig.packageMapper = packageMapper;
             return this;
         }
-        public PackageConfig.Builder packageService(@NotNull String packageService) {
+        public PackageConfig.Builder packageService( String packageService) {
             this.packageConfig.packageService = packageService;
             return this;
         }
-        public PackageConfig.Builder packageServiceImpl(@NotNull String packageServiceImpl) {
+        public PackageConfig.Builder packageServiceImpl( String packageServiceImpl) {
             this.packageConfig.packageServiceImpl = packageServiceImpl;
             return this;
         }
-        public PackageConfig.Builder service(@NotNull String service) {
+        public PackageConfig.Builder service( String service) {
             this.packageConfig.service = service;
             return this;
         }
 
-        public PackageConfig.Builder serviceImpl(@NotNull String serviceImpl) {
+        public PackageConfig.Builder serviceImpl( String serviceImpl) {
             this.packageConfig.serviceImpl = serviceImpl;
             return this;
         }
 
-        public PackageConfig.Builder mapper(@NotNull String mapper) {
+        public PackageConfig.Builder mapper( String mapper) {
             this.packageConfig.mapper = mapper;
             return this;
         }
 
-        public PackageConfig.Builder xml(@NotNull String xml) {
+        public PackageConfig.Builder xml( String xml) {
             this.packageConfig.xml = xml;
             return this;
         }
 
-        public PackageConfig.Builder controller(@NotNull String controller) {
+        public PackageConfig.Builder controller( String controller) {
             this.packageConfig.controller = controller;
             return this;
         }
 
-        public PackageConfig.Builder other(@NotNull String other) {
+        public PackageConfig.Builder other( String other) {
             this.packageConfig.other = other;
             return this;
         }
 
-        public PackageConfig.Builder pathInfo(@NotNull Map<OutputFile, String> pathInfo) {
+        public PackageConfig.Builder pathInfo( Map<OutputFile, String> pathInfo) {
             this.packageConfig.pathInfo = pathInfo;
             return this;
         }
 
-        @NotNull
-        public String joinPackage(@NotNull String subPackage) {
+
+        public String joinPackage( String subPackage) {
             return this.packageConfig.joinPackage(subPackage);
         }
 

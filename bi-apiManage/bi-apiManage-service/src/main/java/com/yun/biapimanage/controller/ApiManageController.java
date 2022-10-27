@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Yun
  * @since 2022-10-26
  */
-@Controller
+@RestController
 @RequestMapping("/apiManageEntity")
 @Api(tags = "API管理接口")
 public class ApiManageController {

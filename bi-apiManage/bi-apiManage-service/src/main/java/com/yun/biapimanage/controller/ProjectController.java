@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Yun
  * @since 2022-10-26
  */
-@Controller
+@RestController
 @RequestMapping("/projectEntity")
 @Api(tags = "项目管理")
 public class ProjectController {

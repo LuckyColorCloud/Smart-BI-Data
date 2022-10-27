@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Yun
  * @since 2022-10-26
  */
-@Controller
+@RestController
 @RequestMapping("/indexConfig")
 @Api(tags = "查询指标相关数据")
 public class IndexConfigController {
