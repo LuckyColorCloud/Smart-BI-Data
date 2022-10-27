@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -53,8 +52,8 @@ public class ApiManageController {
      */
     @PostMapping("/save")
     @ApiOperation("保存")
-    public Result<String> save(@RequestBody ApiManageEntity datasource) {
-        apiManageService.save(datasource);
+    public Result<String> save(@RequestBody ApiManageEntity apiManageEntity) {
+        apiManageService.save(apiManageEntity);
         return Result.OK();
     }
 
@@ -63,8 +62,8 @@ public class ApiManageController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public Result<String> update(@RequestBody ApiManageEntity datasource) {
-        apiManageService.updateById(datasource);
+    public Result<String> update(@RequestBody ApiManageEntity apiManageEntity) {
+        apiManageService.updateById(apiManageEntity);
         return Result.OK();
     }
 

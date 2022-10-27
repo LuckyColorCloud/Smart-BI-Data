@@ -53,8 +53,8 @@ public class ProjectController {
      */
     @PostMapping("/save")
     @ApiOperation("保存")
-    public Result<String> save(@RequestBody ProjectEntity datasource) {
-        projectService.save(datasource);
+    public Result<String> save(@RequestBody ProjectEntity projectEntity) {
+        projectService.save(projectEntity);
         return Result.OK();
     }
 
@@ -63,8 +63,8 @@ public class ProjectController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public Result<String> update(@RequestBody ProjectEntity datasource) {
-        projectService.updateById(datasource);
+    public Result<String> update(@RequestBody ProjectEntity projectEntity) {
+        projectService.updateById(projectEntity);
         return Result.OK();
     }
 

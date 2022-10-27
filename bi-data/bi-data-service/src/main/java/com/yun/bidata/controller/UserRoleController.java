@@ -56,8 +56,8 @@ public class UserRoleController {
      */
     @PostMapping("/save")
     @ApiOperation("保存")
-    public Result<String> save(@RequestBody UserRoleEntity datasource) {
-        userRoleService.save(datasource);
+    public Result<String> save(@RequestBody UserRoleEntity userRoleEntity) {
+        userRoleService.save(userRoleEntity);
         return Result.OK();
     }
 
@@ -66,8 +66,8 @@ public class UserRoleController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public Result<String> update(@RequestBody UserRoleEntity datasource) {
-        userRoleService.updateById(datasource);
+    public Result<String> update(@RequestBody UserRoleEntity userRoleEntity) {
+        userRoleService.updateById(userRoleEntity);
         return Result.OK();
     }
 

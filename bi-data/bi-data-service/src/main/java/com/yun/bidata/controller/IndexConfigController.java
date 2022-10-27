@@ -53,8 +53,8 @@ public class IndexConfigController {
      */
     @PostMapping("/save")
     @ApiOperation("保存")
-    public Result<String> save(@RequestBody IndexConfigEntity datasource) {
-        indexConfigService.save(datasource);
+    public Result<String> save(@RequestBody IndexConfigEntity indexConfigEntity) {
+        indexConfigService.save(indexConfigEntity);
         return Result.OK();
     }
 
@@ -63,8 +63,8 @@ public class IndexConfigController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public Result<String> update(@RequestBody IndexConfigEntity datasource) {
-        indexConfigService.updateById(datasource);
+    public Result<String> update(@RequestBody IndexConfigEntity indexConfigEntity) {
+        indexConfigService.updateById(indexConfigEntity);
         return Result.OK();
     }
 
