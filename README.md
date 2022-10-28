@@ -65,6 +65,11 @@ server-addr====>服务器地址 默认端口8848
 接下来就启动所有服务
 访问网关文档聚合地址 http://127.0.0.1:8607/doc.html 即可愉快的玩耍了
 ```
+
+### 默认账号
+- 账号：sober1050@qq.com
+- 密码：sober1050
+
 ### 代码生成器
 ![generation](/doc/png/generation.png)
 ### 待开发
