@@ -8,7 +8,7 @@ spring:
   cloud:
     nacos:
       username: nacos
-      password: SmartBi13321
+      password: XXXXXXXXX
       discovery:
         server-addr: 175.178.71.118:9005
         namespace: dda6bce5-c628-461a-903f-e8aa4726d1fc
