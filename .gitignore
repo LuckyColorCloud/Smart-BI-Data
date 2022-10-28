@@ -28,3 +28,5 @@ hs_err_pid*
 /target
 */target/*
 */target/*.*
+
+*/node_modules/*

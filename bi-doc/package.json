@@ -1,0 +1,15 @@
+{
+  "name": "Smart-BI-Data-doc",
+  "version": "1.0.0",
+  "description": "一个基于Spring Cloud 微服务中台 主要面向 数字孪生 数字大屏 BI大屏 等业务处理 接口输出 支持excel文件,多种数据库,http请求存储 格式转换 数据处理",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "author": "Sober",
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.9.7"
+  }
+}
