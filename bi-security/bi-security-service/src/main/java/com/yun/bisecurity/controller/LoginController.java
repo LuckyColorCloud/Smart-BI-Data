@@ -1,6 +1,7 @@
 package com.yun.bisecurity.controller;
 
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
+import com.yun.bidatacommon.security.UserSessionInfo;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.entity.AccountEntity;
 import com.yun.bisecurity.service.AccountService;
@@ -11,9 +12,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
@@ -24,6 +27,9 @@ import java.util.Optional;
 @Api(tags = "会话相关")
 @RestController
 public class LoginController {
+
+    @Resource
+    private HttpServletRequest httpServletRequest;
 
     @Resource
     private AccountService accountService;

@@ -1,15 +1,14 @@
-package com.yun.bisecurity.param;
+package com.yun.bisecurity.dto;
 
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author Sober
  */
 @Data
-public class AbacPolicyQueryParam implements Serializable {
+public class AbacPolicyQueryDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

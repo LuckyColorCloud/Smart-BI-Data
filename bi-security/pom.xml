@@ -69,9 +69,5 @@
             <artifactId>bi-data-common</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>com.sobercoding</groupId>
-            <artifactId>LoopAuth-spring-boot-starter</artifactId>
-        </dependency>
     </dependencies>
 </project>

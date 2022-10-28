@@ -3,20 +3,14 @@ package com.yun.bisecurity.loopauth;
 import com.sobercoding.loopauth.abac.face.AbacInterface;
 import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
-import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.entity.AbacPolicyEntity;
-import com.yun.bisecurity.param.AbacPolicyQueryParam;
+import com.yun.bisecurity.dto.AbacPolicyQueryDto;
 import com.yun.bisecurity.service.AbacPolicyService;
-import org.checkerframework.checker.units.qual.A;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -38,7 +32,7 @@ public class AbAcInterFaceImpl implements AbacInterface {
     @Override
     public Set<Policy> getPolicySet(String route, LoopAuthHttpMode loopAuthHttpMode) {
         // 组建查询参数
-        AbacPolicyQueryParam queryParam = new AbacPolicyQueryParam();
+        AbacPolicyQueryDto queryParam = new AbacPolicyQueryDto();
         queryParam.setRoute(route);
         queryParam.setMode(loopAuthHttpMode.name());
         // 获取相关规则

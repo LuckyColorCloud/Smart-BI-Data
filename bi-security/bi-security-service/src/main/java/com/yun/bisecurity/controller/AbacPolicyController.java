@@ -2,12 +2,11 @@ package com.yun.bisecurity.controller;
 
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.entity.AbacPolicyEntity;
-import com.yun.bisecurity.param.AbacPolicyQueryParam;
+import com.yun.bisecurity.dto.AbacPolicyQueryDto;
 import com.yun.bisecurity.service.AbacPolicyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,8 +29,8 @@ public class AbacPolicyController {
      */
     @GetMapping("/query")
     @ApiOperation("查询abac规则")
-    public Result<List<AbacPolicyEntity>> queryList(AbacPolicyQueryParam abacPolicyQueryParam) {
-        return Result.OK("查询成功", abacPolicyService.queryList(abacPolicyQueryParam));
+    public Result<List<AbacPolicyEntity>> queryList(AbacPolicyQueryDto abacPolicyQueryDto) {
+        return Result.OK("查询成功", abacPolicyService.queryList(abacPolicyQueryDto));
     }
 
     /**

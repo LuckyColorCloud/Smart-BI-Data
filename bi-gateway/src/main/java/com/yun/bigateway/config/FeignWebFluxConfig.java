@@ -1,9 +1,13 @@
 package com.yun.bigateway.config;
 
+import com.yun.bigateway.context.ContextThreadLocal;
 import feign.Request;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
 import feign.optionals.OptionalDecoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
@@ -16,8 +20,9 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 /**
  * @author Sober
  */
+@Slf4j
 @Configuration
-public class FeignConfig {
+public class FeignWebFluxConfig implements RequestInterceptor {
 
     /**
      * 默认connect timeout 10s，read timeout 60s
@@ -42,6 +47,14 @@ public class FeignConfig {
 
     public ObjectFactory<HttpMessageConverters> feignHttpMessageConverter() {
         return () -> new HttpMessageConverters(new MappingJackson2HttpMessageConverter());
+    }
+
+    @Override
+    public void apply(RequestTemplate requestTemplate) {
+        // 获得Token
+        String token = ContextThreadLocal.getRequest().getHeader("smartBiToken");
+        // 写入传递
+        requestTemplate.header("smartBiToken", token);
     }
 
 }

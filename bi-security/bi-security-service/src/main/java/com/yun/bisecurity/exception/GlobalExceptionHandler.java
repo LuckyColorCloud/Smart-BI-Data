@@ -1,6 +1,7 @@
 package com.yun.bisecurity.exception;
 
 import com.sobercoding.loopauth.exception.LoopAuthException;
+import com.yun.bidatacommon.security.UserSessionInfo;
 import com.yun.bidatacommon.vo.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -17,8 +18,8 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler
-    public Result<Object> handlerException(LoopAuthException e) {
-        return Result.ERROR(Result.ResultEnum.ILLEGAL_REQUEST, false);
+    public Result<UserSessionInfo> handlerException(LoopAuthException e) {
+        return Result.ERROR(Result.ResultEnum.ILLEGAL_REQUEST);
     }
 
 }
