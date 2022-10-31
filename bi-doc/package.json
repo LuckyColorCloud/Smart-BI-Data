@@ -7,8 +7,8 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
-  "author": "Sober",
-  "license": "MIT",
+  "author": "Yun",
+  "license": "Apache-2.0",
   "devDependencies": {
     "vuepress": "^1.9.7"
   }
