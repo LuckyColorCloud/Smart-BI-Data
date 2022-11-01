@@ -4,6 +4,7 @@
 项目发布初期，希望大家多多点点`Star`
 - [Gitee](https://gitee.com/new_sonw/Smart-BI-Data)
 - [GitHub](https://github.com/ShelikeSnow/Smart-BI-Data)
+- [官网地址](https://smart-bi-data.sobercoding.com/)
 ## 项目流程 定位 优劣势
 ![项目流程](/doc/png/Smart-Bi-Data.png)
 #### 介绍
