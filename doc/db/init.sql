@@ -13,7 +13,7 @@ CREATE TABLE index_config(
     param VARCHAR(1024)    COMMENT '动态参数 动态请求参数从接口的body获取这里配置需要拿取的key' ,
     js_script TEXT    COMMENT 'JS脚本 最终处理方案' ,
     map_key VARCHAR(1024)    COMMENT '转换参数 转换字段' ,
-    type INT    COMMENT '类型 0.静态接口1.http接口2.数据库接口3.饼图,4.柱状图' ,
+    type INT    COMMENT '类型 0.普通类型 1.分组' ,
     name VARCHAR(1024)    COMMENT 'name 名称' ,
     PRIMARY KEY (id)
 ) COMMENT = '指标表'  charset = utf8mb4;
@@ -55,7 +55,7 @@ CREATE TABLE api_manage(
     static_data TEXT    COMMENT '静态数据 静态数据' ,
     writable tinyint(1)    COMMENT '接口可写 接口可写' ,
     params VARCHAR(1024)    COMMENT '图表参数 图表参数' ,
-    fusion INT    COMMENT '融合类型 融合类型 0.http 1.数据库' ,
+    fusion INT    COMMENT '类型 0.接口转发1.查询数据库 2.静态数据直接返回result 3.数据融合(根据id) 4.数据融合(数组合并)' ,
     fusion_params VARCHAR(3072)    COMMENT '融合类型参数 融合类型参数' ,
     chart_type VARCHAR(128)    COMMENT '字符类型 字符类型' ,
     name VARCHAR(1024)    COMMENT '接口名称' ,
