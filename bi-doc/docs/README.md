@@ -16,8 +16,7 @@ features:
 - title: 微服务架构
   details: 多点部署支持更庞大的项目
 - title: 代码生成器
-  details: 生成即用,直接可复制到项目中  
-footer: Apache Licensed | Copyright © 2022-present | Author is Yun
+  details: 生成即用,直接可复制到项目中
 ---
 ### 特别鸣谢
 
