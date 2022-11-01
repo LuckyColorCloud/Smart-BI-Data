@@ -31,7 +31,7 @@ public enum FormatConversion {
             //判断是否为 对象
             if (JSONUtil.isTypeJSONObject(data)) {
                 JSONObject jsonObject = JSONUtil.parseObj(data);
-                HashMap<String, Object> hashMap = JSONUtil.toBean(data, HashMap.class);
+                HashMap<String, Object> hashMap = JSONUtil.toBean(params, HashMap.class);
                 Set<String> keys = hashMap.keySet();
                 HashMap<String, Object> resultMap = new HashMap<>();
                 //进行转换key 并组装
@@ -40,7 +40,7 @@ public enum FormatConversion {
             } else if (JSONUtil.isTypeJSONArray(data)) {
                 ArrayList<HashMap<String, Object>> resultMapList = new ArrayList<>();
                 JSONArray jsonArray = JSONUtil.parseArray(data);
-                HashMap<String, Object> hashMap = JSONUtil.toBean(data, HashMap.class);
+                HashMap<String, Object> hashMap = JSONUtil.toBean(params, HashMap.class);
                 Set<String> keys = hashMap.keySet();
                 jsonArray.parallelStream().map(JSONObject::new).forEach(t -> {
                     HashMap<String, Object> tempMap = new HashMap<>();

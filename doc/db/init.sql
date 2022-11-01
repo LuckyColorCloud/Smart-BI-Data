@@ -58,7 +58,7 @@ CREATE TABLE api_manage(
     fusion INT    COMMENT '融合类型 融合类型 0.http 1.数据库' ,
     fusion_params VARCHAR(3072)    COMMENT '融合类型参数 融合类型参数' ,
     chart_type VARCHAR(128)    COMMENT '字符类型 字符类型' ,
-    auth tinyint(1)    COMMENT '是否鉴权 是否鉴权' ,
+    name VARCHAR(1024)    COMMENT '接口名称' ,
     PRIMARY KEY (id)
 ) COMMENT = 'api管理 ' charset = utf8mb4;
 create table datasource

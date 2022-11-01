@@ -30,9 +30,8 @@ public interface CommonConstant {
     String JSON_PATH = "jsonPath";
     String KEY = "key";
 
-
     /**
-     * DataService
+     * 分组参数
      */
-    String TOKEN = "#{token}";
+    String GROUPING = "grouping";
 }

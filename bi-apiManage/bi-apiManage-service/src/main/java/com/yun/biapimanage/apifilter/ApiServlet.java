@@ -247,7 +247,7 @@ public class ApiServlet extends HttpServlet {
     private JSONObject getParams(HttpServletRequest request) {
         String contentType = request.getContentType();
         //必须是application/json请求
-        if (contentType.equalsIgnoreCase(CommonConstant.APP_JSON)) {
+        if (CommonConstant.APP_JSON.equalsIgnoreCase(contentType)) {
             JSONObject jsonObject = new JSONObject();
             JSONObject httpJsonBody = getHttpJsonBody(request);
             if (Objects.isNull(httpJsonBody)) {

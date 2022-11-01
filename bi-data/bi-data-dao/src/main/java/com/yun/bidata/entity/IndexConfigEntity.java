@@ -65,7 +65,7 @@ public class IndexConfigEntity implements Serializable {
     @ApiModelProperty("转换参数 转换字段")
     private String mapKey;
 
-    @ApiModelProperty("类型 0.静态接口1.http接口2.数据库接口3.饼图,4.柱状图")
+    @ApiModelProperty("类型 0.普通类型 1.分组")
     private Integer type;
 
     @ApiModelProperty("name 名称")

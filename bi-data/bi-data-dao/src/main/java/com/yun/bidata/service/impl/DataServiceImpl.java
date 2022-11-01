@@ -1,7 +1,6 @@
 package com.yun.bidata.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.ZipUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -33,6 +32,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * 数据清洗接口
@@ -72,18 +72,18 @@ public class DataServiceImpl implements DataService {
         //获取需要的token 角色配置信息
         UserRoleEntity userRoleEntity = userRoleService.getById(indexConfigEntity.getTokenId());
         //数据库无此角色 抛出异常
-        if (userRoleEntity == null) {
+        if (userRoleEntity == null && indexConfigEntity.getTokenId() != null) {
             return Result.ERROR(Result.ResultEnum.ROLE_TOKEN_DOES_NOT_EXIST);
         }
         //获取上级项目 公共信息
-        Result<ProjectDto> result = apiManageFeign.queryProjectById(userRoleEntity.getProjectId());
+        Result<ProjectDto> result = apiManageFeign.queryProjectById(indexConfigEntity.getProjectId());
         if (result == null || !result.isSuccess()) {
             return Result.ERROR(result.getCode(), result.getMessage());
         }
         ProjectDto project = result.getResult();
         try {
             //根据角色获取Token
-            String token = queryToken(userRoleEntity);
+            String token = userRoleEntity == null ? "" : queryToken(userRoleEntity);
             //获取请求信息
             RequestDto requestDto = new RequestDto();
             requestDto.setUrl(project.getDomain() + indexConfigEntity.getUrl());
@@ -98,36 +98,81 @@ public class DataServiceImpl implements DataService {
             //判断是否有需要拦截的字段
             JSONArray excludes = StrUtil.isEmpty(indexConfigEntity.getExclude()) ? null : JSONUtil.parseArray(indexConfigEntity.getExclude());
             //判断返回数据类型 拦截字段为空直接返回
-            if (excludes != null && excludes.size() > 0) {
-                if (JSONUtil.isTypeJSONObject(processResult)) {
-                    JSONObject jsonObject = JSONUtil.parseObj(result);
-                    HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
-                    if (!jsonObject.isEmpty()) {
-                        //拦截需要的key
-                        excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, jsonObject.get(t)));
-                    }
-                    return Result.OK(hashMap);
-                } else if (JSONUtil.isTypeJSONArray(processResult)) {
-                    JSONArray jsonArray = JSONUtil.parseArray(result);
-                    ArrayList<HashMap<String, Object>> hashMaps = new ArrayList<>(jsonArray.size());
-                    //拦截需要的key
-                    jsonArray.parallelStream().map(JSONObject::new).forEach(json -> {
-                        HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
-                        excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, json.get(t)));
-                        hashMaps.add(hashMap);
-                    });
-                    return Result.OK(hashMaps);
-                } else {
-                    //非JSON 情况无法落库!!! 可以由人工扩展选择存到redis等
-                    return Result.OK(result);
-                }
-            } else {
-                return Result.OK(JSONUtil.parse(result));
+            switch (indexConfigEntity.getType()) {
+                case 0:
+                    return commonType(excludes, processResult);
+                case 1:
+                    return grouping(excludes, processResult, indexConfigEntity.getMapKey());
+                default:
+                    return Result.ERROR(Result.ResultEnum.METRIC_TYPE_DOES_NOT_EXIST);
             }
         } catch (DataException e) {
             return Result.ERROR(e.getMessage());
         } catch (Exception e) {
             return Result.ERROR(Result.ResultEnum.ROLE_TOKEN_DOES_NOT_EXIST);
+        }
+    }
+
+    /**
+     * 分组类型
+     *
+     * @param excludes      过滤 需要字段
+     * @param processResult jsonPath初步处理值
+     * @param mapKey        分组参数
+     * @return 结果
+     */
+    private Result<Object> grouping(JSONArray excludes, String processResult, String mapKey) {
+        //分组的情况肯定是集合,如不是集合 或 不存在mapKey参数 即不合规范 直接返回
+        if (JSONUtil.isTypeJSONArray(processResult) && JSONUtil.isTypeJSONObject(mapKey)) {
+            JSONArray jsonArray = JSONUtil.parseArray(processResult);
+            JSONObject jsonObject = JSONUtil.parseObj(mapKey);
+            ArrayList<HashMap<String, Object>> hashMaps = new ArrayList<>(jsonArray.size());
+            //拦截需要的key
+            jsonArray.parallelStream().map(JSONObject::new).forEach(json -> {
+                HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
+                excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, json.get(t)));
+                hashMaps.add(hashMap);
+            });
+            return Result.OK(hashMaps.stream().collect(Collectors.groupingBy(t->t.get(jsonObject.get(CommonConstant.GROUPING)))));
+        } else {
+            //非JSON 情况无法落库!!! 可以由人工扩展选择存到redis等
+            return Result.OK(processResult);
+        }
+    }
+
+    /**
+     * 普通类型
+     *
+     * @param excludes      过滤 需要的字段
+     * @param processResult jsonPath初步处理的值
+     * @return 结果
+     */
+    private Result<Object> commonType(JSONArray excludes, String processResult) {
+        if (excludes != null && excludes.size() > 0) {
+            if (JSONUtil.isTypeJSONObject(processResult)) {
+                JSONObject jsonObject = JSONUtil.parseObj(processResult);
+                HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
+                if (!jsonObject.isEmpty()) {
+                    //拦截需要的key
+                    excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, jsonObject.get(t)));
+                }
+                return Result.OK(hashMap);
+            } else if (JSONUtil.isTypeJSONArray(processResult)) {
+                JSONArray jsonArray = JSONUtil.parseArray(processResult);
+                ArrayList<HashMap<String, Object>> hashMaps = new ArrayList<>(jsonArray.size());
+                //拦截需要的key
+                jsonArray.parallelStream().map(JSONObject::new).forEach(json -> {
+                    HashMap<String, Object> hashMap = new HashMap<>(excludes.size());
+                    excludes.parallelStream().map(String::valueOf).forEach(t -> hashMap.put(t, json.get(t)));
+                    hashMaps.add(hashMap);
+                });
+                return Result.OK(hashMaps);
+            } else {
+                //非JSON 情况无法落库!!! 可以由人工扩展选择存到redis等
+                return Result.OK(processResult);
+            }
+        } else {
+            return Result.OK(JSONUtil.parse(processResult));
         }
     }
 

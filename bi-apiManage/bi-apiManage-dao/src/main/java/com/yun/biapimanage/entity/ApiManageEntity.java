@@ -37,7 +37,7 @@ public class ApiManageEntity implements Serializable {
     private String apiPath;
     @ApiModelProperty("指标 多个数据集")
     private String indexId;
-    @ApiModelProperty("类型 0.普通接口1.混合数据库接口，2.混合SQL接口")
+    @ApiModelProperty("类型 0.接口转发1.查询数据库 2.静态数据直接返回result 3.数据融合(根据id) 4.数据融合(数组合并)")
     private Integer type;
     @ApiModelProperty("文档描述 文档描述")
     private String document;
@@ -57,6 +57,6 @@ public class ApiManageEntity implements Serializable {
     private String fusionParams;
     @ApiModelProperty("字符类型")
     private String chartType;
-    @ApiModelProperty("是否鉴权")
-    private Boolean auth;
+    @ApiModelProperty("接口名称")
+    private String name;
 }
