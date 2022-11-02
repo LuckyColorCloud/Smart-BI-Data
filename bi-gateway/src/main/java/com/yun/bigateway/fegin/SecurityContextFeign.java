@@ -25,6 +25,8 @@ public interface SecurityContextFeign {
 
     /**
      * abac鉴权接口
+     * @param method 请求方式如 GET,POST,PUT等
+     * @param route  路由
      * @author Sober
      * @return com.yun.bidatacommon.vo.Result<java.lang.Boolean>
      */

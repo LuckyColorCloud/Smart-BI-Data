@@ -1,5 +1,6 @@
 package com.yun.bigateway.config;
 
+import com.yun.bidatacommon.constant.CommonConstant;
 import com.yun.bigateway.context.ContextThreadLocal;
 import feign.Request;
 import feign.RequestInterceptor;
@@ -52,9 +53,9 @@ public class FeignWebFluxConfig implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
         // 获得Token
-        String token = ContextThreadLocal.getRequest().getHeader("smartBiToken");
+        String token = ContextThreadLocal.getRequest().getHeader(CommonConstant.SMART_BI_TOKEN);
         // 写入传递
-        requestTemplate.header("smartBiToken", token);
+        requestTemplate.header(CommonConstant.SMART_BI_TOKEN, token);
     }
 
 }

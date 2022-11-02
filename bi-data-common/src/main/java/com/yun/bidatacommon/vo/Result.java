@@ -140,6 +140,8 @@ public class Result<T> implements Serializable {
         SUCCESS(200, "处理成功"),
         ERROR(500, "处理失败"),
         ILLEGAL_REQUEST(401, "非法请求"),
+        REQUEST_TIMED_OUT(403, "请求超时,熔断处理!"),
+        FREQUENT_REQUESTS(429, "限制频繁请求,请求失败!"),
         ROLE_TOKEN_DOES_NOT_EXIST(100002, "角色获取Token失败"),
         NO_SUCH_DATA_PROCESSING_TYPE(100001, "无此数据处理类型!"),
         DATA_FORMAT_ERROR(100003, "数据格式错误!"),

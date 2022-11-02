@@ -66,4 +66,35 @@ spring:
             # 前缀过滤，默认配置下，我们的请求路径是 http://localhost:8888/business-oauth2/** 这时会路由到指定的服务
             # 此处配置去掉 1 个路径前缀，再配置上面的 Path=/api/**，就能按照 http://localhost:8888/api/** 的方式访问了
             - StripPrefix=1
-      
+    # 全局熔断降级配置
+      default-filters:
+        - name: Hystrix
+          args:
+            name: default
+            #转发地址
+            fallbackUri: 'forward:/fallback'
+        - name: Retry
+          args:
+            #重试次数，默认值是 3 次
+            retries: 3
+            #HTTP 的状态返回码
+            statuses: BAD_GATEWAY,BAD_REQUEST
+            #指定哪些方法的请求需要进行重试逻辑，默认值是 GET 方法
+            methods: GET,POST
+# hystrix 信号量隔离，3秒后自动超时
+hystrix:
+  enabled: true
+  shareSecurityContext: true
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 3000
+smart:
+  sentinel:
+    #限流数量
+    count: 100
+    #间隔时间
+    intervalSec: 1

@@ -11,7 +11,12 @@ public interface CommonConstant {
     String UTF_8 = "UTF-8";
     String  POINT = ".";
 
-
+    /**
+     * token前缀
+     */
+    String SMART_BI_TOKEN="SmartBiToken";
+    String SMART_BI_DATA="SmartBiData";
+    String SMART_BI_DATA_SENTINEL="SmartBiDataSentinel";
     /**
      * 数据转换系统字段
      */

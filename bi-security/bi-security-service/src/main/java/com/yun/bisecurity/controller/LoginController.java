@@ -1,24 +1,20 @@
 package com.yun.bisecurity.controller;
 
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
-import com.yun.bidatacommon.security.UserSessionInfo;
 import com.yun.bidatacommon.vo.Result;
-import com.yun.bisecurity.entity.AccountEntity;
 import com.yun.bisecurity.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.DigestUtils;
-import org.springframework.web.HttpRequestHandler;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
 /**
  * @author Sober
@@ -29,17 +25,15 @@ import java.util.Optional;
 public class LoginController {
 
     @Resource
-    private HttpServletRequest httpServletRequest;
-
-    @Resource
     private AccountService accountService;
 
     /**
      * 登录接口
-     * @author Sober
+     *
      * @param email
      * @param password
      * @return com.yun.bidatacommon.vo.Result<java.lang.Object>
+     * @author Sober
      */
     @PostMapping("/login")
     @ApiImplicitParams({
@@ -48,7 +42,7 @@ public class LoginController {
     })
     @ApiOperation("登录接口")
     public Result<Object> register(@RequestParam(value = "email") String email,
-                           @RequestParam(value = "password") String password) {
+                                   @RequestParam(value = "password") String password) {
         return accountService.login(email, password);
     }
 
@@ -60,7 +54,8 @@ public class LoginController {
         return Result.OK("注销成功");
     }
 
-    @GetMapping("/test/abac")
+    @SneakyThrows
+    @GetMapping("/fallback/test")
     public String abac1() {
         return "检测成功";
     }
