@@ -30,6 +30,7 @@ module.exports = {
                 sidebarDepth: 2,
                 children: [
                     '/doc/start/spring',
+                    '/doc/start/security'
                 ],
                 collapsable: false,
             }
