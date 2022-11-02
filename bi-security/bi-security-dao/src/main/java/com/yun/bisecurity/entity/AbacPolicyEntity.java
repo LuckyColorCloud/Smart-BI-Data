@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.function.Function;
 
 import com.sobercoding.loopauth.abac.model.Policy;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -35,32 +36,38 @@ public class AbacPolicyEntity implements Serializable {
     /**
      * 规则名称
      */
+    @ApiModelProperty("规则名称")
     private String name;
 
     /**
      * 规则适用路径
      */
+    @ApiModelProperty("规则适用路径")
     private String route;
 
     /**
      * 路径请求方式
      */
+    @ApiModelProperty("路径请求方式")
     private String mode;
 
     /**
      * 属性规则json
      */
+    @ApiModelProperty("属性规则json")
     private String policyJson;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty("创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdTime;
 
     /**
      * 更新时间
      */
+    @ApiModelProperty("更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedTime;
 
