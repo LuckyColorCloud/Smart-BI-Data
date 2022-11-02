@@ -47,8 +47,11 @@ smart:
   #间隔时间
   intervalSec: 1
 详细配置可在GatewayConfiguration 配置
+
 熔断默认就一种 直接看yaml配置超时时间即可  timeoutInMilliseconds
-## hystrix 信号量隔离，3秒后自动超时
+
+hystrix 信号量隔离，3秒后自动超时
+
 hystrix:
   enabled: true
   shareSecurityContext: true
