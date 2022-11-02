@@ -40,18 +40,20 @@ server-addr====>服务器地址 默认端口8848
 ## 限流配置
 
 可以通过nacos  网关配置  默认不写配置的情况 即 每秒100次qps
+```yaml
 smart:
  sentinel:
-  #限流数量
+  限流数量
   count: 100
-  #间隔时间
+  间隔时间
   intervalSec: 1
+```
 详细配置可在GatewayConfiguration 配置
 
 熔断默认就一种 直接看yaml配置超时时间即可  timeoutInMilliseconds
 
 hystrix 信号量隔离，3秒后自动超时
-
+```yaml
 hystrix:
   enabled: true
   shareSecurityContext: true
@@ -62,3 +64,4 @@ hystrix:
           strategy: SEMAPHORE
           thread:
             timeoutInMilliseconds: 3000
+```
