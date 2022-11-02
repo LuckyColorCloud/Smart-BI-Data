@@ -1,10 +1,11 @@
 ---
 title: 怎么样启动项目
 ---
-#默认账户
+# 怎么让项目跑起来???
+
+## 默认账户
  - 账号：sober1050@qq.com
  - 密码：sober1050
-# 怎么让项目跑起来???
 
 首先先下载Nacos 2.1.1 
 这里浅浅放上一个下载地址 - [nacos](https://github.com/alibaba/nacos/releases)
@@ -36,7 +37,8 @@ server-addr====>服务器地址 默认端口8848
 接下来就启动所有服务
 访问网关文档聚合地址 http://127.0.0.1:8607/doc.html 即可愉快的玩耍了
 ```
-###限流配置
+## 限流配置
+
 可以通过nacos  网关配置  默认不写配置的情况 即 每秒100次qps
 smart:
  sentinel:
@@ -46,7 +48,7 @@ smart:
   intervalSec: 1
 详细配置可在GatewayConfiguration 配置
 熔断默认就一种 直接看yaml配置超时时间即可  timeoutInMilliseconds
-# hystrix 信号量隔离，3秒后自动超时
+## hystrix 信号量隔离，3秒后自动超时
 hystrix:
   enabled: true
   shareSecurityContext: true
