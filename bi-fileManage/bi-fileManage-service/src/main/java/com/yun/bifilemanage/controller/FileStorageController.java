@@ -4,8 +4,8 @@ package com.yun.bifilemanage.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidatacommon.vo.Result;
-import com.yun.bifilemanage.entity.FileEntity;
-import com.yun.bifilemanage.service.FileService;
+import com.yun.bifilemanage.entity.FileStorageEntity;
+import com.yun.bifilemanage.service.FileStorageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import java.util.Date;
 
@@ -28,7 +27,7 @@ import java.util.Date;
 public class FileStorageController {
 
     @Autowired
-    FileService fileService;
+    FileStorageService fileStorageService;
 
 
     /**
@@ -40,10 +39,10 @@ public class FileStorageController {
             @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
     })
     @ApiOperation("查询列表")
-    public Result<Page<FileEntity>> list(@Param("pageNo") int pageNo,
-                                         @Param("pageSize") int pageSize) {
-        Page<FileEntity> fileEntityPage = new Page<>(pageNo, pageSize);
-        Page<FileEntity> page = fileService.page(fileEntityPage, new QueryWrapper<FileEntity>().lambda().eq(FileEntity::getStatus, false).orderByDesc(FileEntity::getCreatedTime));
+    public Result<Page<FileStorageEntity>> list(@Param("pageNo") int pageNo,
+                                                @Param("pageSize") int pageSize) {
+        Page<FileStorageEntity> fileEntityPage = new Page<>(pageNo, pageSize);
+        Page<FileStorageEntity> page = fileStorageService.page(fileEntityPage, new QueryWrapper<FileStorageEntity>().lambda().eq(FileStorageEntity::getStatus, false).orderByDesc(FileStorageEntity::getCreatedTime));
         return Result.OK(page);
     }
 
@@ -60,7 +59,7 @@ public class FileStorageController {
     })
     @ApiOperation("保存文件数据")
     public Result<Object> save(MultipartFile file, String md5, String saveName, Integer sourceId) {
-        return fileService.saveAndStorage(file, md5, saveName, sourceId);
+        return fileStorageService.saveAndStorage(file, md5, saveName, sourceId);
     }
 
     /**
@@ -68,11 +67,11 @@ public class FileStorageController {
      */
     @PostMapping("/update")
     @ApiOperation("修改文件数据")
-    public Result<String> update(@RequestBody FileEntity fileEntity) {
-        FileEntity save = fileService.getById(fileEntity.getId());
+    public Result<String> update(@RequestBody FileStorageEntity fileStorageEntity) {
+        FileStorageEntity save = fileStorageService.getById(fileStorageEntity.getId());
         save.setUpdatedTime(new Date());
-        save.setStatus(fileEntity.getStatus());
-        fileService.updateById(save);
+        save.setStatus(fileStorageEntity.getStatus());
+        fileStorageService.updateById(save);
         return Result.OK();
     }
 
@@ -82,8 +81,8 @@ public class FileStorageController {
     @GetMapping("/info/{id}")
     @ApiOperation("查询文件信息")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "文件ID")
-    public Result<FileEntity> info(@PathVariable("id") Integer id) {
-        return Result.OK(fileService.getById(id));
+    public Result<FileStorageEntity> info(@PathVariable("id") Integer id) {
+        return Result.OK(fileStorageService.getById(id));
     }
 
     /**
@@ -93,7 +92,7 @@ public class FileStorageController {
     @ApiOperation("删除文件信息")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "文件ID")
     public Result<Object> delete(Integer id) {
-        return fileService.dropTable(id);
+        return fileStorageService.dropTable(id);
     }
 
     /**
@@ -103,10 +102,10 @@ public class FileStorageController {
     @ApiOperation("重新入库")
     @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "文件ID")
     public Result<String> restart(Integer id) {
-        FileEntity fileEntity = fileService.getById(id);
-        if (fileEntity != null) {
-            fileEntity.setStatus(true);
-            fileService.updateById(fileEntity);
+        FileStorageEntity fileStorageEntity = fileStorageService.getById(id);
+        if (fileStorageEntity != null) {
+            fileStorageEntity.setStatus(true);
+            fileStorageService.updateById(fileStorageEntity);
 
         }
         return Result.OK();
