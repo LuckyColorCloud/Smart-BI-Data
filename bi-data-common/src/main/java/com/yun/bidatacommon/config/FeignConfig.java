@@ -7,11 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 
 /**
  * 请求拦截器,将原始请求header中数据原样通过feign传输
+ *
  * @author Sober
  */
 @Slf4j

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,9 +28,6 @@ public class MinioUtil {
     @Autowired
     private MinioProperties minioProperties;
 
-    @Resource
-    private MinioUtil minioUtil;
-
     /**
      * 文件上传
      *
@@ -39,14 +36,14 @@ public class MinioUtil {
      */
     public String upload(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
-        if (StringUtils.isBlank(originalFilename)){
+        if (StringUtils.isBlank(originalFilename)) {
             throw new RuntimeException();
         }
         String fileName = UuidUtils.generateUuid() + originalFilename.substring(originalFilename.lastIndexOf("."));
         String format = "YYYY-MM/dd";
         // DateTimeFormatter.ofPattern方法根据指定的格式输出时间
         String formatDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
-        String filePath = formatDateTime + "/" + fileName;
+        String filePath = formatDateTime + File.separator + fileName;
         try {
             PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(minioProperties.getBucketName()).object(filePath)
                     .stream(file.getInputStream(), file.getSize(), -1).contentType(file.getContentType()).build();
@@ -95,14 +92,14 @@ public class MinioUtil {
             MinioClient minioClient = minioClientPooledFactory.create();
             minioClient.copyObject(
                     CopyObjectArgs.builder()
-                    .bucket(minioProperties.getBucketName())
-                    .object(newFilePath)
-                    .source(
-                            CopySource.builder()
-                                    .bucket(minioProperties.getBucketName())
-                                    .object(oldFilePath)
-                                    .build())
-                    .build());
+                            .bucket(minioProperties.getBucketName())
+                            .object(newFilePath)
+                            .source(
+                                    CopySource.builder()
+                                            .bucket(minioProperties.getBucketName())
+                                            .object(oldFilePath)
+                                            .build())
+                            .build());
             // remove source obj
             this.deleteObj(oldFilePath);
 
@@ -112,8 +109,6 @@ public class MinioUtil {
         }
         return true;
     }
-
-
 
 
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -53,7 +54,7 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
         if (resList.size() == 1) {
             try {
                 // todo： 规范化，并且鉴权
-                minioUtil.moveObj(path, "del/" + path);
+                minioUtil.moveObj(path, "del" + File.separator + path);
                 resList.get(0).setStatus(true);
                 fileDao.updateById(resList.get(0));
             } catch (Exception e) {
