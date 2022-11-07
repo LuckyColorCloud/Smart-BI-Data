@@ -75,6 +75,7 @@ server-addr====>服务器地址 默认端口8848
 ### 代码生成器
 ![generation](/doc/png/generation.png)
 ### 待开发
+- 前端管理页面(优先,开发中) [地址](https://gitee.com/lucky-color/LuckyColor)
 - 文件服务(ico,图片,视频等...不做重点开发)
 - 数据融合(混合计算)
 - 接入GoView
