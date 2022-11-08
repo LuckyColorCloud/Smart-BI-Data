@@ -3,15 +3,14 @@ package com.yun.bisecurity.entity;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.function.Function;
-
 import com.sobercoding.loopauth.abac.model.Policy;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -83,7 +82,7 @@ public class AbacPolicyEntity implements Serializable {
         // 获取Json的key
         Set<String> keys = jsonObject.keySet();
         // 迭代载入规则属性的 名称 And 值
-        keys.forEach(key -> policy.setProperty(key,jsonObject.get(key)));
+        keys.forEach(key -> policy.setProperty(key, jsonObject.get(key)));
         return policy;
     };
 

@@ -5,6 +5,8 @@ import com.yun.bisecurity.entity.AbacPolicyEntity;
 import com.yun.bisecurity.dto.AbacPolicyQueryDto;
 import com.yun.bisecurity.service.AbacPolicyService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +52,7 @@ public class AbacPolicyController {
      * 更新abac规则
      * @param abacPolicyEntity 规则实体
      */
-    @PostMapping("/updata")
+    @PostMapping("/upData")
     @ApiOperation("更新abac规则")
     public Result<AbacPolicyEntity> update(@RequestBody AbacPolicyEntity abacPolicyEntity) {
         if (!abacPolicyService.updateById(abacPolicyEntity)){
@@ -61,15 +63,18 @@ public class AbacPolicyController {
 
     /**
      * 删除abac规则
-     * @param abacPolicyId id
+     * @param abAcPolicyId id
      */
     @GetMapping("/delete")
     @ApiOperation("删除abac规则")
-    public Result<String> delete(String abacPolicyId) {
-        if (!abacPolicyService.removeById(abacPolicyId)){
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "abacPolicyId", dataType = "String", required = true, value = "规则ID")
+    })
+    public Result<String> delete(String abAcPolicyId) {
+        if (!abacPolicyService.removeById(abAcPolicyId)){
             return Result.OK("遇到错误请重试");
         }
-        return Result.OK("删除成功", abacPolicyId);
+        return Result.OK("删除成功", abAcPolicyId);
     }
 
 

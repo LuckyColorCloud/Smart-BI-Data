@@ -52,5 +52,6 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
         swaggerResource.setSwaggerVersion("3.0");
         return swaggerResource;
     }
+
 }
 
