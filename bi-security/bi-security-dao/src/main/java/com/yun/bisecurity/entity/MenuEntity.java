@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * <p>
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author Sober
  * @since 2022-11-10
  */
+@Data
 @TableName("menu")
 @ApiModel(value = "MenuEntity对象", description = "")
 public class MenuEntity implements Serializable {
@@ -37,6 +39,9 @@ public class MenuEntity implements Serializable {
     @ApiModelProperty("菜单图标")
     private String icon;
 
+    @ApiModelProperty("请求方式")
+    private String mode;
+
     @ApiModelProperty("菜单名称，前端加载页面使用，需要对应vue页面name")
     private String name;
 
@@ -44,91 +49,4 @@ public class MenuEntity implements Serializable {
 
     private LocalDateTime updatedTime;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public LocalDateTime getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(LocalDateTime updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    @Override
-    public String toString() {
-        return "MenuEntity{" +
-        "id=" + id +
-        ", parentId=" + parentId +
-        ", title=" + title +
-        ", type=" + type +
-        ", path=" + path +
-        ", icon=" + icon +
-        ", name=" + name +
-        ", createdTime=" + createdTime +
-        ", updatedTime=" + updatedTime +
-        "}";
-    }
 }

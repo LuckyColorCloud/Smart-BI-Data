@@ -54,8 +54,8 @@ public class LoginController {
         return Result.OK("注销成功");
     }
 
-    @SneakyThrows
     @GetMapping("/fallback/test")
+    @ApiOperation("ABAC测试")
     public String abac1() {
         return "检测成功";
     }

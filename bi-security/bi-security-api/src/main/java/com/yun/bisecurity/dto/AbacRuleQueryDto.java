@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Sober
  */
 @Data
-public class AbacPolicyQueryDto implements Serializable {
+public class AbacRuleQueryDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
