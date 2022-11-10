@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     username: root
-    password: Cjasfhi!@!@3adshfihs14
+    password: 123456
     #时区报错增加时区配置
-    url: jdbc:mysql://175.178.71.118:9088/smart_bi_data?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306:9088/smart_bi_data?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
