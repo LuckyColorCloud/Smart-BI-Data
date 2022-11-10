@@ -3,18 +3,14 @@ package com.yun.bisecurity.controller;
 
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bisecurity.dto.AbacRuleQueryDto;
-import com.yun.bisecurity.entity.AbacMenuEntity;
 import com.yun.bisecurity.entity.AbacRuleEntity;
-import com.yun.bisecurity.service.AbacMenuService;
 import com.yun.bisecurity.service.AbacRuleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
