@@ -35,7 +35,7 @@ public class AbacRuleController {
      */
     @GetMapping("/query")
     @ApiOperation("查询规则")
-    public Result<List<AbacRuleEntity>> queryAbacRule(AbacRuleQueryDto abacRuleQueryDto) {
+    public Result<List<AbacRuleEntity>> query(AbacRuleQueryDto abacRuleQueryDto) {
         return abacRuleService.queryAbacRule(abacRuleQueryDto);
     }
 

@@ -77,7 +77,9 @@ public class AbacRuleServiceImpl extends ServiceImpl<AbacRuleDao, AbacRuleEntity
      */
     @Override
     public Result<Object> removeAbacRule(String id) {
-        List<AbacMenuEntity> abacMenuEntityList = abacMenuService.lambdaQuery().eq(AbacMenuEntity::getAbacRuleId,id).list();
+        List<AbacMenuEntity> abacMenuEntityList = abacMenuService.lambdaQuery()
+                .eq(AbacMenuEntity::getAbacRuleId,id)
+                .list();
         if (abacMenuEntityList.size() >= 1){
             return Result.ERROR("当前规则正在使用中，不可删除");
         }

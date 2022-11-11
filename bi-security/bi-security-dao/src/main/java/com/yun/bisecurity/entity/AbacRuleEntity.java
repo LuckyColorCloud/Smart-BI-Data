@@ -10,7 +10,6 @@ import com.sobercoding.loopauth.abac.model.Policy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.apache.http.nio.pool.NIOConnFactory;
 import org.springframework.cglib.beans.BeanMap;
 
 /**
@@ -29,7 +28,7 @@ public class AbacRuleEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
     @ApiModelProperty("规则名称")
     private String name;
