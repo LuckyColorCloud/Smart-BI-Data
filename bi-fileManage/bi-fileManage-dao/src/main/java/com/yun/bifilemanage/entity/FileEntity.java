@@ -26,11 +26,11 @@ public class FileEntity implements Serializable {
      * 主键
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     /**
      * 用户ID
      */
-    private Integer uid;
+    private Long uid;
     /**
      * 创建时间
      */
@@ -43,6 +43,10 @@ public class FileEntity implements Serializable {
      * 文件路径
      */
     private String filePath;
+    /**
+     * 文件名
+     */
+    private String fileName;
     /**
      * 文件md5
      */

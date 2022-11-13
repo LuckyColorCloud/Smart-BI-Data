@@ -29,31 +29,33 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
     private MinioUtil minioUtil;
 
     @Override
-    public String upload(MultipartFile file) {
-        String path = null;
+    public Long upload(MultipartFile file) {
+        Long id = null;
         try {
             // todo： 规范化，并且鉴权
-            path = minioUtil.upload(file);
+            String path = minioUtil.upload(file);
             FileEntity fileEntity = FileEntity.builder()
+                    .fileName(file.getOriginalFilename())
                     .fileMd5(SecureUtil.md5(file.getInputStream()))
                     .filePath(path)
                     .build();
             fileDao.insert(fileEntity);
+            id = fileEntity.getId();
         } catch (Exception e) {
-            path = null;
+            return null;
         }
-
-        return path;
+        return id;
     }
 
     @Override
-    public Boolean delete(String path) {
+    public Boolean delete(Long id) {
         QueryWrapper<FileEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(FileEntity::getFilePath, path).eq(FileEntity::getStatus, false);
+        queryWrapper.lambda().eq(FileEntity::getId, id).eq(FileEntity::getStatus, false);
         List<FileEntity> resList = this.list(queryWrapper);
         if (resList.size() == 1) {
             try {
                 // todo： 规范化，并且鉴权
+                String path = resList.get(0).getFilePath();
                 minioUtil.moveObj(path, "del" + File.separator + path);
                 resList.get(0).setStatus(true);
                 fileDao.updateById(resList.get(0));

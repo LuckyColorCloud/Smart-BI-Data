@@ -18,12 +18,12 @@ public interface FileService extends IService<FileEntity> {
      * @param file 待上传文件
      * @return 文件url
      */
-    public String upload(MultipartFile file);
+    public Long upload(MultipartFile file);
 
     /** * MinIIO伪删除文件
      * @param path 文件路径
      * @return T/F
      */
-    public Boolean delete(String path);
+    public Boolean delete(Long id);
 }
 
