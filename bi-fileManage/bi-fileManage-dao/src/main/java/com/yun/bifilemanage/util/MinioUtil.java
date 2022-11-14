@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -50,7 +51,7 @@ public class MinioUtil {
             MinioClient minioClient = minioClientPooledFactory.create();
             minioClient.putObject(objectArgs);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("minioUtil upload obj err: {}", e.getMessage());
             return null;
         }
         return filePath;
@@ -73,7 +74,7 @@ public class MinioUtil {
                             .build());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("minioUtil del obj err: {}", e.getMessage());
             return false;
         }
         return true;
@@ -104,11 +105,34 @@ public class MinioUtil {
             this.deleteObj(oldFilePath);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("minioUtil move obj err: {}", e.getMessage());
             return false;
         }
         return true;
     }
 
+    public InputStream downloadObj(String path) {
+        InputStream stream = null;
+        try {
+            MinioClient minioClient = minioClientPooledFactory.create();
+            StatObjectResponse objectStat = minioClient
+                    .statObject(StatObjectArgs.builder()
+                            .bucket(minioProperties.getBucketName())
+                            .object(path)
+                            .build());
+            if(objectStat == null) {
+                return null;
+            }
+            stream = minioClient.getObject(
+                    GetObjectArgs.builder()
+                            .bucket(minioProperties.getBucketName())
+                            .object(path)
+                            .build());
 
+        }catch(Exception e) {
+            log.error("minioUtil download err: {}", e.getMessage());
+            return null;
+        }
+        return stream;
+    }
 }

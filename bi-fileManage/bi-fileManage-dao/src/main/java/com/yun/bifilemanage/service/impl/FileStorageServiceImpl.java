@@ -172,7 +172,9 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageDao, FileStor
     @SuppressWarnings({"rawtypes", "AlibabaSwitchStatement"})
     private List<Map> dataStorage(Long fileId, Integer type) {
         List<Map> hashMaps = new ArrayList<>();
-        File saveFile = fileService.queryFileById(fileId);
+        // todo @snow
+        File saveFile = null;
+//        File saveFile = fileService.queryFileById(fileId);
         //判断文件类型进行解析
         switch (type) {
             //csv

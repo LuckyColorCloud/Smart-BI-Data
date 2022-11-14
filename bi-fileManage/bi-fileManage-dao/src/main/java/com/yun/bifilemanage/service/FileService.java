@@ -5,7 +5,7 @@ import com.yun.bifilemanage.entity.FileEntity;
 import com.yun.bifilemanage.vo.MinioFileVO;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.InputStream;
 
 /**
  * 文件管理
@@ -23,11 +23,25 @@ public interface FileService extends IService<FileEntity> {
      */
     Long upload(MultipartFile file);
 
+    /** * 上传文件到MinIIO
+     * @param file 待上传文件
+     * @param isUser 是否为用户文件
+     * @return 文件url
+     */
+    Long upload(MultipartFile file, Boolean isUser);
+
     /** * MinIIO伪删除文件
      * @param id 文件id
      * @return T/F
      */
     Boolean delete(Long id);
+
+    /** * MinIIO伪删除文件
+     * @param id 文件id
+     * @param isUser 是否为用户文件
+     * @return T/F
+     */
+    Boolean delete(Long id, Boolean isUser);
 
     /**
      * 查询文件信息
@@ -37,10 +51,10 @@ public interface FileService extends IService<FileEntity> {
     MinioFileVO queryById(Long id);
 
     /**
-     * 获取文件
+     * 获取文件流
      * @param id
      * @return
      */
-    File queryFileById(Long id);
+    InputStream queryInputStreamById(Long id);
 }
 

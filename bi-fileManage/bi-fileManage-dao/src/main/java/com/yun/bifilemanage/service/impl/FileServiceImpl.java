@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -40,12 +41,36 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
     public Long upload(MultipartFile file) {
         Long id = null;
         try {
+            String path = minioUtil.upload(file);
+            FileEntity fileEntity = FileEntity.builder()
+                    .fileName(file.getOriginalFilename())
+                    .fileMd5(SecureUtil.md5(file.getInputStream()))
+                    .filePath(path)
+                    .isUser(false)
+                    .build();
+            fileDao.insert(fileEntity);
+            id = fileEntity.getId();
+        } catch (Exception e) {
+            return null;
+        }
+        return id;
+    }
+
+    @Override
+    public Long upload(MultipartFile file, Boolean isUser) {
+        if (!isUser) {
+            return upload(file);
+        }
+        // 是用户文件下面鉴权
+        Long id = null;
+        try {
             // todo： 规范化，并且鉴权
             String path = minioUtil.upload(file);
             FileEntity fileEntity = FileEntity.builder()
                     .fileName(file.getOriginalFilename())
                     .fileMd5(SecureUtil.md5(file.getInputStream()))
                     .filePath(path)
+                    .isUser(isUser)
                     .build();
             fileDao.insert(fileEntity);
             id = fileEntity.getId();
@@ -58,9 +83,33 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
     @Override
     public Boolean delete(Long id) {
         QueryWrapper<FileEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(FileEntity::getId, id).eq(FileEntity::getStatus, false);
+        queryWrapper.lambda().eq(FileEntity::getId, id).eq(FileEntity::getStatus, false).eq(FileEntity::getIsUser, false);
         List<FileEntity> resList = this.list(queryWrapper);
         if (resList.size() == 1) {
+            try {
+                String path = resList.get(0).getFilePath();
+                minioUtil.moveObj(path, "del" + File.separator + path);
+                resList.get(0).setStatus(true);
+                fileDao.updateById(resList.get(0));
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean delete(Long id, Boolean isUser) {
+        if (!isUser) {
+            return delete(id);
+        }
+        // 是用户文件下面鉴权
+        QueryWrapper<FileEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(FileEntity::getId, id).eq(FileEntity::getStatus, false).eq(FileEntity::getIsUser, true);
+        List<FileEntity> resList = this.list(queryWrapper);
+        if (resList!=null && resList.size() == 1) {
             try {
                 // todo： 规范化，并且鉴权
                 String path = resList.get(0).getFilePath();
@@ -79,6 +128,9 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
     @Override
     public MinioFileVO queryById(Long id) {
         FileEntity fileEntity = this.getById(id);
+        if (fileEntity == null || fileEntity.getStatus()) {
+            return null;
+        }
         MinioFileVO minioFileVO = new MinioFileVO();
         BeanUtil.copyProperties(fileEntity, minioFileVO);
         minioFileVO.setUrl(minioProperties.getEndpoint() + File.separator + fileEntity.getFilePath());
@@ -86,9 +138,13 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
     }
 
     @Override
-    public File queryFileById(Long id) {
-        //TODO Cr 实现
-        return null;
+    public InputStream queryInputStreamById(Long id) {
+        FileEntity fileEntity = this.getById(id);
+        if (fileEntity == null || fileEntity.getStatus()) {
+            return null;
+        }
+        return minioUtil.downloadObj(fileEntity.getFilePath());
+
     }
 }
 
