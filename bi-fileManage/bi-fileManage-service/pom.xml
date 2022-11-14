@@ -16,6 +16,10 @@
             <groupId>com.yun</groupId>
             <artifactId>bi-fileManage-dao</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-fileManage-api</artifactId>
+        </dependency>
 
 
 
