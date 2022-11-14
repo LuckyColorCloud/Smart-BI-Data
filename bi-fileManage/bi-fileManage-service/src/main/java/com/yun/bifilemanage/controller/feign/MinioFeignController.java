@@ -1,11 +1,11 @@
 package com.yun.bifilemanage.controller.feign;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.yun.bidata.api.MinioApiFeign;
-import com.yun.bidata.vo.MinioFileVO;
 import com.yun.bidatacommon.vo.Result;
+import com.yun.bifilemanage.api.MinioApiFeign;
 import com.yun.bifilemanage.entity.FileEntity;
 import com.yun.bifilemanage.service.FileService;
+import com.yun.bifilemanage.vo.MinioFileVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

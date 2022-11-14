@@ -1,6 +1,6 @@
-package com.yun.bidata.api;
+package com.yun.bifilemanage.api;
 
-import com.yun.bidata.vo.MinioFileVO;
+import com.yun.bifilemanage.vo.MinioFileVO;
 import com.yun.bidatacommon.vo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

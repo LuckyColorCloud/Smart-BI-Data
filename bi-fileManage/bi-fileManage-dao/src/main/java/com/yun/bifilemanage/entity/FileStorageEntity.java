@@ -34,21 +34,13 @@ public class FileStorageEntity implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
     /**
-     * 文件名
-     */
-    private String fileName;
-    /**
-     * 文件路径
-     */
-    private String filePath;
-    /**
      * 文件大小
      */
     private Long size;
     /**
-     * 文件md5
+     * minio Id
      */
-    private String fileMd5;
+    private Long minioId;
     /**
      * 文件类型 0.csv 1.xlsx 2.json
      */
@@ -58,7 +50,7 @@ public class FileStorageEntity implements Serializable {
      */
     private Integer sourceId;
     /**
-     * 保存名称
+     * 保存表名
      */
     private String saveName;
     /**

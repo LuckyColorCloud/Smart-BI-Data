@@ -1,4 +1,4 @@
-package com.yun.bidata.vo;
+package com.yun.bifilemanage.vo;
 
 import lombok.Data;
 
@@ -32,6 +32,10 @@ public class MinioFileVO {
      * 文件名
      */
     private String fileName;
+    /**
+     * 文件名
+     */
+    private String fileMd5;
     /**
      * url
      */

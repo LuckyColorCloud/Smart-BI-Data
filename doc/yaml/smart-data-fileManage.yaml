@@ -58,7 +58,7 @@ knife4j:
 bi-fileManage:
   savePath: '\home\file'
 minio:
-  endpoint: http://8.134.119.146:9000
+  endpoint: http://127.0.0.1:9000
   accessKey: admin
   secretKey: admin123
-  bucketName: bismart3
+  bucketName: smartbi
