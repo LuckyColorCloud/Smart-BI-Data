@@ -15,6 +15,10 @@
             <groupId>com.yun</groupId>
             <artifactId>bi-dataStorage-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>bi-fileManage-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>cn.hutool</groupId>

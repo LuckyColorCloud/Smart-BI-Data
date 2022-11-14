@@ -2,7 +2,10 @@ package com.yun.bifilemanage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yun.bifilemanage.entity.FileEntity;
+import com.yun.bifilemanage.vo.MinioFileVO;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 /**
  * 文件管理
@@ -18,12 +21,26 @@ public interface FileService extends IService<FileEntity> {
      * @param file 待上传文件
      * @return 文件url
      */
-    public Long upload(MultipartFile file);
+    Long upload(MultipartFile file);
 
     /** * MinIIO伪删除文件
-     * @param path 文件路径
+     * @param id 文件id
      * @return T/F
      */
-    public Boolean delete(Long id);
+    Boolean delete(Long id);
+
+    /**
+     * 查询文件信息
+     * @param id
+     * @return
+     */
+    MinioFileVO queryById(Long id);
+
+    /**
+     * 获取文件
+     * @param id
+     * @return
+     */
+    File queryFileById(Long id);
 }
 

@@ -1,13 +1,17 @@
 package com.yun.bifilemanage.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yun.bifilemanage.config.MinioProperties;
 import com.yun.bifilemanage.dao.FileDao;
 import com.yun.bifilemanage.entity.FileEntity;
 import com.yun.bifilemanage.service.FileService;
 import com.yun.bifilemanage.util.MinioUtil;
+import com.yun.bifilemanage.vo.MinioFileVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +31,10 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
 
     @Resource
     private MinioUtil minioUtil;
+
+
+    @Autowired
+    private MinioProperties minioProperties;
 
     @Override
     public Long upload(MultipartFile file) {
@@ -66,6 +74,21 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
             return false;
         }
         return true;
+    }
+
+    @Override
+    public MinioFileVO queryById(Long id) {
+        FileEntity fileEntity = this.getById(id);
+        MinioFileVO minioFileVO = new MinioFileVO();
+        BeanUtil.copyProperties(fileEntity, minioFileVO);
+        minioFileVO.setUrl(minioProperties.getEndpoint() + File.separator + fileEntity.getFilePath());
+        return minioFileVO;
+    }
+
+    @Override
+    public File queryFileById(Long id) {
+        //TODO Cr 实现
+        return null;
     }
 }
 
