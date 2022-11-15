@@ -55,9 +55,5 @@ public class FileEntity implements Serializable {
      * 是否删除
      */
     private Boolean status;
-    /**
-     * 是否删除
-     */
-    private Boolean isUser;
 
 }

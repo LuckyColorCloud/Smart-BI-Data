@@ -132,6 +132,12 @@
                 <artifactId>bi-data-common</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <!-- ok http for minio Client -->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+            </dependency>
             <!--            minio 文件api-->
             <dependency>
                 <groupId>io.minio</groupId>
