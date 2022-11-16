@@ -57,3 +57,8 @@ knife4j:
     password: samrtBiData
 bi-fileManage:
   savePath: '\home\file'
+minio:
+  endpoint: http://127.0.0.1:9000
+  accessKey: admin
+  secretKey: admin123
+  bucketName: smartbi

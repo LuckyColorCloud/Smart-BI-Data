@@ -26,10 +26,14 @@
             </dependency>
             <dependency>
                 <groupId>com.yun</groupId>
+                <artifactId>bi-fileManage-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yun</groupId>
                 <artifactId>bi-dataStorage-api</artifactId>
                 <version>${revision}</version>
             </dependency>
-
 
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -61,6 +65,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>${commons-pool2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.minio</groupId>

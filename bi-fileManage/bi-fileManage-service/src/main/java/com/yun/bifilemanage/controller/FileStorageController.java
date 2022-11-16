@@ -1,11 +1,11 @@
 package com.yun.bifilemanage.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bifilemanage.entity.FileStorageEntity;
 import com.yun.bifilemanage.service.FileStorageService;
+import com.yun.bifilemanage.vo.FileVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -29,7 +29,6 @@ public class FileStorageController {
     @Autowired
     FileStorageService fileStorageService;
 
-
     /**
      * 列表
      */
@@ -39,11 +38,9 @@ public class FileStorageController {
             @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
     })
     @ApiOperation("查询列表")
-    public Result<Page<FileStorageEntity>> list(@Param("pageNo") int pageNo,
-                                                @Param("pageSize") int pageSize) {
-        Page<FileStorageEntity> fileEntityPage = new Page<>(pageNo, pageSize);
-        Page<FileStorageEntity> page = fileStorageService.page(fileEntityPage, new QueryWrapper<FileStorageEntity>().lambda().eq(FileStorageEntity::getStatus, false).orderByDesc(FileStorageEntity::getCreatedTime));
-        return Result.OK(page);
+    public Result<Page<FileVo>> list(@Param("pageNo") int pageNo,
+                                     @Param("pageSize") int pageSize) {
+        return Result.OK(fileStorageService.list(new Page<>(pageNo, pageSize)));
     }
 
 
@@ -53,13 +50,12 @@ public class FileStorageController {
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "file", dataType = "__file", required = true, value = "文件"),
-            @ApiImplicitParam(paramType = "query", name = "md5", dataType = "String", required = true, value = "文件md5"),
             @ApiImplicitParam(paramType = "query", name = "sourceId", dataType = "java.lang.Integer", required = true, value = "存储数据源ID"),
             @ApiImplicitParam(paramType = "query", name = "saveName", dataType = "String", required = true, value = "保存表名称")
     })
     @ApiOperation("保存文件数据")
-    public Result<Object> save(MultipartFile file, String md5, String saveName, Integer sourceId) {
-        return fileStorageService.saveAndStorage(file, md5, saveName, sourceId);
+    public Result<Object> save(MultipartFile file, String saveName, Integer sourceId) {
+        return fileStorageService.saveAndStorage(file, saveName, sourceId);
     }
 
     /**
@@ -96,7 +92,7 @@ public class FileStorageController {
     }
 
     /**
-     * 删除
+     * 重新入库
      */
     @GetMapping("/restart")
     @ApiOperation("重新入库")
@@ -105,8 +101,7 @@ public class FileStorageController {
         FileStorageEntity fileStorageEntity = fileStorageService.getById(id);
         if (fileStorageEntity != null) {
             fileStorageEntity.setStatus(true);
-            fileStorageService.updateById(fileStorageEntity);
-
+            fileStorageService.restart(fileStorageEntity);
         }
         return Result.OK();
     }
