@@ -82,10 +82,30 @@ server-addr====>服务器地址 默认端口8848
 - 数据融合(混合计算)
 - 接入GoView
 - 权限中心
-- 消息中心
+- 消息中心(初步接入kafka动态配置)
 - 调度中心
 - 日志中心
 - 其他待定(欢迎各位提出需求)``
+### 项目依赖
+```html
+LoopAuth 2.1.0
+mybatis.plus 3.4.3.1
+hutool全量 5.8.5
+springboot 2.3.5.RELEASE
+spring-cloud-alibaba 2.2.3.RELEASE
+lombok 1.18.4
+spring-openfeign 3.1.2
+knife4j 3.0.3
+spring-cloud Hoxton.SR8
+servlet.api 3.0-alpha-1
+spring-gateway 2.2.5.RELEASE
+mysql-connector 8.0.21
+druid 1.1.20
+minio  8.4.5
+okhttp 4.2.2
+commons-pool 22.9.0
+t-log 1.5.0
+```
 
 ### 项目历程
 2022.10.10 加入3位小伙伴,项目将迎来 快速发展 冲!!!

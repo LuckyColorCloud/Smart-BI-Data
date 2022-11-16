@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: locality
+  application:
+    name: bi-messageCenter
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr:  127.0.0.1:8848
+        namespace: 66579ba7-9e6e-41e0-ad5f-4e30f0f2f826
+      config:
+        server-addr:   127.0.0.1:8848
+        file-extension: yaml
+        prefix: smart-data-messageCenter
+        #指定命名空间
+        namespace: 66579ba7-9e6e-41e0-ad5f-4e30f0f2f826
+        extension-configs:
+          - data-id: smart-data-common.yaml
+            refresh: true
