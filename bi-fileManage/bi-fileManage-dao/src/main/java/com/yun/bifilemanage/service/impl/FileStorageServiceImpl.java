@@ -2,6 +2,7 @@ package com.yun.bifilemanage.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.text.csv.CsvData;
 import cn.hutool.core.text.csv.CsvReader;
 import cn.hutool.core.text.csv.CsvRow;
@@ -29,7 +30,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -172,16 +176,14 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageDao, FileStor
     @SuppressWarnings({"rawtypes", "AlibabaSwitchStatement"})
     private List<Map> dataStorage(Long fileId, Integer type) {
         List<Map> hashMaps = new ArrayList<>();
-        // todo @snow
-        File saveFile = null;
-//        File saveFile = fileService.queryFileById(fileId);
+        InputStream inputStream = fileService.queryInputStreamById(fileId);
         //判断文件类型进行解析
         switch (type) {
             //csv
             case 0:
                 CsvReader reader = CsvUtil.getReader();
                 //从文件中读取CSV数据
-                CsvData data = reader.read(saveFile);
+                CsvData data = reader.read(IoUtil.getReader(inputStream, StandardCharsets.UTF_8));
                 //获取头 作为 key
                 List<String> header = data.getHeader();
                 List<CsvRow> rows = data.getRows();
@@ -202,12 +204,12 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageDao, FileStor
                 break;
             //xlsx
             case 1:
-                List<Map<String, Object>> maps = ExcelUtil.getReader(saveFile).readAll();
+                List<Map<String, Object>> maps = ExcelUtil.getReader(inputStream).readAll();
                 hashMaps.addAll(maps);
                 break;
             // json
             case 2:
-                String json = FileUtil.readString(saveFile, StandardCharsets.UTF_8);
+                String json = IoUtil.read(inputStream,StandardCharsets.UTF_8);
                 if (JSONUtil.isTypeJSONObject(json)) {
                     hashMaps.add(JSONUtil.toBean(json, HashMap.class));
                 } else if (JSONUtil.isTypeJSONArray(json)) {
