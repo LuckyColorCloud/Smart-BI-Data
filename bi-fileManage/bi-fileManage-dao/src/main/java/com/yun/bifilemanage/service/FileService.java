@@ -6,6 +6,7 @@ import com.yun.bifilemanage.vo.MinioFileVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * 文件管理
@@ -29,6 +30,7 @@ public interface FileService extends IService<FileEntity> {
      */
     Boolean delete(Long id);
 
+
     /**
      * 查询文件信息
      * @param id
@@ -37,10 +39,20 @@ public interface FileService extends IService<FileEntity> {
     MinioFileVO queryById(Long id);
 
     /**
-     * 获取文件
+     * 获取文件流
      * @param id
      * @return
      */
-    File queryFileById(Long id);
+    InputStream queryInputStreamById(Long id);
+
+    /**
+     * 获取文件
+     * 文件会产生残留在配置下的tmp目录
+     * @param id
+     * @return
+     */
+    File queryTmpFileById(Long id);
+
+    void delTmpFile(File tmp);
 }
 
