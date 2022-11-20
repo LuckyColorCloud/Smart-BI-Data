@@ -38,7 +38,7 @@ public class MenuController {
      * @param state 状态
      * @return Result<List<MenuDto>>
      */
-    @GetMapping("/query")
+    @GetMapping("/list")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "title", dataType = "String", value = "菜单标题"),
             @ApiImplicitParam(paramType = "query", name = "state", dataType = "int", value = "1启用0停用")
@@ -46,9 +46,21 @@ public class MenuController {
     @ApiOperation("查询菜单")
     public Result<List<MenuVo>> query(@RequestParam(value = "title", required = false, defaultValue = "") String title,
                                       @RequestParam(value = "state", required = false, defaultValue = "2") int state) {
-
-
         return Result.OK(MenuEntity.listEntityToTreeVo.apply(menuService.queryMenu(title,state)));
+    }
+
+    /**
+     * 查询菜单根据id
+     * @param id 标题
+     * @return Result<List<MenuDto>>
+     */
+    @GetMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "id", dataType = "String", value = "主键")
+    })
+    @ApiOperation("查询菜单")
+    public Result<MenuVo> one(@RequestParam(value = "id") String id) {
+        return Result.OK(MenuEntity.entityToVo.apply(menuService.getById(id)));
     }
 
     /**
@@ -56,7 +68,7 @@ public class MenuController {
      * @param menuEntity 菜单实体
      * @return Result<MenuEntity>
      */
-    @PostMapping("/save")
+    @PostMapping
     @ApiOperation("新增菜单")
     public Result<MenuEntity> save(@RequestBody MenuEntity menuEntity) {
         return menuService.save(menuEntity)? Result.OK(menuEntity): Result.ERROR(Result.ResultEnum.ERROR);
@@ -66,7 +78,7 @@ public class MenuController {
      * 更新菜单
      * @param menuEntity 菜单实体
      */
-    @PostMapping("/updata")
+    @PutMapping
     @ApiOperation("更新菜单")
     public Result<MenuEntity> updata(@RequestBody MenuEntity menuEntity) {
         return menuService.updateById(menuEntity)? Result.OK(menuEntity): Result.ERROR(Result.ResultEnum.ERROR);
@@ -76,9 +88,12 @@ public class MenuController {
      * 删除菜单
      * @param id 需要删除的id
      */
-    @GetMapping("/remove")
+    @DeleteMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "id", dataType = "String", value = "主键")
+    })
     @ApiOperation("删除菜单")
-    public Result<Object> remove(String id) {
+    public Result<Object> remove(@RequestParam(value = "id") String id) {
         return menuService.removeMenu(id)? Result.OK("删除成功"): Result.ERROR("删除失败，此数据已被使用");
     }
 
