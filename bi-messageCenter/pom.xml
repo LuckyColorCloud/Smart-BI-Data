@@ -33,7 +33,7 @@
             <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka-clients</artifactId>
-                <version>${apache-kafka.version}</version>
+                <version>${kafka.version}</version>
             </dependency>
             <!--            hutools-->
             <dependency>
