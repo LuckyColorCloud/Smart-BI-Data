@@ -33,14 +33,14 @@ public class ApiManageController {
     /**
      * 列表
      */
-    @PostMapping("/list")
+    @GetMapping("/page")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "pageNo", dataType = "int", required = true, value = "分页"),
             @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
     })
     @ApiOperation("查询列表")
-    public Result<Page<ApiManageEntity>> list(@Param("pageNo") int pageNo,
-                                              @Param("pageSize") int pageSize) {
+    public Result<Page<ApiManageEntity>> page(@RequestParam("pageNo") int pageNo,
+                                              @RequestParam("pageSize") int pageSize) {
         Page<ApiManageEntity> apiManagePage = new Page<>(pageNo, pageSize);
         Page<ApiManageEntity> page = apiManageService.page(apiManagePage, new QueryWrapper<ApiManageEntity>().lambda().orderByDesc(ApiManageEntity::getCreatedTime));
         return Result.OK(page);

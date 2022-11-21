@@ -80,7 +80,7 @@ public class MenuController {
      */
     @PutMapping
     @ApiOperation("更新菜单")
-    public Result<MenuEntity> updata(@RequestBody MenuEntity menuEntity) {
+    public Result<MenuEntity> update(@RequestBody MenuEntity menuEntity) {
         return menuService.updateById(menuEntity)? Result.OK(menuEntity): Result.ERROR(Result.ResultEnum.ERROR);
     }
 
