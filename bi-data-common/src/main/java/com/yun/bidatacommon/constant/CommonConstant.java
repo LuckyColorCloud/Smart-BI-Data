@@ -39,4 +39,8 @@ public interface CommonConstant {
      * 分组参数
      */
     String GROUPING = "grouping";
+    /**
+     * socket
+     */
+    String SOCKET = "/webSocket";
 }
