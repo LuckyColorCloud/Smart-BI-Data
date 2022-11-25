@@ -1,16 +1,14 @@
 package com.yun.bimessagecenter.service;
 
-import com.yun.bimessagecenter.entity.MqConfigEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yun.bimessagecenter.entity.MqConfigEntity;
 
 /**
- * <p>
- * MQ配置表 服务类
- * </p>
+ * MQ消息配置
  *
  * @author Yun
- * @since 2022-11-16
  */
 public interface MqConfigService extends IService<MqConfigEntity> {
 
 }
+

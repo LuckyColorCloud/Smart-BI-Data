@@ -135,6 +135,47 @@ CREATE TABLE `user_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='第三方用户角色表 ';
 
+create table if not exists mq_config
+(
+    CREATED_TIME datetime      null comment '创建时间',
+    id           int auto_increment comment '主键'
+        primary key,
+    UPDATED_TIME datetime      null comment '更新时间',
+    type         varchar(32)   null comment 'mq类型',
+    project_id   int           null comment '项目id',
+    consumer     int           null comment '生产者or消费者',
+    config       varchar(3072) null comment 'mq配置 需要是jsonObject',
+    time         int           null comment '轮询时间 单位毫秒',
+    poll         int           null comment 'poll'
+)
+    comment 'MQ消息配置';
+create table if not exists socket_config
+(
+    CREATED_TIME datetime             null comment '创建时间',
+    id           int auto_increment comment '主键'
+        primary key,
+    project_id   int                  null comment '项目id',
+    UPDATED_TIME datetime             null comment '更新时间',
+    path         varchar(1024)        null comment '路径',
+    topic_id     varchar(1024)        null comment '消息ID',
+    status       tinyint(1) default 0 null
+)
+    comment 'socket配置';
+create table if not exists topic
+(
+    CREATED_TIME datetime      null comment '创建时间',
+    id           int auto_increment comment '主键'
+        primary key,
+    project_id   int           null comment '项目id',
+    UPDATED_TIME datetime      null comment '更新时间',
+    socket_id    int           null comment 'socket_id',
+    topic        varchar(32)   null comment '主题',
+    type         int           null comment '数据清洗方式 0.普通1分组',
+    exclude    varchar(1024) null comment 'jsonPath',
+    map_key      varchar(1024) null comment '转换参数',
+    mq_id        int           null
+)
+    comment '主题配置';
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

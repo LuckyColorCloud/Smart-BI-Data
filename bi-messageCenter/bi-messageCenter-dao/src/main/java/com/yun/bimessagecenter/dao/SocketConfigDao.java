@@ -1,15 +1,15 @@
 package com.yun.bimessagecenter.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yun.bimessagecenter.entity.MqConfigEntity;
+import com.yun.bimessagecenter.entity.SocketConfigEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * MQ消息配置
+ * socket配置
  * 
  * @author Yun
  */
 @Mapper
-public interface MqConfigDao extends BaseMapper<MqConfigEntity> {
+public interface SocketConfigDao extends BaseMapper<SocketConfigEntity> {
 	
 }

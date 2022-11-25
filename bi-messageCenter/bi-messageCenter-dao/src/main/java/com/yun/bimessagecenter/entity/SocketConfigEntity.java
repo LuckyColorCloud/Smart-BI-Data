@@ -9,15 +9,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * MQ消息配置
+ * socket配置
  *
  * @author Yun
  */
 @Data
-@TableName("mq_config")
-public class MqConfigEntity implements Serializable {
+@TableName("socket_config")
+public class SocketConfigEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
     /**
      * 创建时间
      */
@@ -32,28 +31,21 @@ public class MqConfigEntity implements Serializable {
      */
     private Date updatedTime;
     /**
-     * mq类型
-     */
-    private String type;
-    /**
      * 项目id
      */
     private Integer projectId;
+
     /**
-     * 生产者or消费者
+     * 路径
      */
-    private Integer consumer;
+    private String path;
     /**
-     * mq配置 需要是jsonObject
+     * 消息ID
      */
-    private String config;
+    private String topicId;
     /**
-     * 轮询时间 单位毫秒
+     * 是否开启（上下线）
      */
-    private Integer time;
-    /**
-     * poll
-     */
-    private Integer poll;
+    private Boolean status;
 
 }

@@ -16,12 +16,6 @@
             <artifactId>bi-messageCenter-dao</artifactId>
             <version>${revision}</version>
         </dependency>
-
-        <!--            kafka-->
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-        </dependency>
         <!--            hutools-->
         <dependency>
             <groupId>cn.hutool</groupId>

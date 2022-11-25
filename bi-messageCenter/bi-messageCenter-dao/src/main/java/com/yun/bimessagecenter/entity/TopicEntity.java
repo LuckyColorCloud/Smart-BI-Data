@@ -1,6 +1,7 @@
 package com.yun.bimessagecenter.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -9,15 +10,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * MQ消息配置
+ * 主题配置
  *
  * @author Yun
  */
 @Data
-@TableName("mq_config")
-public class MqConfigEntity implements Serializable {
+@TableName("topic")
+public class TopicEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
     /**
      * 创建时间
      */
@@ -27,33 +27,42 @@ public class MqConfigEntity implements Serializable {
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
+
     /**
      * 更新时间
      */
     private Date updatedTime;
     /**
-     * mq类型
-     */
-    private String type;
-    /**
      * 项目id
      */
     private Integer projectId;
     /**
-     * 生产者or消费者
+     * socket_id
      */
-    private Integer consumer;
+    private String socketId;
     /**
-     * mq配置 需要是jsonObject
+     * 主题
      */
-    private String config;
+    private String topic;
     /**
-     * 轮询时间 单位毫秒
+     * 数据清洗方式 0.普通1分组
      */
-    private Integer time;
+    private Integer type;
     /**
-     * poll
+     * jsonPath
      */
-    private Integer poll;
-
+    private String exclude;
+    /**
+     * 转换参数
+     */
+    private String mapKey;
+    /**
+     * mqID
+     */
+    private Integer mqId;
+    /**
+     * 参数
+     */
+    @TableField(exist = false)
+    private String path;
 }

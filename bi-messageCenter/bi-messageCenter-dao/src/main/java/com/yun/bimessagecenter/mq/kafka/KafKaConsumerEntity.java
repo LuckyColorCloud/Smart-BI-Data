@@ -1,15 +1,20 @@
-package com.yun.bimessagecenter.kafka;
+package com.yun.bimessagecenter.mq.kafka;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.yun.bimessagecenter.entity.MqConfigEntity;
+import com.yun.bimessagecenter.service.TopicService;
+import com.yun.bimessagecenter.webSocket.WebSocket;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.time.Duration;
-import java.util.Arrays;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 卡夫卡消费者
@@ -23,9 +28,17 @@ public class KafKaConsumerEntity {
      */
     private KafkaConsumer<String, String> consumer = null;
     /**
+     * 键子对
+     */
+    private Map<String, String> map = new ConcurrentHashMap<String, String>();
+    /**
      * 是否初始化成功
      */
     private boolean success = false;
+    /**
+     * 线程
+     */
+    private Thread thread = null;
     /**
      * 轮询
      */
@@ -35,25 +48,50 @@ public class KafKaConsumerEntity {
      */
     private int sleep = 1000;
 
+    private TopicService topicService = SpringUtil.getBean(TopicService.class);
+
     /**
      * 执行
-     *
-     * @throws InterruptedException
      */
-    public void execute() throws InterruptedException {
-        processRecords();
+    @SuppressWarnings("AlibabaAvoidManuallyCreateThread")
+    public void execute() {
+        if (thread == null) {
+            thread = new Thread(() -> {
+                try {
+                    processRecords();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     /**
      * 动态添加 主题
      *
      * @param topic
+     * @param
      * @throws InterruptedException
      */
-    public void subscribe(String... topic) throws InterruptedException {
+    public void subscribe(String path, String topic) {
         //订阅该主题中的所有分区。此处可以使用 \'assign\' 而不是 \'subscribe\' 来订阅特定分区。
-        consumer.subscribe(Arrays.asList(topic));
-        processRecords();
+        map.put(topic, path);
+        consumer.subscribe(map.keySet());
+    }
+
+    /**
+     * 动态删除 主题
+     *
+     * @param topic
+     * @param
+     * @throws InterruptedException
+     */
+    public void rmTopic(String topic) {
+        //订阅该主题中的所有分区。此处可以使用 \'assign\' 而不是 \'subscribe\' 来订阅特定分区。
+        map.remove(topic);
+        consumer.subscribe(map.keySet());
     }
 
     /**
@@ -82,12 +120,18 @@ public class KafKaConsumerEntity {
     private void processRecords() throws InterruptedException {
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(poll));
-            long lastOffset = 0;
             for (ConsumerRecord<String, String> record : records) {
-                System.out.printf("\n\roffset = %d, key = %s, value = %s", record.offset(), record.key(), record.value());
-                lastOffset = record.offset();
+                if (StrUtil.isNotEmpty(record.value())) {
+                    String path = this.map.get(record.topic());
+                    String value = record.value();
+                    try {
+                        WebSocket.sendMessage(value, path);
+                    } catch (Exception e) {
+                        WebSocket.sendMessage(record.value(), path);
+                    }
+                }
+                log.info("接收到消息:{}", record.value());
             }
-            System.out.println("lastOffset read: " + lastOffset);
             Thread.sleep(sleep);
         }
     }
@@ -100,4 +144,5 @@ public class KafKaConsumerEntity {
     public boolean isSuccess() {
         return success;
     }
+
 }
