@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yun.bidatacommon.constant.CommonConstant;
 import com.yun.bifilemanage.config.MinioProperties;
 import com.yun.bifilemanage.dao.FileDao;
 import com.yun.bifilemanage.entity.FileEntity;
@@ -17,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -68,7 +71,7 @@ public class FileServiceImpl extends ServiceImpl<FileDao, FileEntity> implements
         if (resList.size() == 1) {
             try {
                 String path = resList.get(0).getFilePath();
-                minioUtil.moveObj(path, "del" + File.separator + path);
+                minioUtil.moveObj(path, CommonConstant.DEL + File.separator + path);
                 resList.get(0).setStatus(true);
                 fileDao.updateById(resList.get(0));
             } catch (Exception e) {

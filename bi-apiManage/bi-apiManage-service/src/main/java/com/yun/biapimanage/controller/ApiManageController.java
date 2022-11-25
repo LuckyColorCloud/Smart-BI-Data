@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2022-10-26
  */
 @RestController
-@RequestMapping("/apiManageEntity")
+@RequestMapping("/apiManage")
 @Api(tags = "API管理接口")
 public class ApiManageController {
 
@@ -33,14 +33,14 @@ public class ApiManageController {
     /**
      * 列表
      */
-    @PostMapping("/list")
+    @GetMapping("/page")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "pageNo", dataType = "int", required = true, value = "分页"),
             @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
     })
     @ApiOperation("查询列表")
-    public Result<Page<ApiManageEntity>> list(@Param("pageNo") int pageNo,
-                                              @Param("pageSize") int pageSize) {
+    public Result<Page<ApiManageEntity>> page(@RequestParam("pageNo") int pageNo,
+                                              @RequestParam("pageSize") int pageSize) {
         Page<ApiManageEntity> apiManagePage = new Page<>(pageNo, pageSize);
         Page<ApiManageEntity> page = apiManageService.page(apiManagePage, new QueryWrapper<ApiManageEntity>().lambda().orderByDesc(ApiManageEntity::getCreatedTime));
         return Result.OK(page);
@@ -60,8 +60,8 @@ public class ApiManageController {
     /**
      * 修改
      */
-    @PostMapping("/update")
-    @ApiOperation("修改")
+    @PutMapping
+    @ApiOperation("更新")
     public Result<String> update(@RequestBody ApiManageEntity apiManageEntity) {
         apiManageService.updateById(apiManageEntity);
         return Result.OK();
@@ -70,20 +70,24 @@ public class ApiManageController {
     /**
      * 信息
      */
-    @GetMapping("/info/{id}")
-    @ApiOperation("查询信息")
-    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
-    public Result<ApiManageEntity> info(@PathVariable("id") Integer id) {
+    @GetMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "id", dataType = "String", value = "API id")
+    })
+    @ApiOperation("查询")
+    public Result<ApiManageEntity> info(@RequestParam(value = "id") Integer id) {
         return Result.OK(apiManageService.getById(id));
     }
 
     /**
      * 删除
      */
-    @GetMapping("/delete")
-    @ApiOperation("删除信息")
-    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
-    public Result<String> delete(Integer id) {
+    @DeleteMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "id", dataType = "String", value = "API id")
+    })
+    @ApiOperation("删除")
+    public Result<String> delete(@RequestParam(value = "id")  Integer id) {
         apiManageService.removeById(id);
         return Result.OK();
     }

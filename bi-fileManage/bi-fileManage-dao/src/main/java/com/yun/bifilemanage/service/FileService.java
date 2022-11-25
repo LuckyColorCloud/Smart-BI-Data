@@ -18,13 +18,17 @@ import java.io.InputStream;
 public interface FileService extends IService<FileEntity> {
 
 
-    /** * 上传文件到MinIIO
+    /**
+     * 上传文件到MinIIO
+     *
      * @param file 待上传文件
      * @return 文件url
      */
     Long upload(MultipartFile file);
 
-    /** * MinIIO伪删除文件
+    /**
+     * MinIIO伪删除文件
+     *
      * @param id 文件id
      * @return T/F
      */
@@ -33,6 +37,7 @@ public interface FileService extends IService<FileEntity> {
 
     /**
      * 查询文件信息
+     *
      * @param id
      * @return
      */
@@ -40,6 +45,7 @@ public interface FileService extends IService<FileEntity> {
 
     /**
      * 获取文件流
+     *
      * @param id
      * @return
      */
@@ -48,11 +54,17 @@ public interface FileService extends IService<FileEntity> {
     /**
      * 获取文件
      * 文件会产生残留在配置下的tmp目录
+     *
      * @param id
      * @return
      */
     File queryTmpFileById(Long id);
 
+    /**
+     * 删除临时文件
+     *
+     * @param tmp
+     */
     void delTmpFile(File tmp);
 }
 

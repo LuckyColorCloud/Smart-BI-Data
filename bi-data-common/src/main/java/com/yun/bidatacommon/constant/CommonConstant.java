@@ -9,14 +9,14 @@ public interface CommonConstant {
     String CACHE_TOKEN_HEAD = "CACHE_TOKEN_HEAD";
     String TEXT = "Text";
     String UTF_8 = "UTF-8";
-    String  POINT = ".";
+    String POINT = ".";
 
     /**
      * token前缀
      */
-    String SMART_BI_TOKEN="SmartBiToken";
-    String SMART_BI_DATA="SmartBiData";
-    String SMART_BI_DATA_SENTINEL="SmartBiDataSentinel";
+    String SMART_BI_TOKEN = "SmartBiToken";
+    String SMART_BI_DATA = "SmartBiData";
+    String SMART_BI_DATA_SENTINEL = "SmartBiDataSentinel";
     /**
      * 数据转换系统字段
      */
@@ -39,4 +39,13 @@ public interface CommonConstant {
      * 分组参数
      */
     String GROUPING = "grouping";
+    /**
+     * socket
+     */
+    String SOCKET = "/webSocket";
+
+    /**
+     * minio
+     */
+    String DEL = "del";
 }
