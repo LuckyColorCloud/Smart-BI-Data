@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 /**
@@ -30,38 +30,38 @@ public class AccountInfoEntity implements Serializable {
     /**
      * 账户id
      */
-    @ApiModelProperty("账户id")
+    @Schema(description = "账户id")
     private String accountId;
 
     /**
      * 头像
      */
-    @ApiModelProperty("头像")
+    @Schema(description = "头像")
     private String icon;
 
     /**
      * 昵称
      */
-    @ApiModelProperty("昵称")
+    @Schema(description = "昵称")
     private String nickname;
 
     /**
      * 性别0女1男
      */
-    @ApiModelProperty("性别0女1男")
+    @Schema(description = "性别0女1男")
     private Short gender;
 
     /**
      * 创建时间
      */
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdTime;
 
     /**
      * 更新时间
      */
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedTime;
 

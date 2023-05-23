@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -31,13 +31,13 @@ public class AccountEntity implements Serializable {
     /**
      * 邮箱
      */
-    @ApiModelProperty("邮箱")
+    @Schema(description = "邮箱")
     private String email;
 
     /**
      * 密码
      */
-    @ApiModelProperty("密码")
+    @Schema(description = "密码")
     private String password;
 
 }

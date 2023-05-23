@@ -5,10 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bidatastorage.entity.StorageTableEntity;
 import com.yun.bidatastorage.service.StorageTableService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.Operation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/storagetable")
-@Api(tags = "查询数据存储相关接口")
+@Tag(name = "查询数据存储相关接口")
 public class StorageTableController {
 
     @Autowired
@@ -33,11 +34,11 @@ public class StorageTableController {
      * 列表
      */
     @PostMapping("/list")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNo", dataType = "int", required = true, value = "分页"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
+    @Parameters({
+            @Parameter(name = "pageNo", required = true, description = "分页"),
+            @Parameter(name = "pageSize", required = true, description = "数量")
     })
-    @ApiOperation("查询列表")
+    @Operation(summary = "查询列表")
     public Result<Page<StorageTableEntity>> list(@Param("pageNo") int pageNo,
                                                  @Param("pageSize") int pageSize) {
         Page<StorageTableEntity> datasourceEntityPage = new Page<>(pageNo, pageSize);
@@ -50,8 +51,8 @@ public class StorageTableController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @ApiOperation("查询存储表")
-    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "存储表ID")
+    @Operation(summary = "查询存储表")
+    @Parameter(name = "id", required = true, description = "存储表ID")
     public Result<StorageTableEntity> info(@PathVariable("id") Integer id) {
         return Result.OK(storageTableService.getById(id));
     }
@@ -60,7 +61,7 @@ public class StorageTableController {
      * 保存
      */
     @PostMapping("/save")
-    @ApiOperation("保存存储表")
+    @Operation(summary = "保存存储表")
     public Result<String> save(@RequestBody StorageTableEntity storageTable) {
         storageTableService.save(storageTable);
         return Result.OK();
@@ -70,7 +71,7 @@ public class StorageTableController {
      * 修改
      */
     @PostMapping("/update")
-    @ApiOperation("修改存储表")
+    @Operation(summary = "修改存储表")
     public Result<String> update(@RequestBody StorageTableEntity storageTable) {
         storageTableService.updateById(storageTable);
         return Result.OK();
@@ -80,8 +81,8 @@ public class StorageTableController {
      * 删除
      */
     @GetMapping("/delete")
-    @ApiOperation("删除存储表")
-    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "存储表ID")
+    @Operation(summary = "删除存储表")
+    @Parameter(name = "id", required = true, description = "存储表ID")
     public Result<String> delete(Integer id) {
         storageTableService.removeById(id);
         return Result.OK();

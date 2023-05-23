@@ -6,10 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidata.entity.IndexConfigEntity;
 import com.yun.bidata.service.IndexConfigService;
 import com.yun.bidatacommon.vo.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.Operation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/indexConfig")
-@Api(tags = "查询指标相关数据")
+@Tag(name = "查询指标相关数据")
 public class IndexConfigController {
 
     @Autowired
@@ -35,11 +36,11 @@ public class IndexConfigController {
      * 列表
      */
     @PostMapping("/list")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNo", dataType = "int", required = true, value = "分页"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
+    @Parameters({
+            @Parameter(name = "pageNo", required = true, description = "分页"),
+            @Parameter(name = "pageSize", required = true, description = "数量")
     })
-    @ApiOperation("查询列表")
+    @Operation(summary = "查询列表")
     public Result<Page<IndexConfigEntity>> list(@Param("pageNo") int pageNo,
                                                 @Param("pageSize") int pageSize) {
         Page<IndexConfigEntity> indexConfigEntityPage = new Page<>(pageNo, pageSize);
@@ -52,7 +53,7 @@ public class IndexConfigController {
      * 保存
      */
     @PostMapping("/save")
-    @ApiOperation("保存")
+    @Operation(summary = "保存")
     public Result<String> save(@RequestBody IndexConfigEntity indexConfigEntity) {
         indexConfigService.save(indexConfigEntity);
         return Result.OK();
@@ -62,7 +63,7 @@ public class IndexConfigController {
      * 修改
      */
     @PostMapping("/update")
-    @ApiOperation("修改")
+    @Operation(summary = "修改")
     public Result<String> update(@RequestBody IndexConfigEntity indexConfigEntity) {
         indexConfigService.updateById(indexConfigEntity);
         return Result.OK();
@@ -72,8 +73,8 @@ public class IndexConfigController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @ApiOperation("查询信息")
-    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
+    @Operation(summary = "查询信息")
+    @Parameter(name = "id", required = true, description = "数据源ID")
     public Result<IndexConfigEntity> info(@PathVariable("id") Integer id) {
         return Result.OK(indexConfigService.getById(id));
     }
@@ -82,8 +83,8 @@ public class IndexConfigController {
      * 删除
      */
     @GetMapping("/delete")
-    @ApiOperation("删除信息")
-    @ApiImplicitParam(paramType = "query", name = "id", dataType = "int", required = true, value = "数据源ID")
+    @Operation(summary = "删除信息")
+    @Parameter(name = "id", required = true, description = "数据源ID")
     public Result<String> delete(Integer id) {
         indexConfigService.removeById(id);
         return Result.OK();

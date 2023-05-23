@@ -2,11 +2,11 @@ package com.yun.bidatacommon.security;
 
 import cn.hutool.json.JSONUtil;
 import com.yun.bidatacommon.constant.SecurityConfig;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 /**

@@ -2,8 +2,8 @@ package com.yun.bisecurity.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <p>
@@ -14,17 +14,17 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2022-11-10
  */
 @TableName("data_model_menu")
-@ApiModel(value = "DataModelMenuEntity对象", description = "")
+@Schema(title = "DataModelMenuEntity对象", description = "")
 public class DataModelMenuEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    @ApiModelProperty("数据模型id")
+    @Schema(description = "数据模型id")
     private Long dataModelId;
 
-    @ApiModelProperty("菜单id")
+    @Schema(description = "菜单id")
     private Long menuId;
 
 

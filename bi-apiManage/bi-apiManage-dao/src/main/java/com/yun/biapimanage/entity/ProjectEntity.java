@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <p>
@@ -17,31 +17,31 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2022-10-26
  */
 @TableName("project")
-@ApiModel(value = "ProjectEntity对象", description = "项目表 ")
+@Schema(title = "ProjectEntity对象", description = "项目表 ")
 public class ProjectEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createdTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updatedTime;
 
-    @ApiModelProperty("主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("项目名称")
+    @Schema(description = "项目名称")
     private String projectName;
 
-    @ApiModelProperty("域名 域名前缀")
+    @Schema(description = "域名 域名前缀")
     private String domian;
 
-    @ApiModelProperty("头信息 公共头信息")
+    @Schema(description = "头信息 公共头信息")
     private String header;
 
-    @ApiModelProperty("tokenkey token请求的key")
+    @Schema(description = "tokenkey token请求的key")
     private String tokenKey;
 
 
