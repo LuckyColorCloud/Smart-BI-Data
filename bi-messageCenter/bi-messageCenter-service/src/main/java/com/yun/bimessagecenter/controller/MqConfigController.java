@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/mqConfig")
-@Api(tags ="MQ消息配置")
+@Tag(name ="MQ消息配置")
 public class MqConfigController {
     @Autowired
     private MqConfigService mqConfigService;
