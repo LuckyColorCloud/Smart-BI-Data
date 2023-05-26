@@ -47,12 +47,12 @@
         <knife4j.version>4.1.0</knife4j.version>
         <minio.version>8.4.5</minio.version>
         <kafka.version>3.3.1</kafka.version>
-        <hystrix.version>2.2.10.RELEASE</hystrix.version>
         <annotation-api.version>1.3.2</annotation-api.version>
 
         <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
         <druid.version>1.2.15</druid.version>
         <mysql-connector.version>8.0.21</mysql-connector.version>
+        <commons-io.version>2.2</commons-io.version>
 
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -74,12 +74,7 @@
                 <artifactId>LoopAuth-spring-boot-starter</artifactId>
                 <version>${LoopAuth.version}</version>
             </dependency>
-            <!--        hystrix-->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-                <version>${hystrix.version}</version>
-            </dependency>
+
             <!--             mysql-connector-->
             <dependency>
                 <groupId>mysql</groupId>
@@ -167,12 +162,19 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
             </dependency>
-
+            <!--            javax.annotation-api-->
             <dependency>
                 <groupId>javax.annotation</groupId>
                 <artifactId>javax.annotation-api</artifactId>
                 <version>${annotation-api.version}</version>
             </dependency>
+            <!--            commons-io-->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <!--    公共依赖-->
@@ -182,6 +184,11 @@
             <groupId>com.yomahub</groupId>
             <artifactId>tlog-feign-spring-boot-starter</artifactId>
             <version>${t-log.version}</version>
+        </dependency>
+        <!--        loadbalancer-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
         <dependency>
             <groupId>com.yomahub</groupId>
@@ -209,12 +216,10 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${spring-cloud-alibaba.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>${spring-cloud-alibaba.version}</version>
         </dependency>
         <!--        测试包-->
         <dependency>

@@ -88,11 +88,12 @@ server-addr====>服务器地址 默认端口8848
 - 其他待定(欢迎各位提出需求)``
 ### 项目依赖
 ```html
+JDK 17.0+
 LoopAuth 2.1.0
 mybatis.plus 3.4.3.1
 hutool全量 5.8.5
-springboot 2.3.5.RELEASE
-spring-cloud-alibaba 2.2.3.RELEASE
+springboot 3.0.6
+spring-cloud-alibaba 2022.0.2
 lombok 1.18.4
 spring-openfeign 3.1.2
 knife4j 3.0.3

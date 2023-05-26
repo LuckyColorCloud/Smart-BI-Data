@@ -1,10 +1,10 @@
 package com.yun.bimessagecenter.webSocket;
 
+import jakarta.websocket.*;
+import jakarta.websocket.server.ServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
 import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;

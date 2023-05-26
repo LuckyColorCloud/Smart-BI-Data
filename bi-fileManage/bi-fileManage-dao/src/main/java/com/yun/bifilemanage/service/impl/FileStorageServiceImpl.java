@@ -1,7 +1,6 @@
 package com.yun.bifilemanage.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.text.csv.CsvData;
 import cn.hutool.core.text.csv.CsvReader;
@@ -30,10 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -189,7 +185,7 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageDao, FileStor
                 List<CsvRow> rows = data.getRows();
                 //遍历行
                 for (CsvRow csvRow : rows) {
-                    HashMap<String, Object> map = new HashMap<>();
+                    HashMap<String, Object> map = new HashMap<>(header.size());
                     //getRawList返回一个List列表，列表的每一项为CSV中的一个单元格（既逗号分隔部分）
                     List<String> rawList = csvRow.getRawList();
                     for (int i = 0; i < header.size(); i++) {
@@ -209,7 +205,7 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageDao, FileStor
                 break;
             // json
             case 2:
-                String json = IoUtil.read(inputStream,StandardCharsets.UTF_8);
+                String json = IoUtil.read(inputStream, StandardCharsets.UTF_8);
                 if (JSONUtil.isTypeJSONObject(json)) {
                     hashMaps.add(JSONUtil.toBean(json, HashMap.class));
                 } else if (JSONUtil.isTypeJSONArray(json)) {
