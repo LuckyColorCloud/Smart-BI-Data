@@ -40,7 +40,7 @@
 
         <okhttp.version>4.11.0</okhttp.version>
         <t-log.version>1.5.0</t-log.version>
-        <lombok.version>1.18.4</lombok.version>
+        <lombok.version>1.18.28</lombok.version>
 
         <LoopAuth.version>2.1.4.Bate.1</LoopAuth.version>
         <hutool.version>5.8.5</hutool.version>
@@ -237,19 +237,4 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <!-- 其他配置 -->
-                </configuration>
-            </plugin>
-            <!-- 其他插件 -->
-        </plugins>
-    </build>
-
 </project>
