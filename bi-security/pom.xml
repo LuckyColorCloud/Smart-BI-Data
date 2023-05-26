@@ -30,7 +30,7 @@
             </dependency>
             <dependency>
                 <groupId>com.sobercoding</groupId>
-                <artifactId>LoopAuth-spring-boot-starter</artifactId>
+                <artifactId>LoopAuth-spring-boot3-starter</artifactId>
                 <version>${LoopAuth.version}</version>
             </dependency>
             <dependency>

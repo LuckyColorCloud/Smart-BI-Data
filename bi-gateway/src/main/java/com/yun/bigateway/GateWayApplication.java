@@ -13,7 +13,7 @@ import org.springframework.context.annotation.FilterType;
  */
 @Slf4j
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.yun.bigateway", "com.yun.bidatacommon.*"}, excludeFilters = {
+@ComponentScan(basePackages = {"com.alibaba.druid", "com.yun.bigateway", "com.yun.bidatacommon.*"}, excludeFilters = {
         @ComponentScan.Filter(type = FilterType.REGEX, pattern = {
                 "com.yun.bidatacommon.config.MyBatisPlusMetaObjectHandler"})
 })
