@@ -3,8 +3,8 @@ package com.yun.bisecurity.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <p>
@@ -15,14 +15,14 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2022-11-10
  */
 @TableName("data_model")
-@ApiModel(value = "DataModelEntity对象", description = "")
+@Schema(title = "DataModelEntity对象", description = "")
 public class DataModelEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    @ApiModelProperty("模型名称")
+    @Schema(description = "模型名称")
     private String name;
 
     private LocalDateTime createdTime;

@@ -5,7 +5,7 @@ import com.yun.apimanage.dto.ProjectDto;
 import com.yun.biapimanage.entity.ProjectEntity;
 import com.yun.biapimanage.service.ProjectService;
 import com.yun.bidatacommon.vo.Result;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/open/apiManage/api")
-@Api(tags = "API feign服务接口")
+@Tag(name = "API feign服务接口")
 @Slf4j
 public class ApiManageFeignController implements ApiManageFeign {
 

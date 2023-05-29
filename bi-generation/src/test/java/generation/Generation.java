@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import com.baomidou.mybatisplus.generator.keywords.MySqlKeyWordsHandler;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
@@ -21,9 +21,9 @@ public class Generation {
 
     @Test
     public void generation() {
-        DataSourceConfig.Builder dataSource = getDataSource("jdbc:mysql://127.0.0.1:3306/smart_bi_data?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8", "root", "123456", "smart_bi_data");
+        DataSourceConfig.Builder dataSource = getDataSource("jdbc:mysql://101.35.147.40:10001/smart_bi_data?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8", "root", "SmartBi1024", "smart_bi_data");
         // outputDir 可以直接写项目地址 直接生成到项目里 比如D:\project\Smart-BI-Data
-        generate(dataSource, "bi-apiManage", "E:\\mybatis", "Yun", "project", "api_manage");
+        generate(dataSource, "bi-messageCenter", "D:\\project\\Smart-BI-Data", "Yun", "mq_config");
     }
 
     /**

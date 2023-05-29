@@ -26,11 +26,6 @@
             <artifactId>tlog-gateway-spring-boot-starter</artifactId>
             <version>${t-log.version}</version>
         </dependency>
-        <!--        hystrix-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
         <!--sentinelH整合gateway的依赖-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -57,6 +52,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
+           <!--         resilience4j-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+        </dependency>
         <!--        loadbalancer-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -65,8 +65,7 @@
         <!--        knife4j-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
+            <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
         </dependency>
         <!--server-api-->
         <dependency>

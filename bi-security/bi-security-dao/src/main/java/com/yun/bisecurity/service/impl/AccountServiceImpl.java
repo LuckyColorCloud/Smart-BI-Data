@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
@@ -91,7 +91,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountDao, AccountEntity> i
                 .gender((short) 2)
                 .build();
         accountInfoService.save(accountInfo);
-        return Result.OK("新增成功", AccountVo.entityToVo.call(accountEntity,accountInfo));
+        return Result.OK("新增成功");
+//        return Result.OK("新增成功", AccountVo.entityToVo.call(accountEntity,accountInfo));
     }
 
 }

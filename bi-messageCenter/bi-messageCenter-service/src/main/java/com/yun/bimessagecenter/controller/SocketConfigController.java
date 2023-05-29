@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bimessagecenter.entity.SocketConfigEntity;
 import com.yun.bimessagecenter.service.SocketConfigService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/socketConfig")
-@Api(tags = "socket配置")
+@Tag(name = "socket配置")
 public class SocketConfigController {
     @Autowired
     private SocketConfigService socketConfigService;
@@ -34,7 +34,7 @@ public class SocketConfigController {
      * @return 结果集
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ApiOperation("列表")
+    @Operation(summary = "列表")
     public Result<?> queryApiPathList(@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                       @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                       @RequestParam(name = "projectId", defaultValue = "1") Integer projectId) {
@@ -45,7 +45,7 @@ public class SocketConfigController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @ApiOperation("查询")
+    @Operation(summary = "查询")
     public Result<SocketConfigEntity> info(@PathVariable("id") Integer id) {
         return Result.OK(socketConfigService.getById(id));
     }
@@ -54,7 +54,7 @@ public class SocketConfigController {
      * 保存
      */
     @PostMapping("/save")
-    @ApiOperation("保存")
+    @Operation(summary = "保存")
     public Result<String> save(@RequestBody SocketConfigEntity socketConfigEntity) {
         socketConfigService.save(socketConfigEntity);
         return Result.OK();
@@ -64,7 +64,7 @@ public class SocketConfigController {
      * 修改
      */
     @PostMapping("/update")
-    @ApiOperation("更新")
+    @Operation(summary = "更新")
     public Result<String> update(@RequestBody SocketConfigEntity socketConfigEntity) {
         socketConfigEntity.setUpdatedTime(new Date());
         socketConfigService.updateById(socketConfigEntity);
@@ -75,7 +75,7 @@ public class SocketConfigController {
      * 删除
      */
     @GetMapping("/delete/{id}")
-    @ApiOperation("删除")
+    @Operation(summary = "删除")
     public Result<String> delete(@PathVariable("id") Integer id) {
         socketConfigService.removeById(id);
         return Result.OK();
@@ -85,7 +85,7 @@ public class SocketConfigController {
      * 上线
      */
     @GetMapping("/online/{id}")
-    @ApiOperation("上线")
+    @Operation(summary = "上线")
     public Result<String> online(@PathVariable("id") Integer id) {
         SocketConfigEntity socketConfigEntity = socketConfigService.getById(id);
         if (socketConfigEntity != null) {
@@ -99,7 +99,7 @@ public class SocketConfigController {
      * 下线
      */
     @GetMapping("/offline/{id}")
-    @ApiOperation("下线")
+    @Operation(summary = "下线")
     public Result<String> offline(@PathVariable("id") Integer id) {
         SocketConfigEntity socketConfigEntity = socketConfigService.getById(id);
         if (socketConfigEntity != null) {

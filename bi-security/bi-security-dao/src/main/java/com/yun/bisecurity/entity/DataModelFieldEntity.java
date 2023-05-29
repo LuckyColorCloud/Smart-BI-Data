@@ -2,8 +2,8 @@ package com.yun.bisecurity.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <p>
@@ -14,20 +14,20 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2022-11-10
  */
 @TableName("data_model_field")
-@ApiModel(value = "DataModelFieldEntity对象", description = "")
+@Schema(title = "DataModelFieldEntity对象", description = "")
 public class DataModelFieldEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    @ApiModelProperty("数据模型id")
+    @Schema(description = "数据模型id")
     private Long dataModelId;
 
-    @ApiModelProperty("字段名称")
+    @Schema(description = "字段名称")
     private String name;
 
-    @ApiModelProperty("角色id列表,分隔符','")
+    @Schema(description = "角色id列表,分隔符','")
     private String roleIds;
 
 

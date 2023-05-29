@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.5.RELEASE</version>
+        <version>3.0.6</version>
         <relativePath/>
     </parent>
     <!--    模块管理-->
@@ -31,28 +31,34 @@
 
     <!--    版本管理-->
     <properties>
-        <LoopAuth.version>2.1.0</LoopAuth.version>
+        <revision>1.0.0.Beta.3</revision>
+
+        <springboot.version>3.0.6</springboot.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
+        <spring-cloud.version>2022.0.2</spring-cloud.version>
+        <servlet-api.version>4.0.1</servlet-api.version>
+
+        <okhttp.version>4.11.0</okhttp.version>
+        <t-log.version>1.5.0</t-log.version>
+        <lombok.version>1.18.28</lombok.version>
+
+        <LoopAuth.version>2.1.4.Bate.1</LoopAuth.version>
+        <hutool.version>5.8.5</hutool.version>
+        <knife4j.version>4.1.0</knife4j.version>
+        <minio.version>8.4.5</minio.version>
+        <kafka.version>3.3.1</kafka.version>
+        <annotation-api.version>1.3.2</annotation-api.version>
+
+        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
+        <druid.version>1.2.15</druid.version>
+        <mysql-connector.version>8.0.21</mysql-connector.version>
+        <commons-io.version>2.2</commons-io.version>
+
+        <java.version>17</java.version>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mybatis.plus.version>3.4.3.1</mybatis.plus.version>
-        <hutool.version>5.8.5</hutool.version>
-        <java.version>1.8</java.version>
-        <springboot.version>2.3.5.RELEASE</springboot.version>
-        <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
-        <lombok.version>1.18.4</lombok.version>
-        <spring-openfeign.version>3.1.2</spring-openfeign.version>
-        <knife4j.version>3.0.3</knife4j.version>
-        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-        <servlet.api.version>3.0-alpha-1</servlet.api.version>
-        <spring-gateway.version>2.2.5.RELEASE</spring-gateway.version>
-        <mysql-connector.version>8.0.21</mysql-connector.version>
-        <druid.version>1.1.20</druid.version>
-        <revision>1.0.0.Beta.3</revision>
-        <minio.version>8.4.5</minio.version>
-        <okhttp.version>4.2.2</okhttp.version>
-        <commons-pool2.version>2.9.0</commons-pool2.version>
-        <t-log.version>1.5.0</t-log.version>
-        <kafka.version>3.3.1</kafka.version>
     </properties>
 
     <!--    依赖管理-->
@@ -70,6 +76,7 @@
                 <artifactId>LoopAuth-spring-boot-starter</artifactId>
                 <version>${LoopAuth.version}</version>
             </dependency>
+
             <!--             mysql-connector-->
             <dependency>
                 <groupId>mysql</groupId>
@@ -91,7 +98,12 @@
             <!--        swagger 文档-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
             <!--            &lt;!&ndash; spring-cloud&ndash;&gt;-->
@@ -115,12 +127,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${springboot.version}</version>
-            </dependency>
-            <!--            网关依赖-->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>${spring-gateway.version}</version>
             </dependency>
             <!--            全量hutool工具包-->
             <dependency>
@@ -152,12 +158,25 @@
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
             </dependency>
-            <!--            apache commons-->
+            <!--server-api-->
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-pool2</artifactId>
-                <version>${commons-pool2.version}</version>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
             </dependency>
+            <!--            javax.annotation-api-->
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>${annotation-api.version}</version>
+            </dependency>
+            <!--            commons-io-->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <!--    公共依赖-->
@@ -167,6 +186,11 @@
             <groupId>com.yomahub</groupId>
             <artifactId>tlog-feign-spring-boot-starter</artifactId>
             <version>${t-log.version}</version>
+        </dependency>
+        <!--        loadbalancer-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
         <dependency>
             <groupId>com.yomahub</groupId>
@@ -183,7 +207,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>${spring-openfeign.version}</version>
         </dependency>
         <!--    autoconfigure   -->
         <dependency>
@@ -195,12 +218,10 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${spring-cloud-alibaba.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>${spring-cloud-alibaba.version}</version>
         </dependency>
         <!--        测试包-->
         <dependency>
@@ -208,6 +229,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${springboot.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
     </dependencies>

@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <p>
@@ -17,46 +17,46 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2022-10-26
  */
 @TableName("user_role")
-@ApiModel(value = "UserRoleEntity对象", description = "第三方用户角色表 ")
+@Schema(title = "UserRoleEntity对象", description = "第三方用户角色表 ")
 public class UserRoleEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createdTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updatedTime;
 
-    @ApiModelProperty("主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("url")
+    @Schema(description = "url")
     private String url;
 
-    @ApiModelProperty("是否缓存")
+    @Schema(description = "是否缓存")
     private Boolean cache;
 
-    @ApiModelProperty("缓存过期时间 单位分钟")
+    @Schema(description = "缓存过期时间 单位分钟")
     private Integer cacheExpiration;
 
-    @ApiModelProperty("请求头")
+    @Schema(description = "请求头")
     private String header;
 
-    @ApiModelProperty("body")
+    @Schema(description = "body")
     private String body;
 
-    @ApiModelProperty("请求方式")
+    @Schema(description = "请求方式")
     private String requestType;
 
-    @ApiModelProperty("名称")
+    @Schema(description = "名称")
     private String name;
 
-    @ApiModelProperty("所属项目")
+    @Schema(description = "所属项目")
     private Long projectId;
 
-    @ApiModelProperty("jsonPath")
+    @Schema(description = "jsonPath")
     private String jsonPath;
 
 

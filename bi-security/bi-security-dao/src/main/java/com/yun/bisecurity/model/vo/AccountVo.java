@@ -3,9 +3,6 @@ package com.yun.bisecurity.model.vo;
 import com.yun.bisecurity.entity.AccountEntity;
 import com.yun.bisecurity.entity.AccountInfoEntity;
 import lombok.Builder;
-import lombok.Data;
-import rx.functions.Func2;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -52,18 +49,4 @@ public class AccountVo implements Serializable {
      */
     private LocalDateTime updatedTime;
 
-
-    /**
-     * Dto 转 Vo
-     */
-    public static Func2<AccountEntity, AccountInfoEntity, AccountVo> entityToVo = (account, accountInfo) ->
-            AccountVo.builder()
-                    .id(account.getId())
-                    .email(account.getEmail())
-                    .icon(accountInfo.getIcon())
-                    .nickname(accountInfo.getNickname())
-                    .gender(accountInfo.getGender())
-                    .createdTime(accountInfo.getCreatedTime())
-                    .updatedTime(accountInfo.getUpdatedTime())
-                    .build();
 }

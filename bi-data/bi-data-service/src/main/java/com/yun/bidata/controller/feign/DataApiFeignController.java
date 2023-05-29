@@ -5,7 +5,7 @@ import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidata.service.DataService;
 import com.yun.bidatacommon.vo.Result;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/open/data/api")
-@Api(tags = "Data feign服务接口")
+@Tag(name = "Data feign服务接口")
 @Slf4j
 public class DataApiFeignController implements DataApiFeign {
 

@@ -4,8 +4,8 @@ package ${package.PackageEntity};
 import ${pkg};
 #end
 #if(${swagger})
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 #end
 #if(${entityLombokModel})
 import lombok.Getter;
@@ -34,7 +34,7 @@ import lombok.experimental.Accessors;
 @TableName("${schemaName}${table.name}")
 #end
 #if(${swagger})
-@ApiModel(value = "${entity}对象", description = "$!{table.comment}")
+@Schema(title = "${entity}对象", description = "$!{table.comment}")
 #end
 #if(${superEntityClass})
 public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
@@ -57,7 +57,7 @@ public class ${entity} {
 #end
 #if("$!field.comment" != "")
   #if(${swagger})
-    @ApiModelProperty("${field.comment}")
+    @Schema(description = "${field.comment}")
   #else
     /**
      * ${field.comment}

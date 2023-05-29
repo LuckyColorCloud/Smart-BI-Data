@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <p>
@@ -17,58 +17,58 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2022-10-26
  */
 @TableName("index_config")
-@ApiModel(value = "IndexConfigEntity对象", description = "指标表")
+@Schema(title = "IndexConfigEntity对象", description = "指标表")
 public class IndexConfigEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createdTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updatedTime;
 
-    @ApiModelProperty("主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("所属项目 项目id")
+    @Schema(description = "所属项目 项目id")
     private Long projectId;
 
-    @ApiModelProperty("请求路径 域名后面的路径")
+    @Schema(description = "请求路径 域名后面的路径")
     private String url;
 
-    @ApiModelProperty("使用token 使用的tokenID")
+    @Schema(description = "使用token 使用的tokenID")
     private Long tokenId;
 
-    @ApiModelProperty("请求方式 请求方式如get，post")
+    @Schema(description = "请求方式 请求方式如get，post")
     private String requestType;
 
-    @ApiModelProperty("私有头信息 私有头信息一般是不会再有专门接口的私有信息")
+    @Schema(description = "私有头信息 私有头信息一般是不会再有专门接口的私有信息")
     private String privateHeader;
 
-    @ApiModelProperty("过滤字段 集合类型的需要报错的key")
+    @Schema(description = "过滤字段 集合类型的需要报错的key")
     private String exclude;
 
-    @ApiModelProperty("json_path 利用jsonPath作为第一层数据处理")
+    @Schema(description = "json_path 利用jsonPath作为第一层数据处理")
     private String jsonPath;
 
-    @ApiModelProperty("请求body 请求body数据")
+    @Schema(description = "请求body 请求body数据")
     private String body;
 
-    @ApiModelProperty("动态参数 动态请求参数从接口的body获取这里配置需要拿取的key")
+    @Schema(description = "动态参数 动态请求参数从接口的body获取这里配置需要拿取的key")
     private String param;
 
-    @ApiModelProperty("JS脚本 最终处理方案")
+    @Schema(description = "JS脚本 最终处理方案")
     private String jsScript;
 
-    @ApiModelProperty("转换参数 转换字段")
+    @Schema(description = "转换参数 转换字段")
     private String mapKey;
 
-    @ApiModelProperty("类型 0.普通类型 1.分组")
+    @Schema(description = "类型 0.普通类型 1.分组")
     private Integer type;
 
-    @ApiModelProperty("name 名称")
+    @Schema(description = "name 名称")
     private String name;
 
 

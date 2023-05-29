@@ -6,12 +6,9 @@ import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.sobercoding.loopauth.session.model.TokenModel;
 import com.yun.bidatacommon.security.UserSessionInfo;
 import com.yun.bidatacommon.vo.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 鉴权提供的内部接口
@@ -20,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/open/security/api/context")
-@Api(tags = "用户全局会话上下文管理相关接口")
+@Tag(name = "用户全局会话上下文管理相关接口")
 public class SecurityContextController {
 
     /**
@@ -28,7 +25,7 @@ public class SecurityContextController {
      * @author Sober
      * @return com.yun.bidatacommon.vo.Result<java.lang.Boolean>
      */
-    @ApiOperation("abac鉴权接口")
+    @Operation(summary = "abac鉴权接口")
     @PostMapping("/checkAbAc")
     public Result<UserSessionInfo> checkAbAc(@RequestParam String route, @RequestParam String method) {
         /**

@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bimessagecenter.entity.MqConfigEntity;
 import com.yun.bimessagecenter.service.MqConfigService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/mqConfig")
-@Api(tags ="MQ消息配置")
+@Tag(name ="MQ消息配置")
 public class MqConfigController {
     @Autowired
     private MqConfigService mqConfigService;
@@ -34,7 +34,7 @@ public class MqConfigController {
      * @return 结果集
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ApiOperation("列表")
+    @Operation(summary = "列表")
     public Result<?> queryApiPathList(@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                       @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                       @RequestParam(name = "projectId", defaultValue = "1") Integer projectId) {
@@ -45,7 +45,7 @@ public class MqConfigController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @ApiOperation("查询信息")
+    @Operation(summary = "查询信息")
     public Result<MqConfigEntity> info(@PathVariable("id") Integer id) {
         return Result.OK(mqConfigService.getById(id));
     }
@@ -54,7 +54,7 @@ public class MqConfigController {
      * 保存
      */
     @PostMapping("/save")
-    @ApiOperation("保存")
+    @Operation(summary = "保存")
     public Result<String> save(@RequestBody MqConfigEntity mqConfig) {
         mqConfigService.save(mqConfig);
         return Result.OK();
@@ -64,7 +64,7 @@ public class MqConfigController {
      * 修改
      */
     @PostMapping("/update")
-    @ApiOperation("更新")
+    @Operation(summary = "更新")
     public Result<String> update(@RequestBody MqConfigEntity mqConfig) {
         mqConfig.setUpdatedTime(new Date());
         mqConfigService.updateById(mqConfig);
@@ -75,7 +75,7 @@ public class MqConfigController {
      * 删除
      */
     @GetMapping("/delete/{id}")
-    @ApiOperation("删除")
+    @Operation(summary = "删除")
     public Result<String> delete(@PathVariable("id") Integer id){
         mqConfigService.removeById(id);
         return Result.OK();

@@ -22,7 +22,7 @@ import com.yun.bidatastorage.service.DataSourceService;
 import com.yun.bidatastorage.service.SqlScriptService;
 import com.yun.bidatastorage.service.StorageTableService;
 import com.yun.bidatastorage.util.SqlUtil;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/open/storage/api")
-@Api(tags = "Data feign服务接口")
+@Tag(name = "Data feign服务接口")
 @Slf4j
 public class DataStorageFeignController implements DataStorageApiFeign {
     @Autowired

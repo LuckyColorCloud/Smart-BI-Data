@@ -6,10 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.biapimanage.entity.ApiManageEntity;
 import com.yun.biapimanage.service.ApiManageService;
 import com.yun.bidatacommon.vo.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.Operation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/apiManage")
-@Api(tags = "API管理接口")
+@Tag(name = "API管理接口")
 public class ApiManageController {
 
     @Autowired
@@ -34,11 +35,11 @@ public class ApiManageController {
      * 列表
      */
     @GetMapping("/page")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "pageNo", dataType = "int", required = true, value = "分页"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", dataType = "int", required = true, value = "数量")
+    @Parameters({
+            @Parameter(name = "pageNo", required = true, description = "分页"),
+            @Parameter(name = "pageSize", required = true, description = "数量")
     })
-    @ApiOperation("查询列表")
+    @Operation(summary = "查询列表")
     public Result<Page<ApiManageEntity>> page(@RequestParam("pageNo") int pageNo,
                                               @RequestParam("pageSize") int pageSize) {
         Page<ApiManageEntity> apiManagePage = new Page<>(pageNo, pageSize);
@@ -51,7 +52,7 @@ public class ApiManageController {
      * 保存
      */
     @PostMapping("/save")
-    @ApiOperation("保存")
+    @Operation(summary = "保存")
     public Result<String> save(@RequestBody ApiManageEntity apiManageEntity) {
         apiManageService.save(apiManageEntity);
         return Result.OK();
@@ -61,7 +62,7 @@ public class ApiManageController {
      * 修改
      */
     @PutMapping
-    @ApiOperation("更新")
+    @Operation(summary = "更新")
     public Result<String> update(@RequestBody ApiManageEntity apiManageEntity) {
         apiManageService.updateById(apiManageEntity);
         return Result.OK();
@@ -71,10 +72,10 @@ public class ApiManageController {
      * 信息
      */
     @GetMapping
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "id", dataType = "String", value = "API id")
+    @Parameters({
+            @Parameter(name = "id", description = "API id")
     })
-    @ApiOperation("查询")
+    @Operation(summary = "查询")
     public Result<ApiManageEntity> info(@RequestParam(value = "id") Integer id) {
         return Result.OK(apiManageService.getById(id));
     }
@@ -83,10 +84,10 @@ public class ApiManageController {
      * 删除
      */
     @DeleteMapping
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "id", dataType = "String", value = "API id")
+    @Parameters({
+            @Parameter(name = "id", description = "API id")
     })
-    @ApiOperation("删除")
+    @Operation(summary = "删除")
     public Result<String> delete(@RequestParam(value = "id")  Integer id) {
         apiManageService.removeById(id);
         return Result.OK();

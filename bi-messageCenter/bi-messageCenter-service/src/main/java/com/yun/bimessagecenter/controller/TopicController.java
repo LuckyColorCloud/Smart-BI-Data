@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yun.bidatacommon.vo.Result;
 import com.yun.bimessagecenter.entity.TopicEntity;
 import com.yun.bimessagecenter.service.TopicService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/topic")
-@Api(tags = "主题配置")
+@Tag(name = "主题配置")
 public class TopicController {
     @Autowired
     private TopicService topicService;
@@ -33,7 +33,7 @@ public class TopicController {
      * @return 结果集
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ApiOperation("列表")
+    @Operation(summary = "列表")
     public Result<?> queryApiPathList(@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                       @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                       @RequestParam(name = "projectId", defaultValue = "1") Integer projectId) {
@@ -44,7 +44,7 @@ public class TopicController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @ApiOperation("查询")
+    @Operation(summary = "查询")
     public Result<TopicEntity> info(@PathVariable("id") Integer id) {
         return Result.OK(topicService.getById(id));
     }
@@ -53,7 +53,7 @@ public class TopicController {
      * 保存
      */
     @PostMapping("/save")
-    @ApiOperation("保存")
+    @Operation(summary = "保存")
     public Result<String> save(@RequestBody TopicEntity topicEntity) {
         topicService.save(topicEntity);
         return Result.OK();
@@ -63,7 +63,7 @@ public class TopicController {
      * 修改
      */
     @PostMapping("/update")
-    @ApiOperation("更新")
+    @Operation(summary = "更新")
     public Result<String> update(@RequestBody TopicEntity topicEntity) {
         topicEntity.setUpdatedTime(new Date());
         topicService.updateById(topicEntity);
@@ -74,7 +74,7 @@ public class TopicController {
      * 删除
      */
     @GetMapping("/delete/{id}")
-    @ApiOperation("删除")
+    @Operation(summary = "删除")
     public Result<String> delete(@PathVariable("id") Integer id) {
         topicService.removeById(id);
         return Result.OK();

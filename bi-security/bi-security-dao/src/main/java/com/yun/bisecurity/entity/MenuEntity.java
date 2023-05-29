@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import com.yun.bisecurity.model.vo.MenuVo;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -23,7 +23,7 @@ import lombok.Data;
  */
 @Data
 @TableName("menu")
-@ApiModel(value = "MenuEntity对象", description = "")
+@Schema(title = "MenuEntity对象", description = "")
 public class MenuEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,32 +31,32 @@ public class MenuEntity implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
-    @ApiModelProperty("上级菜单id")
+    @Schema(description = "上级菜单id")
     private String parentId;
 
-    @ApiModelProperty("标题")
+    @Schema(description = "标题")
     private String title;
 
-    @ApiModelProperty("菜单类型1菜单，2页面，3按钮")
+    @Schema(description = "菜单类型1菜单，2页面，3按钮")
     private Integer type;
 
-    @ApiModelProperty("菜单地址，页面路由Or接口地址")
+    @Schema(description = "菜单地址，页面路由Or接口地址")
     private String path;
 
-    @ApiModelProperty("菜单图标")
+    @Schema(description = "菜单图标")
     private String icon;
 
-    @ApiModelProperty("请求方式")
+    @Schema(description = "请求方式")
     private String mode;
 
-    @ApiModelProperty("状态1生效0无效")
+    @Schema(description = "状态1生效0无效")
     private Boolean state;
 
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedTime;
 

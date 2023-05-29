@@ -3,8 +3,7 @@ package com.yun.bisecurity.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <p>
@@ -15,14 +14,14 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2022-11-10
  */
 @TableName("role")
-@ApiModel(value = "RoleEntity对象", description = "")
+@Schema(title = "RoleEntity对象", description = "")
 public class RoleEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    @ApiModelProperty("角色名称")
+    @Schema(description = "角色名称")
     private String name;
 
     private LocalDateTime createdTime;
