@@ -2,7 +2,7 @@ package com.yun.bisecurity.controller;
 
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.yun.bidatacommon.vo.Result;
-import com.yun.bisecurity.service.AccountService;
+import com.yun.bisecurity.group.account.service.AccountService;
 
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,22 +42,17 @@ public class LoginController {
             @Parameter(name = "password", required = true, description = "密码")
     })
     @Operation(summary = "登录接口")
-    public Result<Object> register(@RequestParam(value = "email") String email,
+    public Result<String> register(@RequestParam(value = "email") String email,
                                    @RequestParam(value = "password") String password) {
         return accountService.login(email, password);
     }
 
 
     @GetMapping("/out")
-    public Result<Object> loginOut() {
+    public Result<String> loginOut() {
         // 注销登录
         LoopAuthSession.logout();
         return Result.OK("注销成功");
     }
 
-    @GetMapping("/fallback/test")
-    @Operation(summary = "ABAC测试")
-    public String abac1() {
-        return "检测成功";
-    }
 }

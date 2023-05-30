@@ -1,9 +1,9 @@
 package com.yun.bisecurity.controller;
 
 import com.yun.bidatacommon.vo.Result;
-import com.yun.bisecurity.entity.AccountEntity;
-import com.yun.bisecurity.service.AccountService;
-import com.yun.bisecurity.model.vo.AccountVo;
+import com.yun.bisecurity.group.account.model.entity.AccountEntity;
+import com.yun.bisecurity.group.account.service.AccountService;
+import com.yun.bisecurity.group.account.model.vo.AccountVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;

@@ -118,12 +118,12 @@ public class Result<T> implements Serializable {
         return r;
     }
 
-    public static Result<Object> ERROR(String msg) {
+    public static <T> Result<T> ERROR(String msg) {
         return ERROR(ResultEnum.ERROR.respCode, msg);
     }
 
-    public static Result<Object> ERROR(int code, String msg) {
-        Result<Object> r = new Result<Object>();
+    public static <T> Result<T> ERROR(int code, String msg) {
+        Result<T> r = new Result<T>();
         r.setCode(code);
         r.setMessage(msg);
         r.setSuccess(false);

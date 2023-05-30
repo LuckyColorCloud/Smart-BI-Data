@@ -2,18 +2,17 @@ package com.yun.bisecurity.controller;
 
 
 import com.yun.bidatacommon.vo.Result;
-import com.yun.bisecurity.entity.AbacRuleEntity;
-import com.yun.bisecurity.model.vo.MenuVo;
-import com.yun.bisecurity.entity.MenuEntity;
-import com.yun.bisecurity.service.MenuService;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
-import io.swagger.v3.oas.annotations.Parameters;
+import com.yun.bisecurity.group.menu.model.entity.MenuEntity;
+import com.yun.bisecurity.group.menu.model.vo.MenuVo;
+import com.yun.bisecurity.group.menu.service.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import jakarta.annotation.Resource;
+
 import java.util.List;
 
 /**
