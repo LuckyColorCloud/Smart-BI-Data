@@ -18,12 +18,12 @@
     </parent>
     <!--    模块管理-->
     <modules>
+        <module>bi-data-common</module>
         <module>bi-fileManage</module>
         <module>bi-dataStorage</module>
         <module>bi-data</module>
         <module>bi-apiManage</module>
         <module>bi-gateway</module>
-        <module>bi-data-common</module>
         <module>bi-generation</module>
         <module>bi-security</module>
         <module>bi-messageCenter</module>
