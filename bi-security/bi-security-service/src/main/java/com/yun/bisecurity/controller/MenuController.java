@@ -1,7 +1,7 @@
 package com.yun.bisecurity.controller;
 
 
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bisecurity.group.menu.model.entity.MenuEntity;
 import com.yun.bisecurity.group.menu.model.vo.MenuVo;
 import com.yun.bisecurity.group.menu.service.MenuService;

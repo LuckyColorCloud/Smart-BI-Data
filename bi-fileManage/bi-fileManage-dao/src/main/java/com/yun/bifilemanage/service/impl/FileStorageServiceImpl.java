@@ -12,7 +12,7 @@ import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yun.bidatacommon.constant.CommonConstant;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
 import com.yun.bidatastorage.dto.DropTableDto;
 import com.yun.bidatastorage.dto.SaveFileDto;

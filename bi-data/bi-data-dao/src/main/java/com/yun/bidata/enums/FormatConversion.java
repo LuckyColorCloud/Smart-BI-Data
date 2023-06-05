@@ -5,7 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.jayway.jsonpath.JsonPath;
 import com.yun.bidatacommon.constant.CommonConstant;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 
 import java.util.ArrayList;
 import java.util.HashMap;

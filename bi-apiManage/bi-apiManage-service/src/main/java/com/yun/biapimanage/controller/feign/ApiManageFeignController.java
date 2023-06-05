@@ -4,7 +4,7 @@ import com.yun.apimanage.api.ApiManageFeign;
 import com.yun.apimanage.dto.ProjectDto;
 import com.yun.biapimanage.entity.ProjectEntity;
 import com.yun.biapimanage.service.ProjectService;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,38 +1,44 @@
-package com.yun.bisecurity.controller;
+package com.yun.bisecurity.group.login.controller;
 
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
-import com.yun.bidatacommon.vo.Result;
-import com.yun.bisecurity.group.account.service.AccountService;
+import com.yun.bidatacommon.model.vo.Result;
 
 
+import com.yun.bisecurity.group.login.face.LoginFace;
+import com.yun.bisecurity.group.login.model.param.LoginParam;
+import com.yun.bisecurity.group.login.model.vo.LoginInfoVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.Operation;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import jakarta.annotation.Resource;
 
 /**
  * @author Sober
  */
 @Slf4j
 @Tag(name = "会话相关")
+@Validated
 @RestController
 public class LoginController {
 
-    @Resource
-    private AccountService accountService;
+    private final LoginFace loginFace;
+
+    LoginController(LoginFace loginFace) {
+        this.loginFace = loginFace;
+    }
 
     /**
      * 登录接口
      *
-     * @param email
-     * @param password
+     * @param param 登录参数
      * @return com.yun.bidatacommon.vo.Result<java.lang.Object>
      * @author Sober
      */
@@ -42,9 +48,8 @@ public class LoginController {
             @Parameter(name = "password", required = true, description = "密码")
     })
     @Operation(summary = "登录接口")
-    public Result<String> register(@RequestParam(value = "email") String email,
-                                   @RequestParam(value = "password") String password) {
-        return accountService.login(email, password);
+    public Result<LoginInfoVo> register(@ParameterObject @Valid LoginParam param) {
+        return loginFace.login(param);
     }
 
 

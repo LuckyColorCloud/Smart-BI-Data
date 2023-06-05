@@ -5,7 +5,7 @@ import com.sobercoding.loopauth.exception.LoopAuthLoginException;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.sobercoding.loopauth.session.model.TokenModel;
 import com.yun.bidatacommon.security.UserSessionInfo;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;

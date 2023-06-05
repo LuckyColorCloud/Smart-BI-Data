@@ -17,9 +17,15 @@ public interface AccountDao extends BaseMapper<AccountEntity> {
 
     /**
      * 插入 忽略报错，通过布尔返回成功状态
-     * @param accountEntity
+     * @param entity
      * @return
      */
-    boolean insertIgnore(AccountEntity accountEntity);
+    boolean insertIgnore(AccountEntity entity);
 
+    /**
+     * 根据id更新账户 忽略报错，通过布尔返回成功状态
+     * @param entity
+     * @return
+     */
+    boolean updateIgnoreById(AccountEntity entity);
 }

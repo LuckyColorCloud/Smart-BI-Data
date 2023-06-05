@@ -1,6 +1,6 @@
 package com.yun.bifilemanage.exception;
 
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 
 /**
  * 数据异常

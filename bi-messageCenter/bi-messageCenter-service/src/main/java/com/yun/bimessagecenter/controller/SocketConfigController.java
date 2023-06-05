@@ -2,7 +2,7 @@ package com.yun.bimessagecenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bimessagecenter.entity.SocketConfigEntity;
 import com.yun.bimessagecenter.service.SocketConfigService;
 import io.swagger.v3.oas.annotations.tags.Tag;

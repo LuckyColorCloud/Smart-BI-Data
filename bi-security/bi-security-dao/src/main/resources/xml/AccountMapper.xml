@@ -25,4 +25,19 @@
             #{updatedTime}
         )
     </insert>
+
+
+    <update id="updateIgnoreById" parameterType="com.yun.bisecurity.group.account.model.entity.AccountEntity">
+        UPDATE IGNORE `account`
+        SET
+            `pass_word` = #{passWord},
+            `nick_name` = #{nickName},
+            `email` = #{email},
+            `gender` = #{gender},
+            `icon` = #{icon},
+            `created_time` = #{createdTime},
+            `updated_time` = #{updatedTime}
+        WHERE
+            `id` = #{id}
+    </update>
 </mapper>

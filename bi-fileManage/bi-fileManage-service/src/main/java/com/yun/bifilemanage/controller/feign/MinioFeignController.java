@@ -1,7 +1,7 @@
 package com.yun.bifilemanage.controller.feign;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bifilemanage.api.MinioApiFeign;
 import com.yun.bifilemanage.entity.FileEntity;
 import com.yun.bifilemanage.service.FileService;

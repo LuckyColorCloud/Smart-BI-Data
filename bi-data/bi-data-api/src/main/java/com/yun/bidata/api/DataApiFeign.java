@@ -2,7 +2,7 @@ package com.yun.bidata.api;
 
 import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
