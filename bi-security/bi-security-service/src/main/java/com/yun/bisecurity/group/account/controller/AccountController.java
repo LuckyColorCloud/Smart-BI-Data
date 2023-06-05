@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.yun.bidatacommon.model.vo.PageVo;
 import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bisecurity.group.account.model.convert.AccountConvert;
+import com.yun.bisecurity.group.account.model.entity.AccountEntity;
 import com.yun.bisecurity.group.account.model.param.AccountAddParam;
 import com.yun.bisecurity.group.account.model.param.AccountEditParam;
 import com.yun.bisecurity.group.account.model.param.AccountQueryParam;
@@ -49,7 +50,8 @@ public class AccountController {
     public Result<PageVo<AccountVo>> page(@ParameterObject @Valid AccountQueryParam param){
         return Result.OK(accountService.pageVo(
                 param,
-                Wrappers.lambdaQuery(),
+                Wrappers.<AccountEntity>lambdaQuery()
+                        .like(AccountEntity::getEmail, param.getEmail()),
                 AccountConvert.INSTANCE::convertList
         ));
     }
