@@ -41,6 +41,10 @@ public class AccountController {
     }
 
 
+    /**
+     * 分页查询
+     * @param param 参数
+     */
     @GetMapping("/page")
     @Operation(summary = "表单模型分页")
     @Parameters({
@@ -92,6 +96,10 @@ public class AccountController {
         );
     }
 
+    /**
+     * 删除
+     * @param idList id列表
+     */
     @DeleteMapping
     @Operation(summary = "删除账户")
     public Result<String> delete(@RequestBody @Valid @NotEmpty(message = "列表不可为空") List<Long> idList){

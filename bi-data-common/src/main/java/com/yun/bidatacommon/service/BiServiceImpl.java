@@ -54,8 +54,7 @@ public class BiServiceImpl<M extends BaseMapper<T>, T>
 
     /**
      * 分页vo转换
-     * @param param
-     * @return
+     * @param param 分页参数
      */
     protected Page<T> getPage(PageParam param) {
         return new Page<>(param.getPageNumber(), param.getLimit());
