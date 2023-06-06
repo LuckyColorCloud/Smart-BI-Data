@@ -17,12 +17,36 @@ public interface AccountConvert {
 
     AccountConvert INSTANCE = Mappers.getMapper(AccountConvert.class);
 
+    /**
+     * 对象转换
+     *
+     * @param entity
+     * @return
+     */
     AccountVo convert(AccountEntity entity);
 
+    /**
+     * 对象转换
+     *
+     * @param param
+     * @return
+     */
     AccountEntity convert(AccountAddParam param);
 
+    /**
+     * 对象转换
+     *
+     * @param param
+     * @return
+     */
     AccountEntity convert(AccountEditParam param);
 
+    /**
+     * 对象转换
+     *
+     * @param entitys
+     * @return
+     */
     List<AccountVo> convertList(List<AccountEntity> entitys);
 
 }

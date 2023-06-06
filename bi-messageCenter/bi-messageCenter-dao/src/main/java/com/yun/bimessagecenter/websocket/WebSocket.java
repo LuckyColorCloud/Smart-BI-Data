@@ -1,4 +1,4 @@
-package com.yun.bimessagecenter.webSocket;
+package com.yun.bimessagecenter.websocket;
 
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
@@ -65,7 +65,7 @@ public class WebSocket {
     }
 
     private static Object getFieldInstance(Object obj, String fieldPath) {
-        String fields[] = fieldPath.split("#");
+        String[] fields = fieldPath.split("#");
         for (String field : fields) {
             obj = getField(obj, obj.getClass(), field);
             if (obj == null) {

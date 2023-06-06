@@ -5,7 +5,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.yun.bimessagecenter.entity.MqConfigEntity;
 import com.yun.bimessagecenter.service.TopicService;
-import com.yun.bimessagecenter.webSocket.WebSocket;
+import com.yun.bimessagecenter.websocket.WebSocket;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;

@@ -26,6 +26,7 @@ public interface MenuService extends IService<MenuEntity> {
     /**
      * 删除菜单
      * @param id 需要删除的id
+     * @return 布尔型
      */
     boolean removeMenu(String id);
 }

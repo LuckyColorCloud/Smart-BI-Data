@@ -16,11 +16,13 @@ public interface BiService<T> extends IService<T> {
 
     /**
      * 分页
-     * @param param 分页参数
+     *
+     * @param param        分页参数
      * @param queryWrapper 查询条件
-     * @param convertList 数据转换
-     * @param <P> 分页参数类型
-     * @param <V> 数据转换后的类型
+     * @param convertList  数据转换
+     * @param <P>          分页参数类型
+     * @param <V>          数据转换后的类型
+     * @return <P extends PageParam>
      */
     <P extends PageParam, V> PageVo<V> pageVo(P param,
                                               LambdaQueryWrapper<T> queryWrapper,
@@ -28,10 +30,12 @@ public interface BiService<T> extends IService<T> {
 
     /**
      * 分页
-     * @param param 分页参数
+     *
+     * @param param       分页参数
      * @param convertList 数据转换
-     * @param <P> 分页参数类型
-     * @param <V> 数据转换后的类型
+     * @param <P>         分页参数类型
+     * @param <V>         数据转换后的类型
+     * @return <P extends PageParam>
      */
     <P extends PageParam, V> PageVo<V> pageVo(P param,
                                               Function<List<T>, List<V>> convertList);
