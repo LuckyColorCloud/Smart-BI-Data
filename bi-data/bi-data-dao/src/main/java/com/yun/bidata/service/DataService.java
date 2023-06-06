@@ -2,7 +2,7 @@ package com.yun.bidata.service;
 
 import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 
 /**
  * 数据清洗接口

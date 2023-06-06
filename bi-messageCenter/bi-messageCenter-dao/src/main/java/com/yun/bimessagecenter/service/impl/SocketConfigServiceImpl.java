@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Yun
  */
 @Service("socketConfigService")
-public class SocketConfigServiceImpl extends ServiceImpl<SocketConfigDao, SocketConfigEntity> implements SocketConfigService {
+class SocketConfigServiceImpl extends ServiceImpl<SocketConfigDao, SocketConfigEntity> implements SocketConfigService {
     @Autowired
     TopicService topicService;
     @Autowired

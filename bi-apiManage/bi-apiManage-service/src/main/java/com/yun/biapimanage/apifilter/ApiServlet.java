@@ -11,7 +11,7 @@ import com.yun.bidata.api.DataApiFeign;
 import com.yun.bidata.dto.FormatDto;
 import com.yun.bidata.dto.QueryDataDto;
 import com.yun.bidatacommon.constant.CommonConstant;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bidatastorage.api.DataStorageApiFeign;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

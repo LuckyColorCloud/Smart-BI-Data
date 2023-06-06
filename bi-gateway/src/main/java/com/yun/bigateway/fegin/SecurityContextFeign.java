@@ -1,7 +1,7 @@
 package com.yun.bigateway.fegin;
 
 import com.yun.bidatacommon.security.UserSessionInfo;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bigateway.config.FeignWebFluxConfig;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;

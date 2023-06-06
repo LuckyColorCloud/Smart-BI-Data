@@ -2,7 +2,7 @@ package com.yun.bifilemanage.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bifilemanage.entity.FileStorageEntity;
 import com.yun.bifilemanage.service.FileStorageService;
 import com.yun.bifilemanage.vo.FileVo;

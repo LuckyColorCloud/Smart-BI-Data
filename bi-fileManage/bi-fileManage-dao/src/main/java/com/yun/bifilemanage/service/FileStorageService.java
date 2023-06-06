@@ -2,12 +2,10 @@ package com.yun.bifilemanage.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bifilemanage.entity.FileStorageEntity;
 import com.yun.bifilemanage.vo.FileVo;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 /**
  * @author BlessingCR

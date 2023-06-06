@@ -1,7 +1,7 @@
 package com.yun.bifilemanage.controller;
 
 
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bifilemanage.service.FileService;
 import com.yun.bifilemanage.vo.MinioFileVO;
 import io.swagger.v3.oas.annotations.Parameter;

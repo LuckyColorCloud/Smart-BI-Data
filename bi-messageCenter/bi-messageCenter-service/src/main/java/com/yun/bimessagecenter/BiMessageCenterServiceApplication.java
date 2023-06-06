@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @Slf4j
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.yun.bimessagecenter", "com.yun.bidatacommon"})
+@ComponentScan(basePackages = {"com.alibaba.druid", "com.yun.bimessagecenter", "com.yun.bidatacommon"})
 public class BiMessageCenterServiceApplication implements InitializingBean {
     public static void main(String[] args) {
         SpringApplication.run(BiMessageCenterServiceApplication.class, args);

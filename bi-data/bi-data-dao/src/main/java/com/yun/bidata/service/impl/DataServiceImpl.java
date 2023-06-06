@@ -21,7 +21,7 @@ import com.yun.bidata.service.UserRoleService;
 import com.yun.bidata.util.RequestUtil;
 import com.yun.bidatacommon.constant.CommonConstant;
 import com.yun.bidatacommon.util.JavaFormat;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -2,7 +2,7 @@ package com.yun.bisecurity.exception;
 
 import com.sobercoding.loopauth.exception.LoopAuthException;
 import com.yun.bidatacommon.security.UserSessionInfo;
-import com.yun.bidatacommon.vo.Result;
+import com.yun.bidatacommon.model.vo.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

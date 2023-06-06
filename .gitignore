@@ -24,9 +24,6 @@ hs_err_pid*
 .idea
 *.iml
 */logs
-*/target
-/target
-*/target/*
-*/target/*.*
+target/
 
-*/node_modules/*
+
