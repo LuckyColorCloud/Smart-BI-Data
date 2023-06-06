@@ -21,7 +21,7 @@ public class Generation {
 
     @Test
     public void generation() {
-        DataSourceConfig.Builder dataSource = getDataSource("jdbc:mysql://101.35.147.40:10001/smart_bi_data?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8", "root", "SmartBi1024", "smart_bi_data");
+        DataSourceConfig.Builder dataSource = getDataSource("jdbc:mysql://127.0.0.1:3306/smart_bi_data?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8", "root", "SmartBi", "smart_bi_data");
         // outputDir 可以直接写项目地址 直接生成到项目里 比如D:\project\Smart-BI-Data
         generate(dataSource, "bi-messageCenter", "D:\\project\\Smart-BI-Data", "Yun", "mq_config");
     }
