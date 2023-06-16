@@ -1,9 +1,7 @@
 package com.yun.bisecurity.group.account.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.yun.bidatacommon.service.BiService;
+import com.yun.bidatacommon.db.service.BiService;
 import com.yun.bisecurity.group.account.model.entity.AccountEntity;
-import com.yun.bisecurity.group.account.model.param.AccountQueryParam;
 
 import java.util.List;
 

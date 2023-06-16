@@ -1,5 +1,6 @@
-package com.yun.bidatacommon.model.vo;
+package com.yun.bidatacommon.db.model;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 public class PageVo<T> implements Serializable {
 
+
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +28,25 @@ public class PageVo<T> implements Serializable {
         this.pages = page.getPages();
     }
 
+
+    public PageVo(IPage<T> page) {
+        this.records = page.getRecords();
+        this.total = page.getTotal();
+        this.size = page.getSize();
+        this.current = page.getCurrent();
+        this.pages = page.getPages();
+    }
+
+
     public PageVo(List<T> records, Page<?> page) {
+        this.total = page.getTotal();
+        this.size = page.getSize();
+        this.current = page.getCurrent();
+        this.pages = page.getPages();
+        this.records = records;
+    }
+
+    public PageVo(List<T> records, IPage<?> page) {
         this.total = page.getTotal();
         this.size = page.getSize();
         this.current = page.getCurrent();
@@ -38,7 +58,15 @@ public class PageVo<T> implements Serializable {
         return new PageVo<T>(page);
     }
 
+    public static <T> PageVo<T> result(IPage<T> page) {
+        return new PageVo<T>(page);
+    }
+
     public static <T> PageVo<T> result(List<T> records, Page<?> page) {
+        return new PageVo<T>(records, page);
+    }
+
+    public static <T> PageVo<T> result(List<T> records, IPage<?> page) {
         return new PageVo<T>(records, page);
     }
 

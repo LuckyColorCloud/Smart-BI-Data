@@ -1,7 +1,7 @@
 package com.yun.bisecurity.group.account.service.impl;
 
 import com.yun.bidatacommon.exception.CommonException;
-import com.yun.bidatacommon.service.BiServiceImpl;
+import com.yun.bidatacommon.db.service.impl.BiServiceImpl;
 import com.yun.bisecurity.group.account.dao.AccountDao;
 import com.yun.bisecurity.group.account.model.entity.AccountEntity;
 import com.yun.bisecurity.group.account.service.AccountService;

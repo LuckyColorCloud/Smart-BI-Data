@@ -1,7 +1,7 @@
 package com.yun.bisecurity.group.account.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.yun.bidatacommon.model.vo.PageVo;
+import com.yun.bidatacommon.db.model.PageVo;
 import com.yun.bidatacommon.model.vo.Result;
 import com.yun.bisecurity.group.account.model.convert.AccountConvert;
 import com.yun.bisecurity.group.account.model.entity.AccountEntity;
@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.slf4j.Slf4j;
@@ -52,12 +51,14 @@ public class AccountController {
             @Parameter(name = "limit", description = "每页条数")
     })
     public Result<PageVo<AccountVo>> page(@ParameterObject @Valid AccountQueryParam param){
-        return Result.OK(accountService.pageVo(
-                param,
-                Wrappers.<AccountEntity>lambdaQuery()
-                        .like(AccountEntity::getEmail, param.getEmail()),
-                AccountConvert.INSTANCE::convertList
-        ));
+
+        return Result.OK(
+                accountService.autoPageVo(
+                        param,
+                        AccountConvert.INSTANCE::convertList
+                )
+        );
+
     }
 
     /**
