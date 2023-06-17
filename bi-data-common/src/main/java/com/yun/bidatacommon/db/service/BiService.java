@@ -2,7 +2,7 @@ package com.yun.bidatacommon.db.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yun.bidatacommon.model.param.PageParam;
+import com.yun.bidatacommon.db.model.PageParam;
 import com.yun.bidatacommon.db.model.PageVo;
 
 import java.util.List;

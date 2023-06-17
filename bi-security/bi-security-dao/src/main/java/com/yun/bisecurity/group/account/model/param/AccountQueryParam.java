@@ -2,7 +2,7 @@ package com.yun.bisecurity.group.account.model.param;
 
 import com.yun.bidatacommon.db.query.BiQuery;
 import com.yun.bidatacommon.db.query.QueryType;
-import com.yun.bidatacommon.model.param.PageParam;
+import com.yun.bidatacommon.db.model.PageParam;
 import com.yun.bidatacommon.verification.constraints.EnumValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

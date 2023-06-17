@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yun.bidatacommon.db.query.QueryParser;
 import com.yun.bidatacommon.db.service.BiService;
-import com.yun.bidatacommon.model.param.PageParam;
+import com.yun.bidatacommon.db.model.PageParam;
 import com.yun.bidatacommon.db.model.PageVo;
 
 import java.lang.reflect.Field;

@@ -1,4 +1,4 @@
-package com.yun.bidatacommon.model.param;
+package com.yun.bidatacommon.db.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

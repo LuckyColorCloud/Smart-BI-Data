@@ -10,6 +10,6 @@
   "author": "Yun",
   "license": "Apache-2.0",
   "devDependencies": {
-    "vuepress": "^1.9.7"
+    "vuepress": "^1.9.9"
   }
 }
