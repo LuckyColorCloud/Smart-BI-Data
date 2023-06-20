@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.6</version>
+        <version>${springboot.version}</version>
         <relativePath/>
     </parent>
     <!--    模块管理-->
@@ -33,7 +33,7 @@
     <properties>
         <revision>1.0.0.Beta.3</revision>
 
-        <springboot.version>3.0.6</springboot.version>
+        <springboot.version>3.1.0</springboot.version>
         <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <servlet-api.version>4.0.1</servlet-api.version>
